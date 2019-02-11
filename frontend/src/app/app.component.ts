@@ -9,12 +9,18 @@ export class AppComponent implements OnInit {
 
 
   constructor(public auth: AuthService) {
+
     auth.handleAuthentication();
+
   }
+
 
   ngOnInit() {
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      this.auth.renewTokens();
+        this.auth.renewTokens();
+
     }
   }
-  }
+
+}
+

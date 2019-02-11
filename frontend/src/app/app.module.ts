@@ -5,12 +5,13 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { RouterModule } from '@angular/router';
-import {HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CallbackComponent, HomeComponent
+    CallbackComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

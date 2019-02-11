@@ -7,7 +7,7 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
 
-
+profile:any;
   constructor(public auth: AuthService) {
 
     auth.handleAuthentication();
@@ -16,11 +16,19 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
-    if (localStorage.getItem('isLoggedIn') === 'true') {
-        this.auth.renewTokens();
-
+    if (localStorage.getItem('isLoggedIn')) {
+ this.auth.renewTokens();
     }
+
+
+     if (this.auth.userProfile) {
+      this.profile = this.auth.userProfile;
+    } else {
+      this.auth.getProfile((err, profile) => {
+        this.profile = profile;
+      });
   }
 
+}
 }
 

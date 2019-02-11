@@ -1,37 +1,39 @@
 
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Auth0 - Angular</a>
+      <a class="navbar-brand" href="#">360 Search</a>
 
       <button
-        class="btn btn-primary btn-margin"
+        class="btn btn-primary btn-sm"
         routerLink="/">
           Home
       </button>
 
+
+
       <button
-        class="btn btn-primary btn-margin"
+        class="btn btn-primary btn-sm"
         *ngIf="auth.isAuthenticated()"
         routerLink="/profile">
           Profile
       </button>
-
-
+&nbsp;
+&nbsp;
 
       <button
         id="qsLoginBtn"
-        class="btn btn-primary btn-margin"
+        class="btn btn-primary btm-sm"
         *ngIf="!auth.isAuthenticated()"
         (click)="auth.login()">
-          Log In
+
       </button>
 
       <button
-        id="qsLogoutBtn"
-        class="btn btn-primary btn-margin"
+
+        class="btn btn-primary btn-sm"
         *ngIf="auth.isAuthenticated()"
         (click)="auth.logout()">
-          Log Out
+          Log Out <h3 class="nickname">{{ profile?.nickname }}</h3>
       </button>
 
     </div>

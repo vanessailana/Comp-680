@@ -1,3 +1,4 @@
+
 {{ diagnostic }}
 
 <div class="container">
@@ -5,7 +6,7 @@
     <form  [formGroup]="supportForm" (click)="onSubmit()" >
       <div class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" formControlName="name" id="name" required>
+        <input type="text" class="form-control" formControlName="name" id="name" required >
         <div *ngIf="supportForm.controls['name'].invalid && (supportForm.controls['name'].dirty)"  
         class="alert alert-danger">
           Name is required
@@ -14,8 +15,8 @@
  
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" formControlName="email" class="form-control" id="email" required>
-        <div *ngIf="supportForm.controls['email'].invalid && (supportForm.controls['email'].dirty)" class="alert alert-danger">
+        <input type="email" formControlName="email" class="form-control" id="email" required #spy>
+        <div *ngIf="supportForm.controls['email'].invalid && (supportForm.controls['email'].dirty)" class="alert alert-danger" >
           Valid email is required
         </div>
       </div>

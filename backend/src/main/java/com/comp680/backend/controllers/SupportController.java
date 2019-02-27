@@ -1,35 +1,48 @@
 package com.comp680.backend.controllers;
 
-
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+class Support extends Object {
+	String email;
+	String message;
+};
 
 @RestController
 public class SupportController {
 	@Autowired
-    private JavaMailSender sender;
+	private JavaMailSender sender;
 
-	@RequestMapping(value = "/support")
-	public String sendEmail() {
+	@PostMapping(value = "/support/{email}")
+	public String sendEmail(@RequestBody Support request) {
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
+		try {
+			InternetAddress emailAddress = new InternetAddress(request.email);
+			emailAddress.validate();
+		} catch(AddressException e) {
+			return "Invalid email format.";
+		}
+  
         try {
-            helper.setTo("demo@gmail.com");
-            helper.setText("Greetings :)");
-            helper.setSubject("Mail From Spring Boot");
+			helper.setTo(request.email);
+			System.out.println(request.email);
+            helper.setText(request.email);
+            helper.setSubject("Mail From Customer Support");
         } catch (MessagingException e) {
             e.printStackTrace();
-            return "Error while sending mail ..";
+            return "Error occurred while sending mail.";
         }
         sender.send(message);
-        return "Mail Sent Success!";
+        return "Email successfully sent!";
 	}
 }
 

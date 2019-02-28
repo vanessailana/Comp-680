@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+
+
 
 import { AuthService } from './auth/auth.service';
 import { ROUTES } from './app.routes';
@@ -15,6 +19,7 @@ import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,9 +31,11 @@ import { MessageService } from './message.service';
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule,
+    FormsModule
   ],
-  providers: [ AuthService, HttpErrorHandler, MessageService ],
+  providers: [ AuthService, HttpErrorHandler, MessageService, NgbModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

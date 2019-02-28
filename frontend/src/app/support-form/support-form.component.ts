@@ -20,10 +20,15 @@ export class SupportFormComponent implements OnInit {
 
   onSubmit() { 
 
-    var sub=this.supportService.sumbitSupportRequest(this.supportForm.value);
-    sub.subscribe((data) => console.log(data),
+    if(this.supportForm.valid)
+    {
+      var sub = this.supportService.sumbitSupportRequest(this.supportForm.value);
+      sub.subscribe((data) => console.log(data),
                   (error: Response) => console.log(error));
-    //console.log(this.supportForm.value);
+        //console.log(this.supportForm.value);
+    }else{
+      console.log("invlaid input");
+    }
   }
 
   get diagnostic() { return JSON.stringify(this.supportForm.value); }

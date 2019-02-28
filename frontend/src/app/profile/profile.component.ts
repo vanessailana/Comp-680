@@ -1,28 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
-<<<<<<< HEAD
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 
-=======
->>>>>>> Mail-Handler-backend
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-<<<<<<< HEAD
   closeResult: string;
   profile: any;
 
   constructor(public auth: AuthService, private modalService: NgbModal) { }
-=======
-
-  profile: any;
-
-  constructor(public auth: AuthService) { }
->>>>>>> Mail-Handler-backend
 
   ngOnInit() {
     if (this.auth.userProfile) {
@@ -33,7 +23,6 @@ export class ProfileComponent implements OnInit {
       });
     }
     }
-<<<<<<< HEAD
 
     open(content) {
       this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -53,6 +42,3 @@ export class ProfileComponent implements OnInit {
       }
     }
 }
-=======
-  }
->>>>>>> Mail-Handler-backend

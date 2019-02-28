@@ -21,10 +21,7 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "^7.2.4",
-<<<<<<< HEAD
     "@ng-bootstrap/ng-bootstrap": "^4.0.4",
-=======
->>>>>>> Mail-Handler-backend
     "angular2-jwt": "^0.2.3",
     "auth0-js": "^9.10.0",
     "auth0-lock": "^11.14.0",
@@ -35,10 +32,7 @@
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
     "i": "^0.3.6",
-<<<<<<< HEAD
     "jquery": "^3.3.1",
-=======
->>>>>>> Mail-Handler-backend
     "jwks-rsa": "^1.4.0",
     "method-override": "^3.0.0",
     "mongo": "^0.1.0",
@@ -59,7 +53,7 @@
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~3.1.1",
+    "karma": "^4.0.1",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",

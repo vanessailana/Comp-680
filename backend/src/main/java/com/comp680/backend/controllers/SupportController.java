@@ -14,6 +14,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins ="localhost:4200",allowedHeaders="*")
+@RequestMapping("support")
 public class SupportController {
 	public static class Support {
 		public String email;
@@ -23,7 +25,7 @@ public class SupportController {
 	@Autowired
 	private JavaMailSender sender;
 
-	@PostMapping(value = "/support")
+	@PostMapping(value = "/")
 	public ResponseEntity<?> sendEmail(@RequestBody Support request) {
         MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);

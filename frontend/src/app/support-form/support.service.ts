@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class SupportService {
 
-  supportUrl = 'localhost:4200/test';  // URL to web api
+  supportUrl = 'localhost:8080/support';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 

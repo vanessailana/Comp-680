@@ -13,10 +13,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@CrossOrigin(origins ="localhost:4200",allowedHeaders="*")
-@RequestMapping("support")
 public class SupportController {
+
+
 	public static class Support {
 		public String email;
 		public String message;
@@ -25,7 +26,9 @@ public class SupportController {
 	@Autowired
 	private JavaMailSender sender;
 
-	@PostMapping(value = "/")
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@PostMapping("/support")
 	public ResponseEntity<?> sendEmail(@RequestBody Support request) {
         MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -52,5 +55,7 @@ public class SupportController {
 		obj.put("message", "Email successfully sent!");
 		return new ResponseEntity<>(obj, HttpStatus.OK);
 	}
+
+
 }
 

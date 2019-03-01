@@ -3,7 +3,7 @@
 
 <div class="container">
     <h1>Contact Support</h1>
-    <form  [formGroup]="supportForm" (click)="onSubmit()" >
+    <form   [formGroup]="supportForm" (ngSubmit)="onSubmit(submitBtn)" >
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" formControlName="name" id="name" required >
@@ -23,14 +23,21 @@
 
       <div class="form-group">
         <label for="description">Ask a question or report a problem.</label>
-        <textarea formControlName="content" class="form-control" rows=7 id="content"  required>
+        <textarea formControlName="message" class="form-control" rows=7 id="message"  required>
     	  </textarea>
-        <div *ngIf="supportForm.controls['content'].invalid && (supportForm.controls['content'].dirty)" class="alert alert-danger">
+        <div *ngIf="supportForm.controls['message'].invalid && (supportForm.controls['message'].dirty)" class="alert alert-danger">
            Description needs at least 10 characters
         </div>
       </div>
  
-      <button type="submit" class="btn btn-success">Submit</button>
- 
+      <button #submitBtn type="submit" class="btn btn-success">Submit</button>
+      
     </form>
+    
+    <div *ngIf="submitSuccess==true" class="alert alert-success">
+        Message Sucessfully Sent!
+    </div>
+    <div *ngIf="submitFail" class="alert alert-danger">
+        Message Failed to Send!
+    </div>
 </div>

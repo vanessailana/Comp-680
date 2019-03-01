@@ -6,8 +6,7 @@ import {Observable, throwError} from 'rxjs'
 import { catchError, retry } from 'rxjs/operators';
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
+    'Content-Type':  'application/json'
   })
   };
 
@@ -16,7 +15,7 @@ const httpOptions = {
 })
 export class SupportService {
 
-  supportUrl = 'localhost:8080/support';  // URL to web api
+  supportUrl = 'http://localhost:8080/support';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 

@@ -21,7 +21,18 @@
 &nbsp;
 &nbsp;
 
-      <button
+
+
+
+       <button class="btn btn-primary btn-sm"  routerLink="/support">
+          Support <i class="fa fa-question-circle"></i>
+      </button>
+
+      &nbsp;
+&nbsp;
+
+
+   <button
         id="qsLoginBtn"
         class="btn btn-primary btm-sm"
         *ngIf="!auth.isAuthenticated()"
@@ -29,17 +40,6 @@
           Login
       </button>
 
-
-       <button
-
-        class="btn btn-primary btn-sm"
-
-      >
-          Support <i class="fa fa-question-circle"></i>
-      </button>
-
-      &nbsp;
-&nbsp;
  <button
 
         class="btn btn-primary btn-sm"

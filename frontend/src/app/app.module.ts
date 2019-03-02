@@ -18,7 +18,7 @@ import { MessageService } from './message.service';
     AppComponent,
     CallbackComponent,
     ProfileComponent,
-    ChatbotComponent
+    ChatbotComponent,
     SupportFormComponent
   ],
   imports: [

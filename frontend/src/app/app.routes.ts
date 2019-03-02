@@ -6,7 +6,7 @@ import { SupportFormComponent } from './support-form/support-form.component'
 
 export const ROUTES: Routes = [
   { path: 'profile', component: ProfileComponent },
-    { path: 'support', component: ChatbotComponent },
+    { path: 'chat', component: ChatbotComponent },
   { path: 'callback', component: CallbackComponent },
   { path: 'support', component: SupportFormComponent},
   { path: '**', redirectTo: '' }

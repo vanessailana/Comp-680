@@ -1,14 +1,15 @@
 
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">360 Search</a>
+      <a class="navbar-brand" href="#">360 Search  <i class="fa fa-globe" style="font-size:48px;color:red"></i></a>
 
       <button
         class="btn btn-primary btn-sm"
         routerLink="/">
           Home
       </button>
-
+&nbsp;
+&nbsp;
 
 
       <button
@@ -28,14 +29,24 @@
           Login
       </button>
 
-      <button
+
+       <button
+
+        class="btn btn-primary btn-sm"
+
+      >
+          Support <i class="fa fa-question-circle"></i>
+      </button>
+
+      &nbsp;
+&nbsp;
+ <button
 
         class="btn btn-primary btn-sm"
         *ngIf="auth.isAuthenticated()"
         (click)="auth.logout()">
           Log Out <h3 class="nickname">{{ profile?.nickname }}</h3>
       </button>
-
     </div>
   </div>
 

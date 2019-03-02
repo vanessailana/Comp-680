@@ -30,6 +30,7 @@ constructor(public router: Router) {
     this._idToken = '';
     this._accessToken = '';
     this._expiresAt = 0;
+
   }
 
   get accessToken(): string {

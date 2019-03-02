@@ -5,6 +5,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.comp680.backend.models.Support;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,16 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class SupportController {
-
-
-	public static class Support {
-		public String email;
-		public String message;
-	};
-	
 	@Autowired
 	private JavaMailSender sender;
-
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping("/support")

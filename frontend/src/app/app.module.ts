@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { CallbackComponent } from './callback/callback.component';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile/profile.component';
+import { ChatbotComponent } from './chatbot/chatbot.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CallbackComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatbotComponent
   ],
   imports: [
     BrowserModule,

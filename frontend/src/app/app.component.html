@@ -23,27 +23,24 @@
           Profile
       </button>
 &nbsp;
-       <button
-        class="btn btn-primary btn-sm"
-        routerLink="/support">
-          Contact Us
-      </button>
-
-
-
 
 &nbsp;
 &nbsp;
 
+<div class="row">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Contact Us</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button class="dropdown-item" routerLink="/support">Email Us <i class='fa fa-envelope'></i></button>
+        <button class="dropdown-item" routerLink="/chat">Live Chat with us <i class='fa fa-comment'></i></button>
+
+      </div>
+    </div>
+  </div>
 
 
 
-       <button class="btn btn-primary btn-sm"  routerLink="/chat">
-          Live Chat <i class="fa fa-comments"></i>
-      </button>
-
-      &nbsp;
-&nbsp;
 
 
 

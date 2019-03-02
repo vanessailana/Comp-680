@@ -13,17 +13,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
 @RestController
+@EnableWebMvc
+@Controller
 public class SupportController {
 	@Autowired
 	private JavaMailSender sender;
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@PostMapping("/support")
-	public ResponseEntity<?> sendEmail(@RequestBody Support request) {
+	@RequestMapping(value = "/support", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody ResponseEntity<?> sendEmail(@RequestBody Support request) {
         MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		
@@ -47,7 +51,7 @@ public class SupportController {
         }
 		sender.send(message);
 		obj.put("message", "Email successfully sent!");
-		return new ResponseEntity<>(obj, HttpStatus.OK);
+		return new ResponseEntity<>(obj, HttpStatus.CREATED);
 	}
 
 

@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
-
+import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,14 +27,15 @@ private Long job_id;
 @Column(name="status", nullable=false)
 private boolean status=true; 
 
-
+ private Date created;
+  private Date updated;
 
 @Column(name="title", nullable=false)
 private String title;
 
 
 
-@Column(name="description", nullable=false)
+@Column(name="description", nullable=false,length=100000)
 private String description;
 
 
@@ -70,7 +71,15 @@ this.status=status;
 
 
 
+  @PrePersist
+  protected void onCreate() {
+    created = new Date();
+  }
 
+  @PreUpdate
+  protected void onUpdate() {
+    updated = new Date();
+  }
 
 public String description()  {
 

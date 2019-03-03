@@ -16,9 +16,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-
-@RestController
 @EnableWebMvc
 @Controller
 public class SupportController {
@@ -26,7 +23,7 @@ public class SupportController {
 	private JavaMailSender sender;
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(value = "/support", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/support", method = RequestMethod.POST, consumes="application/json",produces = "application/json")
 	public @ResponseBody ResponseEntity<?> sendEmail(@RequestBody Support request) {
         MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);

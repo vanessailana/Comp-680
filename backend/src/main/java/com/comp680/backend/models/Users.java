@@ -82,34 +82,6 @@ private String profile_image;
 
 
 
-@Column(name="linkedin", nullable=true)
-private String  linkedin;
-
-
-
-@Column(name="twitter", nullable=true)
-private String  twitter;
-
-
-
-@Column(name="facebook", nullable=true)
-private String  facebook;
-
-
-
-
-@Column(name="github", nullable=true)
-private String  github;
-
-
-
-
-@Column(name="personal_website", nullable=true)
-private String  personal_website;
-
-
-
-
 
 public String getFirstName(){
 
@@ -262,73 +234,6 @@ profile_image=profile_image;
 }
 
 
-public String getLinkedin(){
-
-return linkedin;
-}
-
-public void setLinkedin(String linkedin) {
-
-linkedin=linkedin;
-}
-
-
-public String getTwitter() {
-
-return twitter;
-
-}
-
-public void setTwitter(String twitter) {
-
-twitter=twitter;
-
-}
-
-
-public String getFacebook() {
-
-return facebook;
-
-}
-
-
-public void setFacebook(String facebook){
-
-facebook=facebook;
-
-
-}
-
-
-public String getGithub() {
-
-return github;
-
-}
-
-
-public void setGithub(String github){
-
-github=github;
-
-
-}
-
-
-public String getWebsite() {
-
-return personal_website;
-
-}
-
-
-public void setWebsite(String personal_website){
-
-personal_website=personal_website;
-
-
-}
 
 }
 

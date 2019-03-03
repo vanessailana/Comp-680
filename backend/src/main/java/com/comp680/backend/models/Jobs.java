@@ -20,25 +20,42 @@ import javax.persistence.ManyToOne;
 public class Jobs {
 
 @Id
+@Column(name="job_id")
 private Long job_id;
 
 
-
+@Column(name="status", nullable=false)
 private boolean status=true; 
 
+
+
+@Column(name="title", nullable=false)
 private String title;
 
 
+
+@Column(name="description", nullable=false)
 private String description;
 
+
+
+@Column(name="startCompensation", nullable=false)
 private double startCompensation;
 
+
+
+@Column(name="endCompensation", nullable=true)
 private double endCompensation;
 
 
+
+@Column(name="employment_type", nullable=false)
 private String employment_type;
 
 
+
+@Column(name="location", nullable=true)
+private String location;
 
 public boolean  Status() {
 return status;
@@ -113,8 +130,17 @@ return employment_type;
 
 }
 
+
+public String location() {
+return location;
+
 }
 
+public String setLocation(String location) {
+ return location;
+
+}
+}
 
 
 

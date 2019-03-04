@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms' 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [FormBuilder]
 })
 export class AppComponent implements OnInit {
 
 profile:any;
-  constructor(public auth: AuthService) {
+searchForm : FormGroup;
+  constructor(public auth: AuthService, private formBuilder: FormBuilder) {
 
     auth.handleAuthentication();
 
@@ -16,6 +20,12 @@ profile:any;
 
 
   ngOnInit() {
+
+    this.searchForm = this.formBuilder.group({
+      keyword: ["",Validators.required],
+      location: [""]
+    });
+
     if (localStorage.getItem('isLoggedIn')) {
  this.auth.renewTokens();
     }

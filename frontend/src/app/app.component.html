@@ -1,68 +1,87 @@
 
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">360 Search  <i class="fa fa-globe" style="font-size:48px;color:red"></i></a>
-
-      <button
-        class="btn btn-primary btn-sm"
-        routerLink="/">
-          Home
-      </button>
-&nbsp;
-&nbsp;
-
-
-
-&nbsp;
-
-
-      <button
-        class="btn btn-primary btn-sm"
-        *ngIf="auth.isAuthenticated()"
-        routerLink="/profile">
-          Profile
-      </button>
-&nbsp;
-
-&nbsp;
-&nbsp;
-
-<div class="row">
-  <div class="col">
-    <div ngbDropdown class="d-inline-block">
-      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Contact Us</button>
-      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button class="dropdown-item" routerLink="/support">Email Us <i class='fa fa-envelope'></i></button>
-        <button class="dropdown-item" routerLink="/chat">Live Chat with us <i class='fa fa-comment'></i></button>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="#">Features</a>
+        <a class="nav-item nav-link" href="#">Pricing</a>
+        <a class="nav-item nav-link disabled" href="#">Disabled</a>
       </div>
     </div>
+  </nav>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">360 Search</a>
+ 
+  <button class="navbar-toggler hidden-sm-up" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-target="#navbarsDefault" aria-controls="navbarsDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarsDefault">
+    <ul class="navbar-nav mr-auto">
+        <a class="nav-link" routerLink="/">
+          Home
+        </a>
+
+       
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="id01"  ngbDropdownToggle>Support</a>
+        <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+          <a class="dropdown-item" routerLink="/support">Email us!</a>
+          <a class="dropdown-item" routerLink="/chat">Chat with us!</a>
+        </div>
+      </li>
+
+      
+      <a
+
+      id="qsLoginBtn"
+      class="nav-link"
+      *ngIf="!auth.isAuthenticated()"
+      (click)="auth.login()">
+        Login
+      </a>
+
+      <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/profile">
+        Profile
+      </a>
+     
+
+      <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
+          Log Out: {{ profile?.nickname }} 
+      </a>
+    </ul>
   </div>
+</nav>
 
+<div class="container border" style="margin-top: 5%">
+    <form   [formGroup]="searchForm" (ngSubmit)="onSubmit(submitBtn)" >
+      <div class="form-group row">
+        <div class="col-xs-3 col-md-3">
+        <label for="keyword"> </label>
+        <input  placeholder="Keyword" type="text" class="form-control" formControlName="keyword" id="keyword" required >
+        <div *ngIf="searchForm.controls['keyword'].invalid && (searchForm.controls['keyword'].dirty)"  
+        class="alert alert-danger">
+          Keyword is required
+        </div>
+        </div>
+    
+        <div class="col-xs-3 col-md-3 offset-md-1">
+        <label for="location">  </label>
+        <input placeholder="Location" type="text" formControlName="location" class="form-control" id="location" required>
+        </div>
+        <div class="hidden-lg hidden-md hidden-sm">&nbsp;</div>
+        <div style="display : flex; align-items : center;" class="col-xs-3 col-md-3 offset-md-1">
+          <button #submitBtn type="submit" class="button-align btn btn-lg btn-dark"> <i class="fa fa-search-plus" aria-hidden="true"></i>Search </button>
+        </div>
+      </div>
+    </form>
+    
+</div>
 
-
-
-
-
-      <button
-
-        id="qsLoginBtn"
-        class="btn btn-primary btm-sm"
-        *ngIf="!auth.isAuthenticated()"
-        (click)="auth.login()">
-          Login
-      </button>
-
- <button
-
-        class="btn btn-primary btn-sm"
-        *ngIf="auth.isAuthenticated()"
-        (click)="auth.logout()">
-          Log Out <h3 class="nickname">{{ profile?.nickname }}</h3>
-      </button>
-    </div>
-  </div>
-
+<div style="padding-top: 65px"> </div>
 
 <main class="container">
   <router-outlet></router-outlet>

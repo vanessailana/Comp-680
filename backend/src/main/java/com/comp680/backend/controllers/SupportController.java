@@ -27,8 +27,12 @@ public class SupportController {
 	public @ResponseBody ResponseEntity<?> sendEmail(@RequestBody Support request) {
 		JSONObject obj = new JSONObject();
 
-		if(request.message.length() == 0) {
-			obj.put("message", "Cannot send email with empty body");
+		if(request.message == null || request.message.length() == 0) {
+			obj.put("message", "Cannot send an email with empty message body");
+			return new ResponseEntity<>(obj, HttpStatus.BAD_REQUEST);
+		}
+		if( request.email == null || request.email.length() == 0) {
+			obj.put("message", "Cannot send an email with empty email address");
 			return new ResponseEntity<>(obj, HttpStatus.BAD_REQUEST);
 		}
 

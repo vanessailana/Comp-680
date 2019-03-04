@@ -25,10 +25,16 @@ public class SupportController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(value = "/support", method = RequestMethod.POST, consumes="application/json",produces = "application/json")
 	public @ResponseBody ResponseEntity<?> sendEmail(@RequestBody Support request) {
+		JSONObject obj = new JSONObject();
+
+		if(request.message.length() == 0) {
+			obj.put("message", "Cannot send email with empty body");
+			return new ResponseEntity<>(obj, HttpStatus.BAD_REQUEST);
+		}
+
         MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 		
-		JSONObject obj = new JSONObject();
 		try {
 			InternetAddress emailAddress = new InternetAddress(request.email);
 			emailAddress.validate();
@@ -50,7 +56,4 @@ public class SupportController {
 		obj.put("message", "Email successfully sent!");
 		return new ResponseEntity<>(obj, HttpStatus.CREATED);
 	}
-
-
 }
-

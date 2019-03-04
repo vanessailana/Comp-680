@@ -24,8 +24,10 @@ public class Questions {
 @Column(name="question_id")
 private Long question_id;
 
+
+
+  private long job_id;
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "job_id", nullable = false)
     private Jobs job;
     
     @Column(name="question",nullable=true)

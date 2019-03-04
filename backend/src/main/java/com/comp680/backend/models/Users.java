@@ -1,6 +1,7 @@
 package com.comp680.backend;
 
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,9 +25,10 @@ public class Users {
 
 @Id
 @Column(name="id")
+@GeneratedValue(strategy=GenerationType.IDENTITY)
 private Long id;
-
-
+@OneToOne(fetch = FetchType.LAZY, optional = false)
+private Social social;
 @Column(name="first_name", nullable=false)
 private String firstName;
 
@@ -77,6 +79,7 @@ private String resume;
 
 @Column(name="profile_image", nullable=true)
 private String profile_image;
+
 
 
 
@@ -234,7 +237,18 @@ profile_image=profile_image;
 }
 
 
+public Social getSocial(){
+return social;
+}
+
+public void  setSocial(Social social) {
+social=social;
+}
+
+
 
 }
+
+
 
 

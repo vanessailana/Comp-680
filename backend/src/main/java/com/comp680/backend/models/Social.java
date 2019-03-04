@@ -1,3 +1,5 @@
+package com.comp680.backend;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -15,17 +17,18 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="social")
-
 public class Social {
 
 
 @Id
 @Column(name="social_id")
-private Long id;
-@OneToOne(fetch = FetchType.LAZY, optional = false)
-@JoinColumn(name = "id", nullable = false)
-private Users user;
- 
+@GeneratedValue(strategy=GenerationType.IDENTITY)
+private long id;
+
+
+
+private long user_id;
+
 
 
 private String linkedin;
@@ -41,7 +44,7 @@ private String website;
 
 public String getLinkedin(){
 
-return linkiden;
+return linkedin;
 
 }
 
@@ -104,24 +107,12 @@ return website;
 
 public void setWebsite(String website) {
 
-website;
+website=website;
 
 }
 
 
-public Users getUser(){
 
-return user;
-
-
-}
-
-
-public void setUser(Users user) {
-
-user=user;
-
-}
 
 
 }

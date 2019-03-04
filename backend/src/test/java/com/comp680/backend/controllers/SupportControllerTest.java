@@ -41,7 +41,16 @@ public class SupportControllerTest  {
     }
 
     private String generateRandomMessage() {
-        return RandomStringUtils.randomAlphanumeric(50);
+        String message = "";
+        int word_count = (int)(Math.random() * 25 + 1);
+        for(int i = 0; i < word_count; i++) {
+            int word_length = (int)(Math.random() * 50 + 1);
+            message += RandomStringUtils.randomAlphabetic(word_length);
+            if(i+1 < word_count) {
+                message += " ";
+            }
+        }
+        return message;
     }
 
     private JSONObject createEmailJson(String email, String message) {

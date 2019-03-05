@@ -47,6 +47,11 @@
       <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/profile">
         Profile
       </a>
+
+
+      <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/posting">
+        Post A Job!
+      </a>
      
 
       <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
+import {PostingService} from './posting.service';
+
 @Component({
   selector: 'app-posting',
   templateUrl: './posting.component.html',
@@ -11,13 +13,20 @@ export class PostingComponent implements OnInit {
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  submitSuccess: boolean;
+  submitFail: boolean;
+
+  constructor(private postingService:PostingService,private fb: FormBuilder) {
+    this.submitSuccess = false;
+    this.submitFail = false;
+
+  }
 
 
   initQuestion() {
     // initialize our address
     return this.fb.group({
-        question: ['', Validators.required]
+      question: ['', Validators.required]
     });
   }
 
@@ -34,9 +43,53 @@ export class PostingComponent implements OnInit {
   get diagnostic() { return JSON.stringify(this.formGroup.value); }
 
 
-  onSubmit(btn: HTMLButtonElement){
+  onSubmit(submitBtn: HTMLButtonElement){
 
-    console.log(this.diagnostic);
+    
+    submitBtn.disabled = true;
+  
+    if(this.formGroup.valid)
+    {
+      var sub = this.postingService.sumbitPost(this.formGroup.value);
+      sub.subscribe(
+        res => 
+        {
+
+          this.submitFail=true; 
+          this.submitSuccess = false;
+          console.log('HTTP Response', res);
+          this.formGroup.reset();
+          
+        },
+        err => 
+        { 
+          this.submitFail=true; 
+          this.submitSuccess = false;
+          console.log('HTTP Error', err)
+          submitBtn.disabled = false;
+        },
+        () => 
+        {
+          console.log('HTTP request completed.');
+          submitBtn.disabled = false;
+        }
+
+      )        
+    }
+    else
+    {
+
+      console.log("invlaid input");
+      submitBtn.disabled = false;
+      this.submitFail=true; 
+      this.submitSuccess = false;
+
+    }
+
+    console.log(this.submitFail);
+    console.log(this.submitSuccess);
+
+    
 
   }
 
@@ -44,14 +97,17 @@ export class PostingComponent implements OnInit {
 
     this.formGroup = this.fb.group({
         job : this.fb.group({
-          title: [""],
-          description: [""],
-          location: [""],
+          title: ["",[Validators.required]],
+          description: ["",[Validators.required]],
+          location: ["",[Validators.required]],
           compensation: [""],
           employment_type: [""]
     
       }),
-    questions : this.fb.array([this.initQuestion()])
+      questions : this.fb.array([
+        this.initQuestion(),
+
+      ])
     })
 
   }

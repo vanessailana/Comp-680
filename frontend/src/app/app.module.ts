@@ -16,8 +16,11 @@ import { MessageService } from './message.service';
 
 import { PostingComponent } from './posting/posting.component';
 
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 @NgModule({
@@ -37,9 +40,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule,
     FormsModule,
     MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserAnimationsModule
   ],
-  providers: [ AuthService, HttpErrorHandler, MessageService, NgbModal],
+  providers: [ 
+    AuthService, 
+    HttpErrorHandler, 
+    MessageService, 
+    NgbModal, 
+    {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}},
+
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

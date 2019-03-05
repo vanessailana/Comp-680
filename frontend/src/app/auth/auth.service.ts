@@ -1,6 +1,5 @@
 // src/app/auth/auth.service.ts
 
-import { BehaviorSubject, Subscription, of, timer } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
@@ -15,10 +14,6 @@ export class AuthService {
   private _idToken: string;
   private _accessToken: string;
   private _expiresAt: number;
-  loggedIn: boolean;
-  loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
-  isAdmin:boolean;
-  loggingIn: boolean;
   userProfile: any;
     refreshSubscription: any;
   requestedScopes: string = 'openid profile';
@@ -47,63 +42,67 @@ constructor(public router: Router) {
   }
   public login(): void {
     this.auth0.authorize();
+
   }
 
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
+      if (authResult && authResult.accessToken && authResult.idToken ) {
         this.setSession(authResult);
         console.log(authResult);
+        console.log("teste");
         this.router.navigate(['/profile']);
       } else if (err) {
         this.router.navigate(['']);
-        console.log(err);
+       
 
       }
     });
   }
 
+
+  private _checkAdmin(profile) {
+    // Check if the user has admin role
+    const roles = profile['https://example.com/roles'] || [];
+    return roles.indexOf('admin') > -1;
+  }
+
+
 public getProfile(cb): void {
     const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      throw new Error('Access token must exist to fetch profile');
-    }
+  
     const self = this;
     this.auth0.client.userInfo(accessToken, (err, profile) => {
-      if (profile) {
+      if (profile && this._checkAdmin(profile)) {
         self.userProfile = profile;
         console.log("test");
+
+      }
+        if (profile && !this._checkAdmin(profile)) {
+        self.userProfile = profile;
+        console.log("test1");
 
       }
       cb(err, profile);
     });
   }
-    setLoggedIn(value: boolean) {
-    // Update login status behavior subject
-    this.loggedIn$.next(value);
-    this.loggedIn = value;
-  }
-
-  private setSession(authResult,profile?){
+  private setSession(authResult): void {
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
-   
-   this._accessToken = authResult._accessToken;
-     if (profile) {
-      this.userProfile = profile;
-      this.isAdmin = this._checkAdmin(profile);
-    }
-    // Update login status in loggedIn$ stream
-    this.setLoggedIn(true);
-    this.loggingIn = false;
-    // Schedule access token renewal
-    this.scheduleRenewal();
-  }
 
-    private _checkAdmin(profile) {
-    // Check if the user has admin role
-    const roles = profile['https://example.com/roles'] || [];
-    return roles.indexOf('admin') > -1;
+    // If there is a value on the `scope` param from the authResult,
+    // use it to set scopes in the session for the user. Otherwise
+    // use the scopes as requested. If no scopes were requested,
+    // set it to nothing
+    const scopes = authResult.scope || this.requestedScopes || '';
+
+    localStorage.setItem('access_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.accessToken);
+    localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('scopes', JSON.stringify(scopes));
+
+
+    this.scheduleRenewal();
   }
 
   public logout(): void {
@@ -114,6 +113,7 @@ public getProfile(cb): void {
     localStorage.removeItem('scopes');
     // Go back to the home route
     this.router.navigate(['/']);
+    location.reload();
   }
 
 

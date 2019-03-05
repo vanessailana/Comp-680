@@ -1,0 +1,68 @@
+{{ diagnostic }}
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit(submitBtn)">
+  <h2> Create a Job Posting </h2>
+  <mat-horizontal-stepper  linear>
+    <mat-step  label="Job Info" formGroupName="job" [stepControl]="job">
+    
+        <div class="form-group">
+            <label for="title"> Job Title: </label>
+            <input type="text" class="form-control" matinput formControlName="title" required> 
+            <label for="description"> Job Description: </label>
+            <textarea type="text" class="form-control" matinput row=5 formControlName="description" required></textarea>
+            <label for="location"> Location: </label>
+            <input type="text" class="form-control" matinput formControlName="location" required>
+            <label for="compensation"> Compensation: </label>
+            <input type="numeric" class="form-control" matinput formControlName="compensation" required>
+            <label for="employment_type"> Employment Type: </label>
+            <input type="text" class="form-control" matinput formControlName="employment_type" required>
+            
+            <button class="btn btn-dark offset-md-11" mat-button matStepperNext type="button">Next</button>
+        </div>
+    
+      
+    </mat-step>
+    <mat-step label="Add Questions" [stepControl]="questions">
+     
+        <div formArrayName="questions">
+
+          <div class="form-group">
+            <button class="btn btn-dark"
+              (click)="addQuestion(i)">
+            Add Question
+            </button>
+          </div>
+            <div *ngFor="let question of formGroup.controls.questions.controls; let i=index">
+                <!-- address header, show remove button when more than one address available -->
+                
+                
+                <!-- Angular assigns array index as group name by default 0, 1, 2, ... -->
+                <div class="form-group" [formGroupName]="i">
+                    <div>
+                        <label> Question: </label>
+                        <input class="form-control" type="text" formControlName="question">
+                
+                    </div>
+                    <button  class="btn btn-danger"
+                        (click)="removeQuestion(i)">
+                        Remove Question
+                    </button>
+               
+
+               
+    
+                </div>
+              </div>
+              <button class="btn btn-dark" mat-button matStepperPrevious type="button">Back</button>
+              <button class="btn btn-dark  offset-md-10" mat-button matStepperNext type="button">Next</button>
+        </div>
+
+    </mat-step>
+
+    <mat-step label="Submit Posting" [stepControl]="submit">
+        <button class="btn btn-dark " mat-button matStepperPrevious type="button">Back</button>
+        <button #submiitBtn class="btn btn-sucess offset-md-10"> Submit </button>
+    </mat-step>
+  
+  </mat-horizontal-stepper>
+ 
+</form>

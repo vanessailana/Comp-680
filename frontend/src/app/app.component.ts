@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,26 +10,32 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
 
 profile:any;
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService,private permissionsService: NgxPermissionsService,
+               private http: HttpClient) {
 
     auth.handleAuthentication();
 
+
+
   }
 
 
-  ngOnInit() {
+  ngOnInit(){
+  const perm = localStorage.getItem('roles');
+  console.log(perm);
+
+ 
+  this.permissionsService.loadPermissions(perm);
+  
     if (localStorage.getItem('isLoggedIn')) {
+
  this.auth.renewTokens();
     }
 
+ 
 
-     if (this.auth.userProfile) {
-      this.profile = this.auth.userProfile;
-    } else {
-      this.auth.getProfile((err, profile) => {
-        this.profile = profile;
-      });
-  }
+      
+  
 
 }
 }

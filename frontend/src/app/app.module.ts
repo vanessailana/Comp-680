@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { NgxPermissionsModule } from 'ngx-permissions';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -27,7 +29,7 @@ import { MessageService } from './message.service';
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
     NgbModule,
-    FormsModule
+    FormsModule,  NgxPermissionsModule.forRoot()
   ],
   providers: [ AuthService, HttpErrorHandler, MessageService, NgbModal],
   bootstrap: [AppComponent]

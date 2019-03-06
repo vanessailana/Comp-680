@@ -64,6 +64,7 @@ constructor(public router: Router) {
   private _checkAdmin(profile) {
     // Check if the user has admin role
     const roles = profile['https://example.com/roles'] || [];
+     localStorage.setItem('roles', roles);
     return roles.indexOf('admin') > -1;
   }
 
@@ -75,7 +76,8 @@ public getProfile(cb): void {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile && this._checkAdmin(profile)) {
         self.userProfile = profile;
-        console.log("test");
+         
+     
 
       }
         if (profile && !this._checkAdmin(profile)) {
@@ -87,6 +89,8 @@ public getProfile(cb): void {
     });
   }
   private setSession(authResult): void {
+
+
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
 
@@ -95,13 +99,12 @@ public getProfile(cb): void {
     // use the scopes as requested. If no scopes were requested,
     // set it to nothing
     const scopes = authResult.scope || this.requestedScopes || '';
-
+    
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
-
-
+   
     this.scheduleRenewal();
   }
 

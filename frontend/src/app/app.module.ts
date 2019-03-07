@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { NgxPermissionsModule } from 'ngx-permissions';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -38,6 +40,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
     NgbModule,
+
     FormsModule,
     MatStepperModule,
     MatFormFieldModule,
@@ -52,6 +55,8 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}},
 
   
+    FormsModule,  NgxPermissionsModule.forRoot()
+
   ],
   bootstrap: [AppComponent]
 })

@@ -13,19 +13,19 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class SupportService {
+export class PostingService {
 
-  supportUrl = 'http://localhost:8080/support';  // URL to web api
+  supportUrl = 'http://localhost:8080/posting';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
 
-    this.handleError = httpErrorHandler.createHandleError('SupportService');
+    this.handleError = httpErrorHandler.createHandleError('PostingService');
 
   }
 
-  sumbitSupportRequest(support: any): Observable<any> {
-  	return this.http.post<any>(this.supportUrl,support,httpOptions);
+  sumbitPost(post: any): Observable<any> {
+  	return this.http.post<any>(this.supportUrl,post,httpOptions);
   }
 
 }

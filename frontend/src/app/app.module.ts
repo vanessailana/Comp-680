@@ -15,13 +15,24 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 import { SupportFormComponent } from './support-form/support-form.component';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
+
+import { PostingComponent } from './posting/posting.component';
+
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     CallbackComponent,
     ProfileComponent,
     ChatbotComponent,
-    SupportFormComponent
+    SupportFormComponent,
+    PostingComponent
   ],
   imports: [
     BrowserModule,
@@ -29,9 +40,24 @@ import { MessageService } from './message.service';
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
     NgbModule,
-    FormsModule,  NgxPermissionsModule.forRoot()
+
+    FormsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule
   ],
-  providers: [ AuthService, HttpErrorHandler, MessageService, NgbModal],
+  providers: [ 
+    AuthService, 
+    HttpErrorHandler, 
+    MessageService, 
+    NgbModal, 
+    {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}},
+
+  
+    FormsModule,  NgxPermissionsModule.forRoot()
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

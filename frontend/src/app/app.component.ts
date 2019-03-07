@@ -1,23 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms' 
 import { NgxPermissionsService } from 'ngx-permissions';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [FormBuilder]
 })
 export class AppComponent implements OnInit {
 
 profile:any;
+searchForm : FormGroup;
+
   constructor(public auth: AuthService,private permissionsService: NgxPermissionsService,
-               private http: HttpClient) {
+               private http: HttpClient,private formBuilder: FormBuilder {
 
     auth.handleAuthentication();
 
 
 
   }
+
 
 
   ngOnInit(){
@@ -27,12 +32,13 @@ profile:any;
 
  console.log(arr);
 
-
+   this.searchForm = this.formBuilder.group({
+      keyword: ["",Validators.required],
+      location: [""]
      
     this.permissionsService.loadPermissions(arr);
     
  
-  
     if (localStorage.getItem('isLoggedIn')) {
 
  this.auth.renewTokens();

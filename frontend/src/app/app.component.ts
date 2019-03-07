@@ -23,9 +23,15 @@ profile:any;
   ngOnInit(){
   const perm = localStorage.getItem('roles');
   console.log(perm);
+ var arr = [perm];
 
+ console.log(arr);
+
+
+     
+    this.permissionsService.loadPermissions(arr);
+    
  
-  this.permissionsService.loadPermissions(perm);
   
     if (localStorage.getItem('isLoggedIn')) {
 

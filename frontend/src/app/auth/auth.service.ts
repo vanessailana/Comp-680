@@ -114,6 +114,7 @@ public getProfile(cb): void {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     localStorage.removeItem('scopes');
+       localStorage.removeItem('roles');
     // Go back to the home route
     this.router.navigate(['/']);
     location.reload();

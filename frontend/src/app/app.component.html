@@ -77,11 +77,11 @@
         Profile
       </a>
 
-
+<ng-template ngxPermissionsOnly="admin">
       <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/posting">
         Post A Job!
       </a>
-     
+     </ng-template>
 
       <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
           Log Out: {{ profile?.nickname }} 

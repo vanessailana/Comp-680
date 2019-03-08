@@ -31,14 +31,19 @@ searchForm : FormGroup;
 
  var arr = [perm];
 
+\
+     
     this.permissionsService.loadPermissions(arr);
+\
  console.log(arr);
 
    this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],
       location: [""]
+
+      })
      
-    }) 
+
  
     if (localStorage.getItem('isLoggedIn')) {
 

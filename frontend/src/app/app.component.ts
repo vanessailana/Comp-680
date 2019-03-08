@@ -15,7 +15,7 @@ profile:any;
 searchForm : FormGroup;
 
   constructor(public auth: AuthService,private permissionsService: NgxPermissionsService,
-               private http: HttpClient,private formBuilder: FormBuilder {
+               private http: HttpClient,private formBuilder: FormBuilder) {
 
     auth.handleAuthentication();
 
@@ -30,13 +30,17 @@ searchForm : FormGroup;
   console.log(perm);
  var arr = [perm];
 
+     
+    this.permissionsService.loadPermissions(arr);
+
  console.log(arr);
 
    this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],
       location: [""]
+
+      })
      
-    this.permissionsService.loadPermissions(arr);
     
  
     if (localStorage.getItem('isLoggedIn')) {

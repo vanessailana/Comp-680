@@ -39,7 +39,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
-    NgbModule,
+    NgbModule,NgxPermissionsModule.forRoot(),
 
     FormsModule,
     MatStepperModule,
@@ -55,7 +55,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}},
 
   
-    FormsModule,  NgxPermissionsModule.forRoot()
+    FormsModule
 
   ],
   bootstrap: [AppComponent]

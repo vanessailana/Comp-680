@@ -1,4 +1,4 @@
-package com.comp680.backend;
+package com.comp680.backend.models;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.*;

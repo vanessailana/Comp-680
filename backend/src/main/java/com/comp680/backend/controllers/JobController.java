@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
+
+@RestController
 public class JobController {
 
 @Autowired 

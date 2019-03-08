@@ -25,34 +25,47 @@ export class SupportFormComponent implements OnInit {
   onSubmit(submitBtn: HTMLButtonElement ) { 
 
     submitBtn.disabled = true;
-
+  
     if(this.supportForm.valid)
     {
       var sub = this.supportService.sumbitSupportRequest(this.supportForm.value);
-      sub.subscribe((data) => {
-                                console.log(data); 
-                                this.supportForm.reset(); 
-                                submitBtn.disabled = false; 
-                                this.submitSuccess = true;
-                                this.submitFail = false;
-                              },
-                  (error: Response) => {
-                                        console.log(error);
-                                        this.submitFail=true; 
-                                        this.submitSuccess = false;
-                                        }
-                                        );
-        
-    }else{
+      sub.subscribe(
+        res => 
+        {
+
+          this.submitFail=true; 
+          this.submitSuccess = false;
+          console.log('HTTP Response', res);
+          this.supportForm.reset(); 
+        },
+        err => 
+        { 
+          this.submitFail=true; 
+          this.submitSuccess = false;
+          console.log('HTTP Error', err);
+          submitBtn.disabled = false;
+        },
+        () => 
+        {
+          console.log('HTTP request completed.');
+          submitBtn.disabled = false;
+        }
+
+      )        
+    }
+    else
+    {
+
       console.log("invlaid input");
       submitBtn.disabled = false;
       this.submitFail=true; 
       this.submitSuccess = false;
+
     }
 
     console.log(this.submitFail);
     console.log(this.submitSuccess);
-    
+
     
     
   }

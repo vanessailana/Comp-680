@@ -28,11 +28,13 @@ searchForm : FormGroup;
   ngOnInit(){
   const perm = localStorage.getItem('roles');
   console.log(perm);
+
  var arr = [perm];
 
+\
      
     this.permissionsService.loadPermissions(arr);
-
+\
  console.log(arr);
 
    this.searchForm = this.formBuilder.group({
@@ -41,7 +43,7 @@ searchForm : FormGroup;
 
       })
      
-    
+
  
     if (localStorage.getItem('isLoggedIn')) {
 

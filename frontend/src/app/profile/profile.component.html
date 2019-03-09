@@ -1,45 +1,94 @@
-<div class="panel panel-default profile-area">
-  <div class="panel-heading">
-    <h3>Profile</h3>
-  </div>
-  <div class="panel-body">
-    <img src="{{profile?.picture}}" class="avatar" alt="avatar">
-    <div>
-      <label><i class="glyphicon glyphicon-user"></i> Nickname</label>
-      <h3 class="nickname">{{ profile?.nickname }}</h3>
-    </div>
-    <pre class="full-profile">{{ profile | json }}</pre>
-  </div>
-</div>
 
-<div class="container">
+
+<pre class="full-profile">{{ profile | json }}</pre>
+
+
+<div *ngIf="role =='user'"class="container">
   
   <div class="row">
-    <div class="border border-dark col-xs-5 col-md-5">
-       <img src="{{profile?.picture}}" class="avatar profile-image" alt="avatar">
-       <h4> {{ profile?.name }}</h4>
-       <h4> Location: </h4>
+    <div class=" bg-light rounded form-group border border-dark col-xs-5 col-md-5">
+    
+      <ul class="list-group">
+      Profile: 
+        <li class="list-group-item"> <img src="{{profile?.picture}}" class="avatar profile-image" alt="avatar"></li>
+        <li class="list-group-item"> Name: {{ profile?.name }} </li>
+        <li class="list-group-item"> Email: {{ profile?.email }} </li>
+        <li class="list-group-item"> Address: </li>
+        <li class="list-group-item"> Phone: </li>
+        <li class="list-group-item"> Objective: </li>
+        <li class="list-group-item"> <i class="fas fa-file"></i> Resume: </li>
+        <li class="list-group-item"> <i class="fas fa-camera"></i> Photo: </li>
+        <li class="list-group-item">  <button #edit_info name="edit_info" class="btn-default btn-lg" (click)="open(content,edit_info)"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
+      </ul> 
     </div>
-    <div class="border border-dark col-xs-5 col-md-5 offset-md-2">
-      <h4> Work Experience </h4>
-      <!-- Trigger the modal with a button -->
-      <button class="btn-default btn-lg" (click)="open(content)"> + Add Work Experience</button>
+ 
+    <div class="bg-light form-group border border-dark rounded col-xs-5 col-md-5 offset-md-2">
+        <ul class="list-group">
+            Socials: 
+            <li class="list-group-item"> <i class="fab fa-linkedin-in"></i> </li>
+            <li class="list-group-item"> <i class="fab fa-twitter"></i> </li>
+            <li class="list-group-item">  <i class="fab fa-facebook"></i> </li>
+            <li class="list-group-item"> <i class="fab fa-github"></i></li>
+            <li class="list-group-item"> <i class="fas fa-globe"></i>
+            <li class="list-group-item">  <button #add_social name="add_social" class="btn-default btn-lg" (click)="open(content,add_social)"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
+          </ul>   
     </div>
+ 
+
+
+  
+
   </div>
-  <div class="row top-row">
-    <div class="border border-dark col-xs-5 col-md-5">
-        <h4> Contact Information </h4>
-        <h5> Email: {{ profile?.email }} </h5>
-        <h5> Phone: </h5>
-        <button class="btn-default btn-lg" (click)="open(content)"> Edit </button>
+
+
+<div class="row top-row">
+   
+
+    <div class="bg-light rounded form-group border border-dark col-xs-5 col-md-5">
+       
+        <ul class="list-group">
+            Work Experience: 
+            <li class="list-group-item"> </li>
+            <li class="list-group-item"> 
+              <button #add_edu name="add_edu"  class="btn-default btn-lg" (click)="open(content,add_edu)"> 
+                <i class="fas fa-plus"> </i> Work Experience
+              </button>
+            </li>
+            
+          </ul>   
+        <!-- Trigger the modal with a button -->
+        
+      </div>
+
+    <div class="bg-light form-group border border-dark col-xs-5 col-md-5 offset-md-2">
+        <ul class="list-group">
+            Education:
+            <li class="list-group-item"> </li>
+            <li class="list-group-item">  <button #add_edu name="add_edu" class="btn-default btn-lg" (click)="open(content,add_edu)"> <i class="fas fa-plus"></i>Add Education</button> </li>
+        </ul>
     </div>
-    <div class="border border-dark col-xs-5 col-md-5 offset-md-2">
-      <h4> Education </h4>
-      <!-- Trigger the modal with a button -->
-      <button class="btn-default btn-lg" (click)="open(content)"> + Add Education</button>
-    </div>
-  </div>
 </div>
+
+  <div class="row top-row">
+      <div class="bg-light form-group border border-dark rounded col-xs-5 col-md-5">
+          <ul class="list-group">
+              Projects: 
+              <li class="list-group-item">  </li>
+              <li class="list-group-item">  <button name="add_project"  #add_project class="btn-default btn-lg" (click)="open(content,add_project)"> <i class="fas fa-plus"></i>Add Project</button> </li>
+            </ul>   
+      </div>
+  
+      <div class="bg-light form-group border border-dark col-xs-5 col-md-5 offset-md-2">
+          <ul class="list-group">
+              Skills: 
+              <li class="list-group-item"> </li>
+              <li class="list-group-item">  <button name="add_skill"  #add_skill class="btn-default btn-lg"  (click)="open(content,add_skill)"> <i class="fas fa-plus"></i>Add Skill</button> </li>
+          </ul>
+      </div>
+    </div>
+</div>
+
+
 
 <ng-template #content let-modal>
   <div class="modal-header">
@@ -49,20 +98,115 @@
     </button>
   </div>
   <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <label for="dateOfBirth">Date of birth</label>
-        <div class="input-group">
-          <input id="dateOfBirth" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
-          </div>
+    
+    <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit(submitBtn); modal.close('Save Result')" >
+        <div *ngIf="currentBtn.name=='add_skill'" class="form-group">
+          <label for="skill">Skill Name </label>
+          <input type="text" class="form-control" formControlName="skill" id="skill" required >
+       
+            <label for="level"> Level </label>
+            <select class="form-control" formControlName="level">
+                <option *ngFor="let level of levels" [value]="level">{{level}}</option>
+            </select>
         </div>
+        <div *ngIf="currentBtn.name=='add_project'" class="form-group">
+              <label for="name"> Project Name </label>
+              <input type="text" class="form-control" formControlName="name" id="name" required >
+              <label for="description"> Description </label>
+              <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
+              </textarea>
+              <label for="technologies"> Technologies </label>
+              <textarea formControlName="technologies" class="form-control" rows=5 id="technologies"  required>
+              </textarea>
+              <label for="link"> Link </label>
+              <input type="text" class="form-control" formControlName="link" id="link" required >
+              <label for="start_date"> Start Date </label>
+              <input type="date" class="form-control" formControlName="start_date" id="start_date" required >
+              <label for="end_date"> End Date </label>
+              <input type="date" class="form-control" formControlName="end_date" id="end_date" required >
+        </div>
+        <div *ngIf="currentBtn.name=='add_edu'" class="form-group">
+            <label for="school"> School Name </label>
+            <input type="text" class="form-control" formControlName="school" id="school" required>
+            <label for="degree"> Degree  </label>
+            <input type="text" class="form-control" formControlName="degree" id="degree" required>
+            <label for="major"> Major </label>
+            <input type="text" class="form-control" formControlName="major" id="major" required>
+            <label for="start_date"> Start Date </label>
+            <input type="date" class="form-control" formControlName="start_date" id="start_date" required >
+            <label for="end_date"> End Date </label>
+            <input type="date" class="form-control" formControlName="end_date" id="end_date" required >
+            <label for="description"> Description </label>
+          <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
+          </textarea>
+          <label for="in_progress"> In Progress </label>
+          <input type="checkbox" class="form-control" formControlName="in_progress" id="in_progress" required >
+
       </div>
+
+      <div *ngIf="currentBtn.name=='add_exp'" class="form-group">
+          <label for="title"> Job Title </label>
+          <input type="text" class="form-control" formControlName="title" id="title" required >
+          <label for="company"> Company Name </label>
+          <input type="text" class="form-control" formControlName="company" id="company" required >
+
+          <label for="start_date"> Start Date </label>
+          <input type="date" class="form-control" formControlName="start_date" id="start_date" required >
+          <label for="end_date"> End Date </label>
+          <input type="date" class="form-control" formControlName="end_date" id="end_date" required >
+
+          <label for="description"> Description </label>
+          <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
+            </textarea>
+          <label for="current"> Current </label>
+          <input type="checkbox" class="form-control" formControlName="current" id="current" required >
+
+    
+          
+ 
+    </div>
+
+    <div *ngIf="currentBtn.name=='edit_info'" class="form-group">
+        <label for="first_name"> First Name: </label>
+        <input type="text" class="form-control" formControlName="first_name" id="first_name">
+        <label for="last_name">  Last Name: </label>
+        <input type="text" class="form-control" formControlName="last_name" id="last_name">
+        <label for="email"> <i class="fas fa-envelope"></i> Email: </label>
+        <input type="email" class="form-control" formControlName="email" id="email">
+        <label for="address">  Street Adress: </label>
+        <input type="text" class="form-control" formControlName="address" id="address">
+        <label for="city">  City: </label>
+        <input type="text" class="form-control" formControlName="city" id="city">
+        <label for="zip_code">  Zip Code: </label>
+        <input type="numeric" class="form-control" formControlName="zip_code" id="zip_code">
+        <label for="phone_number">  Phone: </label>
+        <input type="tel" class="form-control" formControlName="phone_number" id="phone_number">
+        <label for="objective">  Objective: </label>
+        <textarea class="form-control" formControlName="objective" rows=5  id="objective"></textarea>
+        <label for="resume">  Resume: </label>
+        <input type="file" class="form-control" formControlName="resume" id="resume">
+        <label for="profile_image"> Profile Photo: </label>
+        <input type="file" class="form-control" formControlName="profile_image"id="profile_image">
+  </div>
+     
+  <div *ngIf="currentBtn.name=='add_social'" class="form-group">
+      <label for="linkedin"> <i class="fab fa-linkedin-in"></i> </label>
+      <input type="text" class="form-control" formControlName="linkedin" id="linkedin">
+      <label for="twitter"> <i class="fab fa-twitter"></i> </label>
+      <input type="text" class="form-control" formControlName="twitter" id="twitter">
+      <label for="facebook"> <i class="fab fa-facebook"></i> </label>
+      <input type="text" class="form-control" formControlName="facebook" id="facebook">
+      <label for="github"> <i class="fab fa-github"></i> </label>
+      <input type="text" class="form-control" formControlName="github" id="github">
+      <label for="website"> <i class="fas fa-globe"></i> </label>
+      <input type="text" class="form-control" formControlName="website" id="website">
+</div>
+        <button #submitBtn type="submit" class="btn btn-dark"> <i class="fas fa-pencil-alt"></i> Save </button>
     </form>
+
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    {{ diagnostic }}
   </div>
 </ng-template>
 

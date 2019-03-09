@@ -30,6 +30,7 @@ constructor(public router: Router) {
     this._idToken = '';
     this._accessToken = '';
     this._expiresAt = 0;
+
   }
 
   get accessToken(): string {
@@ -41,36 +42,55 @@ constructor(public router: Router) {
   }
   public login(): void {
     this.auth0.authorize();
+    console.log("login");
   }
 
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
+      if (authResult && authResult.accessToken && authResult.idToken ) {
         this.setSession(authResult);
         console.log(authResult);
+        console.log("teste");
         this.router.navigate(['/profile']);
       } else if (err) {
         this.router.navigate(['']);
-        console.log(err);
+       
 
       }
     });
   }
 
+
+  private _checkAdmin(profile) {
+    // Check if the user has admin role
+    const roles = profile['https://example.com/roles'] || [];
+     localStorage.setItem('roles', roles);
+    return roles.indexOf('admin') > -1;
+  }
+
+
 public getProfile(cb): void {
     const accessToken = localStorage.getItem('access_token');
-    if (!accessToken) {
-      throw new Error('Access token must exist to fetch profile');
-    }
+  
     const self = this;
     this.auth0.client.userInfo(accessToken, (err, profile) => {
-      if (profile) {
+      if (profile && this._checkAdmin(profile)) {
         self.userProfile = profile;
+         
+     
+
+      }
+        if (profile && !this._checkAdmin(profile)) {
+        self.userProfile = profile;
+        console.log("test1");
+
       }
       cb(err, profile);
     });
   }
   private setSession(authResult): void {
+
+
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
 
@@ -79,13 +99,12 @@ public getProfile(cb): void {
     // use the scopes as requested. If no scopes were requested,
     // set it to nothing
     const scopes = authResult.scope || this.requestedScopes || '';
-
+    
     localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
+    localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
-
-
+   
     this.scheduleRenewal();
   }
 
@@ -95,8 +114,10 @@ public getProfile(cb): void {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     localStorage.removeItem('scopes');
+       localStorage.removeItem('roles');
     // Go back to the home route
     this.router.navigate(['/']);
+    location.reload();
   }
 
 

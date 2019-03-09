@@ -10,51 +10,34 @@ import { HttpClient } from '@angular/common/http';
   providers: [FormBuilder]
 })
 export class AppComponent implements OnInit {
+  profile:any;
+  searchForm : FormGroup;
 
-profile:any;
-searchForm : FormGroup;
-
-  constructor(public auth: AuthService,private permissionsService: NgxPermissionsService,
-               private http: HttpClient,private formBuilder: FormBuilder) {
-
+  constructor(
+    public auth: AuthService,
+    private permissionsService: NgxPermissionsService,
+    private http: HttpClient,
+    private formBuilder: FormBuilder
+  ) {
     auth.handleAuthentication();
-
-
-
   }
 
-
-
   ngOnInit(){
-  const perm = localStorage.getItem('roles');
-  console.log(perm);
-
- var arr = [perm];
-
-\
-     
+    const perm = localStorage.getItem('roles');
+    console.log(perm);
+    var arr = [perm];
+    
     this.permissionsService.loadPermissions(arr);
-\
- console.log(arr);
+    console.log(arr);
 
-   this.searchForm = this.formBuilder.group({
+    this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],
       location: [""]
+    });
 
-      })
-     
-
- 
-    if (localStorage.getItem('isLoggedIn')) {
-
- this.auth.renewTokens();
+    if(localStorage.getItem('isLoggedIn')) {
+      this.auth.renewTokens();
     }
-
- 
-
-      
-  
-
-}
+  }
 }
 

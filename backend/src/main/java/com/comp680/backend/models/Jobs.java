@@ -23,7 +23,7 @@ import javax.persistence.Temporal;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
-@Table(name="job")
+@Table(name="jobs")
 public class Jobs {
 
 @Id

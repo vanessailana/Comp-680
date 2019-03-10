@@ -40,7 +40,7 @@ export class PostingComponent implements OnInit {
     control.removeAt(i);
   }
 
-  get diagnostic() { return JSON.stringify(this.formGroup.value); }
+  get diagnostic() { return JSON.stringify(this.formGroup.controls.job.value); }
 
 
   onSubmit(submitBtn: HTMLButtonElement){

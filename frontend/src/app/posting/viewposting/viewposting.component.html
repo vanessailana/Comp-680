@@ -1,0 +1,51 @@
+<h2 class="d-flex justify-content-center">Jobs Currently Posted</h2>
+
+ <table class="table table-bordered">
+
+
+<tr>
+<td> Title </td>
+<td> Location </td>
+<td> Start Compensation </td>
+<td> End Compensation </td>
+<td> Employment Type </td>
+<td> Description </td>
+</tr>
+
+
+
+<tbody *ngFor="let job of jobs">
+
+<td> {{job.title}} </td>
+<td> {{job.location}} </td>
+ <td> ${{job.compensationStart}}</td>
+  <td> ${{job.compensationEnd}}</td>
+<td> {{job.employmentType}} </td>
+
+
+<td> <ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Job Description</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{job.description}}</p>
+  </div>
+  <div class="modal-footer">
+  
+  </div>
+</ng-template>
+
+<button class="btn btn-outline-dark" (click)="open(content)">View Job Description</button>
+ </td>
+
+
+
+<td></td>
+
+
+
+</tbody>
+</table>

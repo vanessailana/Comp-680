@@ -19,7 +19,17 @@
         </div>
       </li>
 
-      
+      <li class="nav-item dropdown" ngbDropdown>
+        <a class="nav-link dropdown-toggle" id="id01"  ngbDropdownToggle>Jobs</a>
+        <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+          <ng-template ngxPermissionsOnly="admin">
+
+          <a class="dropdown-item" *ngIf="auth.isAuthenticated()" routerLink="/posting">Create a Job</a>
+              </ng-template>
+          <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
+        </div>
+      </li>
+
       <a
 
       id="qsLoginBtn"
@@ -32,12 +42,9 @@
       <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/profile">
         Profile
       </a>
-      <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/posting">
-        Post A Job!
-      </a>
-<ng-template ngxPermissionsOnly="admin">
-      
-     </ng-template>
+
+
+
 
       <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
           Log Out: {{ profile?.nickname }} 
@@ -76,4 +83,3 @@
 <main class="container">
   <router-outlet></router-outlet>
 </main>
-

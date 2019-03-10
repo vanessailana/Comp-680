@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-
+import {Posting} from './posting.model';
 import {PostingService} from './posting.service';
 
 @Component({
@@ -50,7 +50,9 @@ export class PostingComponent implements OnInit {
   
     if(this.formGroup.valid)
     {
-      var sub = this.postingService.sumbitPost(this.formGroup.value);
+    console.log(this.formGroup);
+      var sub = this.postingService.sumbitPost(this.formGroup.controls.job.value);
+
       sub.subscribe(
         res => 
         {
@@ -72,6 +74,7 @@ export class PostingComponent implements OnInit {
         {
           console.log('HTTP request completed.');
           submitBtn.disabled = false;
+          console.log(sub);
         }
 
       )        
@@ -93,6 +96,14 @@ export class PostingComponent implements OnInit {
 
   }
 
+
+  processForm() {
+
+
+  }
+
+
+
   ngOnInit() {
 
     this.formGroup = this.fb.group({
@@ -100,7 +111,8 @@ export class PostingComponent implements OnInit {
           title: ["",[Validators.required]],
           description: ["",[Validators.required]],
           location: ["",[Validators.required]],
-          compensation: [""],
+          start_compensation: ["",[Validators.required]],
+          end_compensation: [""],
           employment_type: [""]
     
       }),

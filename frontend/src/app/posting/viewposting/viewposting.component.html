@@ -1,5 +1,5 @@
 <h2 class="d-flex justify-content-center">Jobs Currently Posted</h2>
-
+ 
  <table class="table table-bordered">
 
 
@@ -10,17 +10,19 @@
 <td> End Compensation </td>
 <td> Employment Type </td>
 <td> Description </td>
+<td>Edit Job </td>
+<td> Delete Job </td>
 </tr>
 
 
 
-<tbody *ngFor="let job of jobs">
+<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p}">
 
 <td> {{job.title}} </td>
 <td> {{job.location}} </td>
- <td> ${{job.compensationStart}}</td>
-  <td> ${{job.compensationEnd}}</td>
-<td> {{job.employmentType}} </td>
+ <td> ${{job.compensation_start}}</td>
+  <td> ${{job.compensation_end}}</td>
+<td> {{job.employment_type}} </td>
 
 
 <td> <ng-template #content let-c="close" let-d="dismiss">
@@ -42,10 +44,16 @@
  </td>
 
 
+<td>Edit Job </td>
+<td> <button mat-raised-button (click)="openDialog()">Delete Job</button></td>
+
 
 <td></td>
 
-
-
+ 
 </tbody>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+ 
 </table>
+

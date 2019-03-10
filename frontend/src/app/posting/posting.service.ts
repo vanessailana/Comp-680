@@ -46,9 +46,7 @@ export class PostingService {
   }
 
 
- createPost(posting:Posting) {
-    return this.http.post(this.supportUrl,posting).catch(this.errorHandler);
-  }
+
 
 
    updatePosting(posting:Posting){

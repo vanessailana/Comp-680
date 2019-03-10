@@ -64,9 +64,13 @@ constructor(public router: Router) {
   private _checkAdmin(profile) {
     // Check if the user has admin role
     const roles = profile['https://example.com/roles'] || [];
+    
      localStorage.setItem('roles', roles);
+       localStorage.setItem('name', name);
     return roles.indexOf('admin') > -1;
   }
+
+  
 
 
 public getProfile(cb): void {
@@ -90,7 +94,6 @@ public getProfile(cb): void {
   }
   private setSession(authResult): void {
 
-
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
 
@@ -99,9 +102,9 @@ public getProfile(cb): void {
     // use the scopes as requested. If no scopes were requested,
     // set it to nothing
     const scopes = authResult.scope || this.requestedScopes || '';
-    
+
     localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.accessToken);
+    localStorage.setItem('id_token', authResult.nickname);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
    
@@ -113,6 +116,7 @@ public getProfile(cb): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+
     localStorage.removeItem('scopes');
        localStorage.removeItem('roles');
     // Go back to the home route

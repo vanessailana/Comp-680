@@ -36,9 +36,6 @@ public class SupportController {
 			return new ResponseEntity<>(obj, HttpStatus.BAD_REQUEST);
 		}
 
-        MimeMessage message = sender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);
-		
 		try {
 			InternetAddress emailAddress = new InternetAddress(request.email);
 			emailAddress.validate();
@@ -48,16 +45,20 @@ public class SupportController {
 		}
   
         try {
+			MimeMessage message = sender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message);
+	
 			helper.setTo(request.email);
             helper.setText(request.message);
-            helper.setSubject("Mail From Customer Support");
+			helper.setSubject("Mail From Customer Support");
+
+			sender.send(message);
+			obj.put("message", "Email successfully sent!");
+			return new ResponseEntity<>(obj, HttpStatus.CREATED);
         } catch (MessagingException e) {
 			e.printStackTrace();
 			obj.put("message", "Error occurred while sending mail.");
 			return new ResponseEntity<>(obj, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-		sender.send(message);
-		obj.put("message", "Email successfully sent!");
-		return new ResponseEntity<>(obj, HttpStatus.CREATED);
 	}
 }

@@ -4,6 +4,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ChatbotComponent } from './chatbot/chatbot.component';
 import { SupportFormComponent } from './support-form/support-form.component';
 import { PostingComponent } from './posting/posting.component';
+import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
 
 export const ROUTES: Routes = [
   { path: 'profile', component: ProfileComponent },
@@ -11,5 +12,6 @@ export const ROUTES: Routes = [
   { path: 'posting', component: PostingComponent },
   { path: 'callback', component: CallbackComponent },
   { path: 'support', component: SupportFormComponent},
+  { path: 'view_jobs', component: ViewpostingComponent},
   { path: '**', redirectTo: '' }
 ];

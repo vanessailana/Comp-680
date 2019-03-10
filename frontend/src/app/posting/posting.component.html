@@ -19,11 +19,17 @@
             <input type="text" placeholder="Job Location" class="form-control" matInput formControlName="location" required>
         </mat-form-field><br>
         <mat-form-field>
-            <input type="numberic" placeholder="Compensation" class="form-control" matInput formControlName="compensation">
+            <input type="numberic" placeholder="Start Compensation" class="form-control" matInput formControlName="start_compensation">
         </mat-form-field><br>
+        <mat-form-field>
+            <input type="numberic" placeholder="End Compensation" class="form-control" matInput formControlName="end_compensation">
+        </mat-form-field><br>
+    
         <mat-form-field>
             <input type="text" placeholder="Employment Type" class="form-control" matInput formControlName="employment_type" required>
         </mat-form-field>
+        
+
         <div>
           <button class="btn btn-dark" mat-button matStepperNext>Next</button>
         </div>

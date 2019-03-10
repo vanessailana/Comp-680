@@ -15,14 +15,16 @@ import { ChatbotComponent } from './chatbot/chatbot.component';
 import { SupportFormComponent } from './support-form/support-form.component';
 import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
-
-import { PostingComponent } from './posting/posting.component';
+import { PostingService } from './posting/posting.service';
+ import { PostingComponent } from './posting/posting.component';
 
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
+import { JobDescriptionComponent } from './posting/job-description/job-description.component';
 
 
 @NgModule({
@@ -32,9 +34,12 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     ProfileComponent,
     ChatbotComponent,
     SupportFormComponent,
-    PostingComponent
+    PostingComponent,
+    ViewpostingComponent,
+    JobDescriptionComponent
   ],
   imports: [
+NgbModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
@@ -48,7 +53,7 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
     BrowserAnimationsModule
   ],
   providers: [ 
-    AuthService, 
+    AuthService, PostingService,
     HttpErrorHandler, 
     MessageService, 
     NgbModal, 

@@ -19,7 +19,8 @@ const httpOptions = {
 export class PostingService {
  private posting = new Posting();
  
-  supportUrl = 'http://localhost:8080/jobs';  // URL to web api
+  supportUrl = 'http://localhost:8080/createJob';  // URL to web api
+  viewJobs = 'http://localhost:8080/all';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
@@ -40,12 +41,12 @@ export class PostingService {
   	return this.http.post<any>(this.supportUrl,post,httpOptions);
   }
 
-    getAll(): Observable<any> {
-    return this.http.get<Posting[]>(this.supportUrl).catch(this.errorHandler);
+  getAll(): Observable<any> {
+    return this.http.get('//localhost:8080/all');
   }
 
 
- createPosting(posting:Posting) {
+ createPost(posting:Posting) {
     return this.http.post(this.supportUrl,posting).catch(this.errorHandler);
   }
 

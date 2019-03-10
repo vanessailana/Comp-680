@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
-
+import { Posting} from './posting.model';
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import {Observable, throwError} from 'rxjs'
 import { catchError, retry } from 'rxjs/operators';
 const httpOptions = {
@@ -14,8 +17,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PostingService {
-
-  supportUrl = 'http://localhost:8080/posting';  // URL to web api
+ private posting = new Posting();
+ 
+  supportUrl = 'http://localhost:8080/createJob';  // URL to web api
+  viewJobs = 'http://localhost:8080/all';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
@@ -24,8 +29,43 @@ export class PostingService {
 
   }
 
+  setter(posting:Posting){
+     this.posting=posting;
+   }
+
+  getter(){
+    return this.posting;
+  }
+
   sumbitPost(post: any): Observable<any> {
   	return this.http.post<any>(this.supportUrl,post,httpOptions);
+  }
+
+  getAll(): Observable<any> {
+    return this.http.get('//localhost:8080/all');
+  }
+
+
+ createPost(posting:Posting) {
+    return this.http.post(this.supportUrl,posting).catch(this.errorHandler);
+  }
+
+
+   updatePosting(posting:Posting){
+
+   return this.http.put(this.supportUrl,posting).catch(this.errorHandler);
+
+      }
+
+  deletePosting(post) {
+    return this.http.delete(this.supportUrl + "/"+ post.id);
+  }
+
+
+
+   errorHandler(error:Response){
+
+     return Observable.throw(error||"SERVER ERROR");
   }
 
 }

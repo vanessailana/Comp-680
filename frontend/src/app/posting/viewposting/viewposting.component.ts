@@ -12,12 +12,12 @@ import {JobDescriptionComponent} from '../job-description/job-description.compon
   templateUrl: './viewposting.component.html',
   styleUrls: ['./viewposting.component.css']
 })
-export class ViewpostingComponent implements OnInit {
+export class ViewpostingComponent  implements OnInit {
  posting:Posting[];
-  p: number = 1;
+   p: number = 1;
   totalRec : number;
  jobs: Array<any>;
-  constructor(private postingService: PostingService,private modalService: NgbModal,private _rotuer:Router, public dialogRef: MatDialogRef<JobDescriptionComponent>,public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog,private postingService: PostingService,private modalService: NgbModal,private _rotuer:Router) { }
 
   ngOnInit() {
 
@@ -32,29 +32,48 @@ export class ViewpostingComponent implements OnInit {
   open(content) {
     this.modalService.open(content);
   }
+  test(){
+  this._rotuer.navigate(['/view_jobs']);
+  }
 
-  delete(content) {
-    this.modalService.open(content);
+  delete(contentd) {
+    this.modalService.open(contentd);
+  }
+
+    deleteJob(job: Posting){
+    this.postingService.deletePosting(job)
+      .subscribe( data => {
+        this.jobs = this.jobs.filter(u => u !== job);
+location.reload();
+        
+  
+      })
+ location.reload();
+
+  };
+
+  onNoClick(): void {
+     this.dialog.closeAll();
   }
 
    onCloseCancel() {
      this._rotuer.navigate(['view_jobs']);
   }
 
-
-  openDialog(): void {
+ openDialog(): void {
     const dialogRef = this.dialog.open(JobDescriptionComponent, {
       width: '250px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+  dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-    
+  
     });
+}
 
 
 }
 
-}
+
 
 

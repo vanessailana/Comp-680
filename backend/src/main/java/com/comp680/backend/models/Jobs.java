@@ -89,6 +89,15 @@ this.status=status;
 }
 
 
+public long getId(){
+  return job_id;
+}
+
+public void setId() {
+  this.job_id=job_id;
+}
+
+
 
 
 

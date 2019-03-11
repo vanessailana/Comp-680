@@ -32,7 +32,7 @@ JobRepo jobRepo;
     }
 
  @DeleteMapping("/jobs/{id}")
-     public List<Jobs> delete(@PathVariable("job_id") Long job_id)
+     public List<Jobs> delete(@PathVariable("id") Long  job_id)
      {
          jobRepo.deleteById(job_id);
          return jobRepo.findAll();

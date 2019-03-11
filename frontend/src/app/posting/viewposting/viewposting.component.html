@@ -45,7 +45,25 @@
 
 
 <td>Edit Job </td>
-<td> <button mat-raised-button (click)="openDialog()">Delete Job</button></td>
+<td> <ng-template #contentd let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title"> Delete A Job</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="alert alert-primary" role="alert">
+    Warning, you are about to delete a job. If you want to delete a job continue and press the delete button. Or just exit out of this modal. 
+  </div>
+  <div class="modal-footer">
+
+       <button type="button" class="btn btn-outline-dark" (click)="deleteJob(job)">Delete</button>
+
+
+
+</div>
+
+</ng-template> <button mat-raised-button (click)="delete(contentd)">Delete</button> </td>
 
 
 <td></td>

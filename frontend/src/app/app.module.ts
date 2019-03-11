@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NgxPermissionsModule } from 'ngx-permissions';
-import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 import {JobDescriptionComponent} from './posting/job-description/job-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
@@ -25,7 +23,7 @@ import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
-
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
   declarations: [
@@ -38,14 +36,13 @@ import { ViewpostingComponent } from './posting/viewposting/viewposting.componen
     ViewpostingComponent,
     JobDescriptionComponent
   ],
-  imports: [NgxPaginationModule,
-NgbModule, MatDialogModule,
+  imports: [
+NgbModule, MatDialogModule, NgxPaginationModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
     NgbModule,
-    NgxPermissionsModule.forRoot(),
 
     FormsModule,
     MatStepperModule,
@@ -53,8 +50,10 @@ NgbModule, MatDialogModule,
     MatInputModule,
     BrowserAnimationsModule
   ],
+  entryComponents:[ViewpostingComponent,
+    JobDescriptionComponent],
   providers: [ 
-  MatDialogRef,
+
     AuthService, PostingService,
     HttpErrorHandler, JobDescriptionComponent,
     MessageService, 

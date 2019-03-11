@@ -1,5 +1,5 @@
 package com.comp680.backend.controllers;
-import com.comp680.backend.models.UsersRepository;
+import com.comp680.backend.repositories.UsersRepository;
 
 
 import com.comp680.backend.models.Users;

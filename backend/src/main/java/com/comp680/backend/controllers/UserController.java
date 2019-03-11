@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 
-@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class UserController {
 

@@ -37,8 +37,25 @@ private Long question_id;
 public String getQuestion(){
 
 return question;
-
 }
+
+
+public Long getId() {
+return job_id;
+}
+
+public Long getQuestionId() {
+	return question_id;
+}
+
+public void setQuestionId(Long question_id) {
+	this.question_id=question_id;
+}
+
+public void setId() {
+this.job_id=job_id;
+}
+
 
 public Jobs getJob() {
 
@@ -48,16 +65,16 @@ return job;
 
 public void setJob(Jobs job) {
 
-job=job;
-return;
+this.job=job;
+
 
 }
 
 
 public void setQuestion(String question){
 
-question=question;
-return;
+this.question=question;
+
 
 }
  

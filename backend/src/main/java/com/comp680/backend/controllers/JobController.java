@@ -1,6 +1,6 @@
 package com.comp680.backend.controllers;
 
-import com.comp680.backend.repo.JobRepo;
+import com.comp680.backend.repositories.JobRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.validation.Valid;
 import com.comp680.backend.models.Jobs;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class JobController {
 
 @Autowired 
-JobRepo jobRepo;
+JobRepository jobRepo;
 
  @GetMapping("/all")
     public List<Jobs> findAll()

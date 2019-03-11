@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ProfileService } from './profile.service';
 
 
 @Component({
@@ -18,29 +19,63 @@ export class ProfileComponent implements OnInit {
 
   levels = ['Novice', 'Intermediate', 'Expert'];
 
-  role : string;
+  userInfo:any;
 
-  constructor(public auth: AuthService, private modalService: NgbModal, private formBuilder: FormBuilder) { }
+  constructor(public auth: AuthService, private modalService: NgbModal,private profileService:ProfileService, private formBuilder: FormBuilder) {
 
-  ngOnInit() {
     if (this.auth.userProfile) {
       this.profile = this.auth.userProfile;
-      this.role = this.profile['https://example.com/roles'][0];
+     
+      console.log(this.profile.email);
+
+      this.profileService.createOrUserInfo(this.profile.email).subscribe(
+        res=>{ console.log(res); this.userInfo=res;},
+        err=>console.log(err.message),
+        () => console.log("Complete")
+      );
+      
+     
+
     } else {
      
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
-        this.role = this.profile['https://example.com/roles'][0];
+
+        this.profileService.createOrUserInfo(this.profile.email).subscribe(
+          res=> { console.log(res); this.userInfo=res;},
+          err=>console.log(err),
+          () => console.log("Complete")
+        );
+       
         
       });
+
+      
     }
-   
+
+    
+
+   }
+
+  ngOnInit() {
+
     }
 
    
 
     onSubmit(submitBtn: HTMLButtonElement ) { 
       console.log("Button Name"+this.currentBtn.name);
+
+      if(this.currentBtn.name=="edit_info")
+      {
+        this.profileService.postUser(this.dynamicForm.value).subscribe(
+          res => {console.log(res),this.userInfo=res},
+          err => console.log(err),
+          () => console.log("complete")
+
+        );
+
+      }
 
     }
     get diagnostic() { return JSON.stringify(this.dynamicForm.value); }
@@ -54,16 +89,17 @@ export class ProfileComponent implements OnInit {
       {
         case "edit_info":
           this.dynamicForm = this.formBuilder.group({
-            first_name:["",Validators.required],
-            last_name: ["",Validators.required],
-            email: ["",Validators.required],
-            address:[""],
-            city:[""],
-            zip_code:[""],
-            phone_number:[""],
-            objective:[""],
-            resume:[""],
-            profile_image:[""]
+            firstName:[this.userInfo.firstName],
+            lastName: [this.userInfo.lastName],
+            email: [this.userInfo.email],
+            address:[this.userInfo.address],
+            city:[this.userInfo.city],
+            state:[this.userInfo.state],
+            zipCode:[this.userInfo.zipCode],
+            number:[this.userInfo.number],
+            objective:[this.userInfo.objective],
+            resume:[this.userInfo.resume],
+            image:[this.userInfo.image]
           });
         break;
         case "add_skill":

@@ -29,11 +29,11 @@ public class Users {
 private Long id;
 @OneToOne(fetch = FetchType.LAZY, optional = false)
 private Social social;
-@Column(name="first_name", nullable=false)
+@Column(name="first_name", nullable=true)
 private String firstName;
 
 
-@Column(name="last_name", nullable=false)
+@Column(name="last_name", nullable=true)
 private String lastName;
 
 
@@ -42,37 +42,37 @@ private String email;
 
 
 
-@Column(name="address", nullable=false)
+@Column(name="address", nullable=true)
 private String address;
 
 
 
-@Column(name="city", nullable=false)
+@Column(name="city", nullable=true)
 private String city;
 
 
-@Column(name="state", nullable=false, length=2)
+@Column(name="state", nullable=true, length=2)
 private String state;
 
 
 
-@Column(name="zipcode", nullable=false)
+@Column(name="zipcode", nullable=true)
 private int zipcode;
 
 
 
 
-@Column(name="phone_number", nullable=false)
+@Column(name="phone_number", nullable=true)
 private String phone_number;
 
 
 
-@Column(name="objective", nullable=false, length=1000)
+@Column(name="objective",nullable=true, length=1000)
 private String objective;
 
 
 
-@Column(name="resume", nullable=false)
+@Column(name="resume", nullable=true)
 private String resume;
 
 
@@ -85,6 +85,12 @@ private String profile_image;
 
 
 
+public Long getId(){
+
+    return id;
+    
+}
+
 
 public String getFirstName(){
 
@@ -95,7 +101,7 @@ return firstName;
 
 public void setFirstName(String firstName){
 
-firstName=firstName;
+this.firstName=firstName;
 
 
 }
@@ -108,7 +114,7 @@ return lastName;
 
 public void setLastName( String lastName) {
 
-lastName=lastName;
+this.lastName=lastName;
 
 }
 
@@ -122,7 +128,7 @@ return email;
 
 public void setEmail(String email) {
 
-email=email;
+this.email=email;
 
 }
 
@@ -134,7 +140,7 @@ return address;
 
 public void setAddress(String address) {
 
-address=address;
+this.address=address;
 
 }
 
@@ -147,7 +153,7 @@ return city;
 
 public void setCity(String city) {
 
-city=city;
+this.city=city;
 
 }
 
@@ -160,7 +166,7 @@ return zipcode;
 
 public void setZipCode(int zipcode) {
 
-zipcode=zipcode;
+this.zipcode=zipcode;
 
 }
 
@@ -175,7 +181,7 @@ return state;
 
 public void setState(String state) {
 
-state=state;
+this.state=state;
 
 }
 
@@ -189,7 +195,7 @@ return phone_number;
 
 public void setNumber(String phone_number){
 
-phone_number=phone_number;
+this.phone_number=phone_number;
 
 
 }
@@ -204,7 +210,7 @@ return objective;
 
 public void setObjective(String objective) {
 
-objective=objective;
+this.objective=objective;
 
 }
 
@@ -218,7 +224,7 @@ return resume;
 
 public void setResume(String resume) {
 
-resume=resume;
+this.resume=resume;
 
 }
 
@@ -232,7 +238,7 @@ return profile_image;
 
 public void setImage(String profile_image){
 
-profile_image=profile_image;
+this.profile_image=profile_image;
 
 }
 
@@ -242,7 +248,7 @@ return social;
 }
 
 public void  setSocial(Social social) {
-social=social;
+this.social=social;
 }
 
 

@@ -34,10 +34,10 @@ public class Project {
     @Column(name="project_name" ,nullable=false)
     private String project_name;
 
-    @Column(name="description" ,nullable=false, length=1000)
+    @Column(name="description" ,nullable=true, length=1000)
     private String description;
 
-    @Column(name="link" ,nullable=false)
+    @Column(name="link" ,nullable=true)
     private String link;
 
     @Column(name="start_date", nullable=true)
@@ -46,7 +46,7 @@ public class Project {
     @Column(name="end_date", nullable=true)
     private String end_date;
 
-    @Column(name="technologies" ,nullable=false)
+    @Column(name="technologies" ,nullable=true)
     private String technologies;
 
     public String getProjectName(){

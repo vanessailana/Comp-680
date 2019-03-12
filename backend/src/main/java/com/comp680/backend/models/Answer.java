@@ -24,12 +24,12 @@ public class Answer {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="user_id", nullable=false)
-    private long user_id;
+    @Column(name="applicant_id", nullable=false)
+    private long applicant_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
-    private User user;
+    @JoinColumn(name="applicant_id",referencedColumnName="applicant_id",insertable=false, updatable=false)
+    private Applicant applicant;
 
     @Column(name="question_id", nullable=false)
     private long question_id;
@@ -69,11 +69,11 @@ public class Answer {
         this.question=question;
     }
 
-    public User getUser(){
-        return user;
+    public Applicant getApplicant(){
+        return applicant;
     }
 
-    public void setUser(User user){
-        this.user=user;
+    public void setApplicant(Applicant user){
+        this.applicant=applicant;
     }
 }

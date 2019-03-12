@@ -23,11 +23,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*")
 @RestController
-public class UserController {
+public class UsersController {
 
     private final UsersRepository repository;
 
-    UserController(UsersRepository rep)
+    UsersController(UsersRepository rep)
     {
         this.repository = rep;
     }

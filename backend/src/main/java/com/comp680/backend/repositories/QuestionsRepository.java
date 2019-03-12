@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 
 
-public interface QuestionRepository extends JpaRepository<Job, Long> {
+public interface QuestionsRepository extends JpaRepository<Job, Long> {
 
 }

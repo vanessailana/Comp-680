@@ -1,6 +1,6 @@
 package com.comp680.backend.controllers;
 
-import com.comp680.backend.repositories.QuestionRepository;
+import com.comp680.backend.repositories.QuestionsRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.validation.Valid;
 import com.comp680.backend.models.Question;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class QuestionsController {
 
 @Autowired 
-QuestionRepository questRepo;
+QuestionsRepository questRepo;
 
  @GetMapping("/questions")
     public List<Question> findAll()

@@ -22,6 +22,7 @@ export class PostingService {
   supportUrl = 'http://localhost:8080/createJob';  // URL to web api
   viewJobs = 'http://localhost:8080/all';  // URL to web api
   deleteJobs = 'http://localhost:8080/jobs';  // URL to web api
+  quest='http://localhost:8080/createQuestion'; 
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
@@ -44,6 +45,11 @@ export class PostingService {
 
   getAll(): Observable<any> {
     return this.http.get('//localhost:8080/all');
+  }
+
+  createQuestion(question: any) :Observable<any> {
+return this.http.post<any>(this.quest,question,httpOptions);
+
   }
 
 

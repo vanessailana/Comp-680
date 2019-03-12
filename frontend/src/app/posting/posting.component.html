@@ -18,15 +18,39 @@
         <mat-form-field>
             <input type="text" placeholder="Job Location" class="form-control" matInput formControlName="location" required>
         </mat-form-field><br>
-        <mat-form-field>
-            <input type="numberic" placeholder="Compensation" class="form-control" matInput formControlName="compensation">
+        <mat-form-field required>
+            <input type="numeric" placeholder="Start Compensation" class="form-control" matInput formControlName="start_compensation">
         </mat-form-field><br>
+
+            <mat-form-field>
+            <input type="numeric" placeholder="End Compensation" class="form-control" matInput formControlName="end_compensation">
+        </mat-form-field><br>
+
+
         <mat-form-field>
             <input type="text" placeholder="Employment Type" class="form-control" matInput formControlName="employment_type" required>
         </mat-form-field>
-        <div>
-          <button class="btn btn-dark" mat-button matStepperNext>Next</button>
-        </div>
+<button class="btn btn-outline-dark" (click)="open(content)"> Submit </button>
+
+        <ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Job Description</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="alert-success">
+    <p>If you want to submit this job, press save and close </p>
+  </div>
+  <div class="modal-footer">
+  <button (click)="save()" > Submit </button>
+ 
+  </div>
+</ng-template>
+
+
+ <button class="btn btn-dark"  mat-button matStepperNext>Next</button>
+
         </div>
       </form>
     </mat-step>
@@ -36,17 +60,25 @@
           <div formArrayName="questions">
           <div class="form-group">
             <button class="btn btn-dark" (click)="addQuestion(i)"> Add Question </button>
+
+
+
+
           </div>
           <div *ngFor="let quest of formGroup.controls.questions.controls; let i=index"  [formGroupName]="i">
             <ng-template matStepLabel>Questions to ask candidates</ng-template>
             <mat-form-field>
               <input matInput placeholder="Question" formControlName="question" required>
             </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="job_id"  formControlName="job_id" required> {{job_id}}
+            </mat-form-field>
         <button  class="btn btn-danger" (click)="removeQuestion(i)"> Remove Question </button>
           </div>
         <div>
+          <button (click)="saveQuest()"> Save Questions</button>
           <button class="btn btn-dark" mat-button matStepperPrevious>Back</button>
-          <button class="btn btn-dark" mat-button matStepperNext>Next</button>
+          <button class="btn btn-dark" (click)="done()" mat-button matStepperNext>Next</button>
         </div>
       </div>
     </form>

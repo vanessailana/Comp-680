@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import {Posting} from './posting.model';
+import {Question} from './question.model';
 import {PostingService} from './posting.service';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-posting',
@@ -10,13 +12,12 @@ import {PostingService} from './posting.service';
 
 })
 export class PostingComponent implements OnInit {
-
+  question: Question;
   formGroup: FormGroup;
-
-  submitSuccess: boolean;
+   submitSuccess: boolean;
   submitFail: boolean;
-
-  constructor(private postingService:PostingService,private fb: FormBuilder) {
+   test=localStorage.getItem('job_id');
+  constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
     this.submitSuccess = false;
     this.submitFail = false;
 
@@ -26,13 +27,24 @@ export class PostingComponent implements OnInit {
   initQuestion() {
     // initialize our address
     return this.fb.group({
-      question: ['', Validators.required]
+      question: ['', Validators.required],
+      job_id: ['']
     });
   }
 
   addQuestion() {
     const control = <FormArray>this.formGroup.controls['questions'];
     control.push(this.initQuestion());
+  }
+
+
+done() {
+  localStorage.removeItem("job_id");
+}
+
+
+   open(content) {
+    this.modalService.open(content);
   }
 
   removeQuestion(i: number) {
@@ -60,7 +72,11 @@ export class PostingComponent implements OnInit {
           this.submitFail=true; 
           this.submitSuccess = false;
           console.log('HTTP Response', res);
-          this.formGroup.reset();
+          console.log(this.formGroup.value.id);
+    
+
+          localStorage.setItem("id",this.formGroup.value.id)
+
           
         },
         err => 
@@ -97,15 +113,40 @@ export class PostingComponent implements OnInit {
   }
 
 
-  processForm() {
+save() {
+   this.postingService.sumbitPost(this.formGroup.controls.job.value).subscribe(result => {
+       console.log('HTTP Response', result.id);
+       
 
+     console.log(this.formGroup.controls.job);
 
+    }, error => console.error(error));
+   
+     console.log(this.formGroup.controls.job.value.id);
   }
+
+
+  saveQuest() {
+   this.postingService.createQuestion(this.question).subscribe(result => {
+       console.log('HTTP Response', result.id);
+       
+
+     console.log(this.formGroup.controls.job);
+
+    }, error => console.error(error));
+   
+     console.log(this.formGroup.controls.job.value.id);
+  }
+
+
+get job_id(): any {
+    return localStorage.getItem('job_id');
+}
 
 
 
   ngOnInit() {
-
+  
     this.formGroup = this.fb.group({
         job : this.fb.group({
           title: ["",[Validators.required]],

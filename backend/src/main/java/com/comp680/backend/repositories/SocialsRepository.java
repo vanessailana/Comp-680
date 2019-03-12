@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface SocialsRepository extends CrudRepository<Social, Long> {
 
-    Social findByUsersId(long id);
+    Social findByUserId(long id);
 }
 
 

@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface EducationsRepository extends CrudRepository<Education, Long> {
 
-    List<Education> findByUsersId(long id);
+    List<Education> findByUserId(long id);
     Education findById(long id);
 }

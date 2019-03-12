@@ -29,7 +29,7 @@ public class Social {
         String facebook, String github, String website
     ){
         this.id = id;
-        this.user=user;
+        this.user=users;
         this.linkedin=linkedin;
         this.twitter=twitter;
         this.facebook=facebook;

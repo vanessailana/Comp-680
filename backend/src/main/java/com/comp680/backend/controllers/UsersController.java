@@ -1,19 +1,14 @@
 package com.comp680.backend.controllers;
 
-import com.comp680.backend.repositories.EducationsRepository;
-import com.comp680.backend.repositories.ExperiencesRepository;
-import com.comp680.backend.repositories.SocialsRepository;
-import com.comp680.backend.repositories.UsersRepository;
+import com.comp680.backend.repositories.*;
+
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
-import com.comp680.backend.models.User;
-import com.comp680.backend.models.Education;
-import com.comp680.backend.models.Experience;
-import com.comp680.backend.models.Social;
-import com.comp680.backend.models.User;
+import com.comp680.backend.models.*;
 
 import org.apache.commons.lang.UnhandledException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +95,7 @@ public class UsersController {
     @RequestMapping(value = "/profile/social", method = {RequestMethod.GET,RequestMethod.POST})
     Social createOrSocialInfo(@RequestBody long id){
 
-        Social social = socialsRepository.findByUsersId(id);
+        Social social = socialsRepository.findByUserId(id);
         if(social == null)
         {
             Social newSocial = new Social();
@@ -118,7 +113,7 @@ public class UsersController {
     @PostMapping("/profile/social/patch")
     Social patchSocial(@RequestBody Social social)
     {
-        Social find = socialsRepository.findByUsersId(social.getUser().getId());
+        Social find = socialsRepository.findByUserId(social.getUser().getId());
         find.setFacebook(social.getFacebook());
         find.setTwitter(social.getTwitter());
         find.setGithub(social.getGithub());
@@ -132,7 +127,7 @@ public class UsersController {
     List<Education> getEducation(@PathVariable("id") long id)
     {
         System.out.println("Get");
-        return educationsRepository.findByUsersId(id);
+        return educationsRepository.findByUserId(id);
     }
 
     @PostMapping("/profile/edu/post")
@@ -140,14 +135,14 @@ public class UsersController {
     {
         educationsRepository.save(edu);
 
-        return educationsRepository.findByUsersId(edu.getUser().getId());
+        return educationsRepository.findByUserId(edu.getUser().getId());
     }
 
     @PatchMapping("/profile/edu/patch")
     List<Education> patchEducation(@RequestBody Education edu)
     {
 
-        Education find = educationsRepository.findById(edu.getUser().getId());
+        Education find = educationsRepository.findById(edu.getUser().getId()).get();
         find.setMajor(edu.getMajor());
         find.setSchoolName(edu.getSchoolName());
         find.setDegree(edu.getDegree());
@@ -156,7 +151,7 @@ public class UsersController {
         find.setStartDate(edu.getStartDate());
         find.setInProgress(edu.getInProgress());
         educationsRepository.save(find);
-        return educationsRepository.findByUsersId(edu.getUser().getId());
+        return educationsRepository.findByUserId(edu.getUser().getId());
     }
 
     @DeleteMapping("/profile/edu/delete/{users_id}/{edu_id}")
@@ -166,7 +161,7 @@ public class UsersController {
 
         educationsRepository.delete(find);
 
-        return educationsRepository.findByUsersId(users_id);
+        return educationsRepository.findByUserId(users_id);
         
     }
 
@@ -174,7 +169,7 @@ public class UsersController {
     List<Experience> getExperience(@PathVariable("id") long id)
     {
         System.out.println("Get");
-        return experiencesRepository.findByUsersId(id);
+        return experiencesRepository.findByUserId(id);
     }
 
 
@@ -183,14 +178,14 @@ public class UsersController {
     {
         experiencesRepository.save(exp);
 
-        return experiencesRepository.findByUsersId(exp.getUser().getId());
+        return experiencesRepository.findByUserId(exp.getUser().getId());
     }
 
     @PatchMapping("/profile/experience/patch")
     List<Experience> patchExperience(@RequestBody Experience exp)
     {
 
-        Experience find = experiencesRepository.findById(exp.getUser().getId());
+        Experience find = experiencesRepository.findById(exp.getUser().getId()).get();
     
         find.setCompany(exp.getCompany());
         find.setTitle(exp.getTitle());
@@ -199,7 +194,7 @@ public class UsersController {
         find.setStartDate(exp.getStartDate());
         find.setDescription(exp.getDescription());
         experiencesRepository.save(find);
-        return experiencesRepository.findByUsersId(exp.getUser().getId());
+        return experiencesRepository.findByUserId(exp.getUser().getId());
     }
 
     @DeleteMapping("/profile/experience/delete/{users_id}/{exp_id}")
@@ -209,7 +204,7 @@ public class UsersController {
 
         experiencesRepository.delete(find);
 
-        return experiencesRepository.findByUsersId(users_id);
+        return experiencesRepository.findByUserId(users_id);
         
     }
 

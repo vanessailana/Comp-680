@@ -22,33 +22,35 @@ public class Education {
 
 
 @Id
-@Column(name="ed_id")
+@Column(name="id")
 @GeneratedValue(strategy=GenerationType.IDENTITY)
-private Long ed_id;
+private long id;
 
 
-@Column(name="school_name", nullable=false)
+@Column(name="school_name")
 private String schoolName;
 
+@Column(name="major")
+private String major;
 
-@Column(name="degree", nullable=false)
+
+@Column(name="degree")
 private String degree;
 
 
 
-@Column(name="user_id", nullable=false)
-private long user_id;
+
 @ManyToOne(fetch = FetchType.LAZY, optional = false)
-@JoinColumn(name = "id", nullable = false)
-private Users user;
+@JoinColumn(name = "users_id", nullable = false)
+private Users users;
 
 
-@Column(name="startDate", nullable=false)
+@Column(name="start_date")
 private String startDate;
 
 
 
-@Column(name="endDate", nullable=false)
+@Column(name="end_date")
 private String endDate;
 
 
@@ -59,11 +61,23 @@ private String description;
 
 
 
-@Column(name="in_progress", nullable=false)
+@Column(name="in_progress")
 private boolean in_progress;
 
+public void setMajor(String major)
+{
+    this.major = major;
+}
 
+public String getMajor()
+{
+    return this.major;
+}
 
+public long getId()
+{
+    return this.id;
+}
 
 public String getSchool() {
 
@@ -73,7 +87,7 @@ return schoolName;
 
 
 public void setSchool(String schoolName){
-schoolName=schoolName;
+this.schoolName=schoolName;
 
 }
 
@@ -87,7 +101,7 @@ return degree;
 
 public void setDegree(String degree) {
 
-degree=degree;
+this.degree=degree;
 }
 
 
@@ -100,7 +114,7 @@ return startDate;
 
 public void setStart(String startDate) {
 
-startDate=startDate;
+this.startDate=startDate;
 }
 
 
@@ -114,7 +128,7 @@ return endDate;
 
 public void setEnd(String endDate) {
 
-endDate=endDate;
+this.endDate=endDate;
 
 }
 
@@ -127,28 +141,27 @@ return description;
 
 public void setDescription(String description) {
 
-description=description;
+this.description=description;
 
 }
 
-public Users getUser(){
-return user;
+public Users getUsers(){
+return users;
 }
 
-public void setUser(Users user){
-user=user;
+public void setUsers(Users users){
+this.users=users;
 }
 
 
-public boolean InProgress() {
+public boolean getInProgress() {
 
 return in_progress;
 }
 
 
-public void setInProgress() {
-
-in_progress=in_progress;
+public void setInProgress(boolean in_progress) {
+    this.in_progress=in_progress;
 }
 
 }

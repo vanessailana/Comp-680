@@ -24,13 +24,13 @@ public class Experience {
 @Id
 @Column(name="id")
 @GeneratedValue(strategy=GenerationType.IDENTITY)
-private long educationId;
+private long id;
 
-private long userId;
+
 
 @ManyToOne(fetch = FetchType.LAZY, optional = false)
-@JoinColumn(name="userId",referencedColumnName="id",insertable=false, updatable=false)
- private Users user;
+@JoinColumn(name = "users_id", nullable = false)
+private Users users;
 
 
 @Column(name="title",nullable=false)
@@ -62,6 +62,15 @@ private boolean current=true;
 
 
 
+public boolean getCurrent()
+{
+    return current;
+}
+public long getId()
+{
+    return this.id;
+}
+
 public String getTitle() {
 
 return title;
@@ -70,7 +79,7 @@ return title;
 
 public void setTitle(String title) {
 
-title=title;
+this.title=title;
 
 }
 
@@ -83,7 +92,7 @@ return company;
 
 public void setCompany(String company){
 
-company=company;
+this.company=company;
 
 }
 
@@ -96,7 +105,7 @@ return startDate;
 
 public void setStartDate(String startDate){
 
-startDate=startDate;
+this.startDate=startDate;
 
 }
 
@@ -108,9 +117,13 @@ return endDate;
 
 
 public void setEndDate(String endDate){
-endDate=endDate;
+this.endDate=endDate;
 }
 
+public void setDescription(String description)
+{
+    this.description = description;
+}
 public String getDescription(){
 return description;
 }
@@ -120,18 +133,19 @@ return current;
 
 }
 
-public Users getUser(){
-return user;
+public Users getUsers(){
+return users;
 }
 
-public void setUser(Users user){
-user=user;
+public void setUsers(Users users){
+this.users=users;
 }
 
 
 
 public void setCurrent(boolean current){
 
-current=current;
+this.current=current;
 }
+
 }

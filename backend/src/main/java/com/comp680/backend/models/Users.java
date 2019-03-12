@@ -6,6 +6,9 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
@@ -18,8 +21,13 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="users")
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Users {
+
+public Users()
+{
+
+}
 
 
 
@@ -27,10 +35,16 @@ public class Users {
 @Column(name="id")
 @GeneratedValue(strategy=GenerationType.IDENTITY)
 private Long id;
-@OneToOne(fetch = FetchType.LAZY, optional = false)
-private Social social;
+
 @Column(name="first_name", nullable=true)
 private String firstName;
+
+@OneToOne(fetch = FetchType.LAZY,
+cascade =  CascadeType.ALL,
+mappedBy = "users")
+private Social social;
+
+
 
 
 @Column(name="last_name", nullable=true)
@@ -90,6 +104,7 @@ public Long getId(){
     return id;
     
 }
+
 
 
 public String getFirstName(){
@@ -242,7 +257,7 @@ this.profile_image=profile_image;
 
 }
 
-
+/*
 public Social getSocial(){
 return social;
 }
@@ -251,7 +266,7 @@ public void  setSocial(Social social) {
 this.social=social;
 }
 
-
+*/
 
 }
 

@@ -12,7 +12,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
- @CrossOrigin(origins = "http://localhost:4200",allowedHeaders="*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders="*", maxAge = 3600)
 public class JobController {
 
 @Autowired 

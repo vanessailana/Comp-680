@@ -33,8 +33,14 @@ public class Education {
     @Column(name="school_name", nullable=false)
     private String school_name;
 
+    @Column(name="major", nullable=false)
+    private String major;
+
     @Column(name="degree", nullable=false)
     private String degree;
+
+    @Column(name="description", nullable=true,length=1000)
+    private String description;
 
     @Column(name="start_date", nullable=false)
     private String start_date;
@@ -42,18 +48,35 @@ public class Education {
     @Column(name="end_date", nullable=false)
     private String end_date;
 
-    @Column(name="description", nullable=true,length=1000)
-    private String description;
-
     @Column(name="in_progress", nullable=false)
     private boolean in_progress;
 
-    public String getSchool() {
+    public Long getId() {
+        return id;
+    }
+    
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public String getSchoolName() {
         return school_name;
     }
 
-    public void setSchool(String school_name){
+    public void setSchoolName(String school_name){
         this.school_name = school_name;
+    }
+    
+    public String getMajor() {
+        return school_name;
+    }
+
+    public void setMajor(String major){
+        this.major = major;
     }
 
     public String getDegree() {
@@ -62,6 +85,14 @@ public class Education {
 
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     public String getStartDate() {
@@ -78,22 +109,6 @@ public class Education {
 
     public void setEndDate(String end_date) {
         this.end_date = end_date;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public User getUser(){
-        return user;
-    }
-
-    public void setUser(User user){
-        this.user = user;
     }
 
     public boolean getInProgress() {

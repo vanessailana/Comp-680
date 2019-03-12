@@ -3,7 +3,7 @@ package com.comp680.backend.controllers;
 import com.comp680.backend.repositories.JobRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.validation.Valid;
-import com.comp680.backend.models.Jobs;
+import com.comp680.backend.models.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -19,22 +19,22 @@ public class JobController {
 JobRepository jobRepo;
 
  @GetMapping("/all")
-    public List<Jobs> findAll()
+    public List<Job> findAll()
     {
         return jobRepo.findAll();
     }
 
  @PostMapping("/createJob")
-    public Jobs create(@RequestBody Jobs job)
+    public Job create(@RequestBody Job job)
     {
     	System.out.println(job.description + " " + job.employment_type);
         return jobRepo.save(job);
     }
 
  @DeleteMapping("/jobs/{id}")
-     public List<Jobs> delete(@PathVariable("job_id") Long job_id)
+     public List<Job> delete(@PathVariable("id") Long id)
      {
-         jobRepo.deleteById(job_id);
+         jobRepo.deleteById(id);
          return jobRepo.findAll();
      }
 

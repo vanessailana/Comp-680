@@ -16,103 +16,73 @@ import javax.persistence.JoinTable;
 
 
 @Entity
-@Table(name="social")
+@Table(name="socials")
 public class Social {
 
+    @Id
+    @Column(name="social_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 
-@Id
-@Column(name="social_id")
-@GeneratedValue(strategy=GenerationType.IDENTITY)
-private long id;
+    @Column(name="user_id",nullable=false)
+    private long user_id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
+    private User user;
 
+    @Column(name="linkedin",nullable=true)
+    private String linkedin;
 
-private long user_id;
+    @Column(name="twitter",nullable=true)
+    private String twitter;
 
+    @Column(name="facebook",nullable=true)
+    private String facebook;
 
+    @Column(name="github",nullable=true)
+    private String github;
 
-private String linkedin;
+    @Column(name="website",nullable=true)
+    private String website;
 
-private String twitter;
+    public String getLinkedin(){
+        return linkedin;
+    }
 
-private String facebook;
+    public void setLinkedin(String linkedin) {
+        this.linkedin=linkedin;
+    }
 
-private String github;
+    public String getTwitter() {
+        return twitter;
+    }
 
-private String website;
+    public void setTwitter(String twitter) {
+        this.twitter=twitter;
+    }
 
+    public String getFacebook() {
+        return facebook;
+    }
 
-public String getLinkedin(){
+    public void setFacebook(String facebook) {
+        this.facebook=facebook;
+    }
 
-return linkedin;
+    public String getGithub() {
+        return github;
+    }
 
-}
+    public void setGithub(String github) {
+        this.github=github;
+    }
 
+    public String getWebsite() {
+        return website;
+    }
 
-public void setLinkedin(String linkedin) {
-
-linkedin=linkedin;
-
-}
-
-
-
-public String getTwitter() {
-
-return twitter;
-
-}
-
-
-public void setTwitter(String twitter) {
-
-twitter=twitter;
-
-}
-
-
-public String getFacebook() {
-
-return facebook;
-
-}
-
-
-public void setFacebook(String facebook) {
-
-facebook=facebook;
-
-}
-
-public String getGithub() {
-
-return github;
-
-}
-
-
-public void setGithub(String github) {
-
-github=github;
-
-}
-
-
-public String getWebsite() {
-
-return website;
-
-}
-
-
-public void setWebsite(String website) {
-
-website=website;
-
-}
-
-
-
-
-
+    public void setWebsite(String website) {
+        this.website=website;
+    }
 }

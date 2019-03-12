@@ -2,7 +2,7 @@ package com.comp680.backend.controllers;
 import com.comp680.backend.repositories.UsersRepository;
 
 
-import com.comp680.backend.models.Users;
+import com.comp680.backend.models.User;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -34,12 +34,12 @@ public class UserController {
 
 
     @PostMapping("/profile/user")
-    Users createOrGetUser(@RequestBody String email) 
+    User createOrGetUser(@RequestBody String email) 
     {
-        Users users = repository.findByEmail(email);
+        User users = repository.findByEmail(email);
         if(users==null)
         {
-            Users newUser = new Users();
+            User newUser = new User();
 
             newUser.setEmail(email);
             repository.save(newUser);
@@ -53,9 +53,9 @@ public class UserController {
 
 
     @PostMapping("/profile/create")
-    Users patchUser(@RequestBody Users users) 
+    User patchUser(@RequestBody User users) 
     {
-        Users find = repository.findByEmail(users.getEmail());
+        User find = repository.findByEmail(users.getEmail());
         find.setAddress(users.getAddress());
         find.setCity(users.getCity());
         //find.setEmail(users.getEmail());

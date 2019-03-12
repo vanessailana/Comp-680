@@ -25,8 +25,14 @@ export class ProfileComponent implements OnInit {
   eduInfo:any;
   expInfo:any;
 
+  projectInfo:any;
+
+  skillInfo:any;
+
   eduId:number;
   expId: number;
+  skillId: number;
+  projectId : number;
 
   constructor(public auth: AuthService, private modalService: NgbModal,private profileService:ProfileService, private formBuilder: FormBuilder) {
 
@@ -52,6 +58,12 @@ export class ProfileComponent implements OnInit {
 
           this.profileService.getExp(this.userInfo.id).subscribe(
             res => {console.log(res); this.expInfo = res;},
+            err => console.log(err.message),
+            ()=> console.log("Complete")
+          )
+
+          this.profileService.getSkill(this.userInfo.id).subscribe(
+            res => {console.log(res); this.skillInfo = res;},
             err => console.log(err.message),
             ()=> console.log("Complete")
           )
@@ -85,6 +97,17 @@ export class ProfileComponent implements OnInit {
 
             this.profileService.getExp(this.userInfo.id).subscribe(
               res => {console.log(res); this.expInfo = res;},
+              err => console.log(err.message),
+              ()=> console.log("Complete")
+            )
+
+            this.profileService.getSkill(this.userInfo.id).subscribe(
+              res => {console.log(res); this.skillInfo = res;},
+              err => console.log(err.message),
+              ()=> console.log("Complete")
+            )
+            this.profileService.getProject(this.userInfo.id).subscribe(
+              res => {console.log(res); this.projectInfo = res;},
               err => console.log(err.message),
               ()=> console.log("Complete")
             )
@@ -134,6 +157,22 @@ export class ProfileComponent implements OnInit {
             err => console.log(err),
             () => console.log("Complete")
           );
+        }
+        else if(btn.name == 'delete_skill')
+        {
+          this.profileService.deleteSkill(this.userInfo.id, this.skillInfo[id].id).subscribe(
+            res => {console.log(res), this.skillInfo = res;},
+            err => console.log(err),
+            () => console.log("Complete")
+          )
+        }
+        else if(btn.name == 'delete_project')
+        {
+          this.profileService.deleteProject(this.userInfo.id, this.projectInfo[id].id).subscribe(
+            res => {console.log(res), this.projectInfo = res;},
+            err => console.log(err),
+            () => console.log("Complete")
+          )
         }
     }
 
@@ -210,6 +249,49 @@ export class ProfileComponent implements OnInit {
 
         )
       }
+      else if(this.currentBtn.name == "add_skill")
+      {
+        this.dynamicForm.value['user']=this.userInfo;
+        this.profileService.postSkill(this.dynamicForm.value).subscribe(
+          res => {console.log(res),this.skillInfo=res},
+          err => console.log(err),
+          () => console.log("complete")
+
+        )
+      }
+      else if(this.currentBtn.name == "edit_skill")
+      {
+        this.dynamicForm.value['user']=this.userInfo;
+        this.dynamicForm.value['id'] = this.skillId;
+        this.profileService.patchSkill(this.dynamicForm.value).subscribe(
+          res => {console.log(res),this.skillInfo=res},
+          err => console.log(err),
+          () => console.log("complete")
+
+        )
+      }else if (this.currentBtn.name == "add_project")
+      {
+
+        this.dynamicForm.value['user']=this.userInfo;
+        this.profileService.postProject(this.dynamicForm.value).subscribe(
+          res => {console.log(res),this.projectInfo=res},
+          err => console.log(err),
+          () => console.log("complete")
+
+        )
+
+      }else if (this.currentBtn.name == "edit_project")
+      {
+        this.dynamicForm.value['user']=this.userInfo;
+        this.dynamicForm.value['id'] = this.projectId;
+        this.profileService.patchProject(this.dynamicForm.value).subscribe(
+          res => {console.log(res),this.projectInfo=res},
+          err => console.log(err),
+          () => console.log("complete")
+
+        )
+
+      }
 
     }
     get diagnostic() { return JSON.stringify(this.dynamicForm.value); }
@@ -243,17 +325,39 @@ export class ProfileComponent implements OnInit {
             level: ["Novice",Validators.required],
           });
         break;
+
+        case "edit_skill":
+
+        this.dynamicForm = this.formBuilder.group({
+          skill:[this.skillInfo[id].skill],
+          level: [this.skillInfo[id].level],
+        });
+        this.skillId = this.skillInfo[id].id;
+        break;
         case "add_project":
           
           this.dynamicForm = this.formBuilder.group({
-            name:["",Validators.required],
-            description: ["",Validators.required],
+            projectName:[""],
+            description: [""],
             technologies: [""],
             link: [""],
-            start_date: [""],
-            end_date: [""]
+            startDate: [""],
+            endDate: [""]
           });
         break;
+        case "edit_project":
+          
+        this.dynamicForm = this.formBuilder.group({
+          projectName:[this.projectInfo[id].projectName],
+          description: [this.projectInfo[id].description],
+          technologies: [this.projectInfo[id].technologies],
+          link: [this.projectInfo[id].link],
+          startDate: [this.projectInfo[id].startDate],
+          endDate: [this.projectInfo[id].endDate]
+        });
+
+        this.projectId = this.projectInfo[id].id;
+      break;
         case "add_social":
           
           this.dynamicForm = this.formBuilder.group({

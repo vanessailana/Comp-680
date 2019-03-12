@@ -42,16 +42,24 @@ public class UsersController {
 
     private final ExperiencesRepository experiencesRepository;
 
+    private final SkillRepository skillRepository;
+
+    private final ProjectRepository projectRepository;
+
     UsersController(
         UsersRepository usersRepository,
         SocialsRepository socialsRepository, 
         EducationsRepository educationsRepository,
-        ExperiencesRepository experiencesRepository
+        ExperiencesRepository experiencesRepository,
+        SkillRepository skillRepository,
+        ProjectRepository projectRepository
     ){
         this.usersRepository = usersRepository;
         this.socialsRepository = socialsRepository;
         this.educationsRepository = educationsRepository;
         this.experiencesRepository = experiencesRepository;
+        this.skillRepository = skillRepository;
+        this.projectRepository = projectRepository;
     }
 
 
@@ -208,6 +216,88 @@ public class UsersController {
         experiencesRepository.delete(find);
 
         return experiencesRepository.findByUserId(users_id);
+        
+    }
+
+
+    @GetMapping("/profile/skill/{id}")
+    List<Skill> getSkill(@PathVariable("id") long id)
+    {
+        System.out.println("Get");
+        return skillRepository.findByUserId(id);
+    }
+
+
+    @PostMapping("/profile/skill/post")
+    List<Skill> postSkill(@RequestBody Skill skill)
+    {
+        skillRepository.save(skill);
+
+        return skillRepository.findByUserId(skill.getUser().getId());
+    }
+
+    @RequestMapping(value = "/profile/skill/patch")
+    List<Skill> patchSkill(@RequestBody Skill skill)
+    {
+        Skill find = skillRepository.findById(skill.getId());
+
+        find.setSkill(skill.getSkill());
+        find.setLevel(skill.getLevel());
+
+        return skillRepository.findByUserId(skill.getUser().getId());
+    }
+
+    @DeleteMapping("/profile/skill/delete/{users_id}/{skill_id}")
+    List<Skill> deleteSkill(@PathVariable long users_id, @PathVariable long skill_id)
+    {
+        Skill find = skillRepository.findById(skill_id);
+
+        skillRepository.delete(find);
+
+        return skillRepository.findByUserId(users_id);
+        
+    }
+
+
+    @GetMapping("/profile/project/{id}")
+    List<Project> getProject(@PathVariable("id") long id)
+    {
+        System.out.println("Get");
+        return projectRepository.findByUserId(id);
+    }
+
+
+    @RequestMapping(value = "/profile/project/post", method = {RequestMethod.POST,RequestMethod.OPTIONS})
+    List<Project> postProject(@RequestBody Project project)
+    {
+        projectRepository.save(project);
+
+        return projectRepository.findByUserId(project.getUser().getId());
+    }
+
+    @RequestMapping(value = "/profile/project/patch")
+    List<Project> patchProject(@RequestBody Project project)
+    {
+        Project find = projectRepository.findById(project.getId());
+
+        find.setProjectName(project.getProjectName());
+        find.setDescription(project.getDescription());
+        find.setTechnologies(project.getTechnologies());
+        find.setLinks(project.getLink());
+        find.setStartDate(project.getStartDate());
+        find.setEndDate(project.getEndDate());
+        
+        return projectRepository.findByUserId(project.getUser().getId());
+    }
+
+    @DeleteMapping("/profile/project/delete/{users_id}/{project_id}")
+    List<Project> deleteProject(@PathVariable long users_id, @PathVariable long project_id)
+    {
+        Project find = projectRepository.findById(project_id);
+
+        projectRepository.delete(find);
+
+        return projectRepository.findByUserId(users_id);
         
     }
 

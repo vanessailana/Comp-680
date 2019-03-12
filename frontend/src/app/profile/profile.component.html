@@ -1,6 +1,4 @@
 
-<pre class="full-profile">{{ profile | json }}</pre>
-
 
 <div class="container">
   
@@ -96,7 +94,17 @@
 
           
           <ul class="list-group">
-              Projects: 
+              Projects:
+              <ul *ngFor="let project of projectInfo; let i=index">
+                <li class="list-group-item"> Project Name: {{ project.projectName }} </li>
+                <li class="list-group-item"> Description: {{ project.description }}</li>
+                <li class="list-group-item"> Technologies: {{  project.technologies }} </li>
+                <li class="list-group-item"> Links: {{ project.link }}</li>
+                <li class="list-group-item"> StartDate: {{  project.startDate }}</li>
+                <li class="list-group-item"> EndDate: {{  project.endDate }}</li>
+                <button #edit_project name="edit_project" class="btn-default btn-sm" (click)="open(content,edit_project,i)"> <i class="fas fa-pencil-alt"></i>Edit</button> 
+                <button #delete_project name="delete_project" class="btn-default btn-sm" (click)="onDelete(delete_project,i)"> <i class="fas fa-trash"></i>Delete</button> 
+              </ul>
               <li class="list-group-item">  </li>
               <li class="list-group-item">  <button name="add_project"  #add_project class="btn-default btn-lg" (click)="open(content,add_project)"> <i class="fas fa-plus"></i>Add Project</button> </li>
             </ul>   
@@ -105,6 +113,13 @@
       <div class="bg-light form-group border border-dark col-xs-5 col-md-5 offset-md-2">
           <ul class="list-group">
               Skills: 
+
+              <ul *ngFor="let skill of skillInfo; let i=index">
+                <li class="list-group-item"> School: {{ skill.skill }} </li>
+                <li class="list-group-item"> Level: {{ skill.level }}</li>
+                <button #edit_skill name="edit_skill" class="btn-default btn-sm" (click)="open(content,edit_skill,i)"> <i class="fas fa-pencil-alt"></i>Edit</button> 
+                <button #delete_skill name="delete_skill" class="btn-default btn-sm" (click)="onDelete(delete_skill,i)"> <i class="fas fa-trash"></i>Delete</button> 
+              </ul>
               <li class="list-group-item"> </li>
               <li class="list-group-item">  <button name="add_skill"  #add_skill class="btn-default btn-lg"  (click)="open(content,add_skill)"> <i class="fas fa-plus"></i>Add Skill</button> </li>
           </ul>
@@ -124,7 +139,7 @@
   <div class="modal-body">
     
     <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit(submitBtn); modal.close('Save Result')" >
-        <div *ngIf="currentBtn.name=='add_skill'" class="form-group">
+        <div *ngIf="currentBtn.name=='add_skill'||currentBtn.name=='edit_skill'" class="form-group">
           <label for="skill">Skill Name </label>
           <input type="text" class="form-control" formControlName="skill" id="skill" required >
        
@@ -133,9 +148,9 @@
                 <option *ngFor="let level of levels" [value]="level">{{level}}</option>
             </select>
         </div>
-        <div *ngIf="currentBtn.name=='add_project'" class="form-group">
-              <label for="name"> Project Name </label>
-              <input type="text" class="form-control" formControlName="name" id="name" required >
+        <div *ngIf="currentBtn.name=='add_project' || currentBtn.name=='edit_project'" class="form-group">
+              <label for="projectName"> Project Name </label>
+              <input type="text" class="form-control" formControlName="projectName" id="projectName" required >
               <label for="description"> Description </label>
               <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
               </textarea>
@@ -145,9 +160,9 @@
               <label for="link"> Link </label>
               <input type="text" class="form-control" formControlName="link" id="link" required >
               <label for="start_date"> Start Date </label>
-              <input type="date" class="form-control" formControlName="start_date" id="start_date" required >
+              <input type="date" class="form-control" formControlName="startDate" id="startDate" required >
               <label for="end_date"> End Date </label>
-              <input type="date" class="form-control" formControlName="end_date" id="end_date" required >
+              <input type="date" class="form-control" formControlName="endDate" id="endDate" required >
         </div>
         <div *ngIf="currentBtn.name=='add_edu'||currentBtn.name=='edit_edu'" class="form-group">
             <label for="schoolName"> School Name </label>
@@ -233,12 +248,12 @@
 
   </div>
   <div class="modal-footer">
-    {{ diagnostic }}
+    
   </div>
 </ng-template>
 
 
 <hr>
 
-<pre>{{closeResult}}</pre>
+
 

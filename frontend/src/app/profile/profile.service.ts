@@ -92,6 +92,51 @@ export class ProfileService {
   }
 
 
+  getSkill(id : any):Observable<any>
+  {
+    return this.http.get<any>(this.profileUrl+"/skill/"+id,httpOptions);
+  }
+
+  postSkill(exp: any)
+  {
+    return this.http.post<any>(this.profileUrl+"/skill/post",exp,httpOptions);
+  }
+
+  deleteSkill(users_id: any, skill_id: any)
+  {
+    
+    return this.http.delete<any>(this.profileUrl+"/skill/delete/"+users_id+"/"+skill_id, httpOptions);
+  }
+
+  patchSkill(exp: any)
+  {
+    return this.http.post<any>(this.profileUrl+"/skill/patch",exp,httpOptions);
+  }
+
+
+  getProject(id : any):Observable<any>
+  {
+    return this.http.get<any>(this.profileUrl+"/project/"+id,httpOptions);
+  }
+
+  postProject(project: any)
+  {
+    return this.http.post<any>(this.profileUrl+"/project/post",project,httpOptions);
+  }
+
+  deleteProject(users_id: any, project_id: any)
+  {
+    
+    return this.http.delete<any>(this.profileUrl+"/project/delete/"+users_id+"/"+project_id, httpOptions);
+  }
+
+  patchProject(project: any)
+  {
+    return this.http.post<any>(this.profileUrl+"/project/patch",project,httpOptions);
+  }
+
+
+
 
 
 }

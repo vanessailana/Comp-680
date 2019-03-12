@@ -22,26 +22,23 @@ public class Skill {
     @Id
     @Column(name="skill_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name="user_id", nullable=false)
-    private long user_id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name="skill",nullable=true)
     private String skill;
 
-    @Column(name="novice",nullable=true)
-    private boolean novice;
+    @Column(name="level",nullable=true)
+    private String level;
 
-    @Column(name="intermediate",nullable=true)
-    private boolean intermediate;
 
-    @Column(name="expert",nullable=true)
-    private boolean expert;
+    public long getId()
+    {
+        return id;
+    }
 
     public  String getSkill(){
         return skill;
@@ -51,28 +48,15 @@ public class Skill {
         this.skill=skill;
     }
 
-    public boolean getNovice(){
-        return novice;
+   
+    public String getLevel()
+    {
+        return level;
     }
 
-    public void setNovice(boolean novice){
-        this.novice=novice;
-    }
-
-    public boolean getIntermediate(){
-        return intermediate;
-    }
-
-    public void setIntermediate(boolean intermediate){
-        this.intermediate=intermediate;
-    }
-
-    public boolean getExpert(){
-        return expert;
-    }
-
-    public void setExpert(boolean expert){
-        this.expert=expert;
+    public void setLevel(String level)
+    {
+        this.level = level;
     }
 
     public User getUser(){

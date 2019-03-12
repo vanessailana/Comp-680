@@ -22,14 +22,12 @@ public class Project {
     @Id
     @Column(name="project_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(name="user_id" ,nullable=false)
-    private long user_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
-    private User user ;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name="project_name" ,nullable=false)
     private String project_name;
@@ -48,6 +46,11 @@ public class Project {
 
     @Column(name="technologies" ,nullable=true)
     private String technologies;
+
+    public long getId()
+    {
+        return this.id;
+    }
 
     public String getProjectName(){
         return project_name;

@@ -25,7 +25,7 @@ import javax.persistence.JoinTable;
 public class Social {
     public Social(){}
 
-    public Social(long id, Users users, String linkedin, String twitter, 
+    public Social(long id, User users, String linkedin, String twitter, 
         String facebook, String github, String website
     ){
         this.id = id;

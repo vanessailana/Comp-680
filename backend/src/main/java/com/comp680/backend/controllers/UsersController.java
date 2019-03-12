@@ -13,7 +13,7 @@ import com.comp680.backend.models.User;
 import com.comp680.backend.models.Education;
 import com.comp680.backend.models.Experience;
 import com.comp680.backend.models.Social;
-import com.comp680.backend.models.Users;
+import com.comp680.backend.models.User;
 
 import org.apache.commons.lang.UnhandledException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +50,12 @@ public class UsersController {
     UsersController(
         UsersRepository usersRepository,
         SocialsRepository socialsRepository, 
-        EducationsRepository educationsRepo,
+        EducationsRepository educationsRepository,
         ExperiencesRepository experiencesRepository
     ){
         this.usersRepository = usersRepository;
         this.socialsRepository = socialsRepository;
-        this.educationsRepository = educationsRepo;
+        this.educationsRepository = educationsRepository;
         this.experiencesRepository = experiencesRepository;
     }
 
@@ -147,7 +147,7 @@ public class UsersController {
     List<Education> patchEducation(@RequestBody Education edu)
     {
 
-        Education find = educationsRepository.findById(edu.getId());
+        Education find = educationsRepository.findById(edu.getUser().getId());
         find.setMajor(edu.getMajor());
         find.setSchoolName(edu.getSchoolName());
         find.setDegree(edu.getDegree());
@@ -190,7 +190,7 @@ public class UsersController {
     List<Experience> patchExperience(@RequestBody Experience exp)
     {
 
-        Experience find = experiencesRepository.findById(exp.getId());
+        Experience find = experiencesRepository.findById(exp.getUser().getId());
     
         find.setCompany(exp.getCompany());
         find.setTitle(exp.getTitle());

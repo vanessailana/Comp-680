@@ -10,4 +10,3 @@ public interface EducationsRepository extends CrudRepository<Education, Long> {
     List<Education> findByUsersId(long id);
     Education findById(long id);
 }
-

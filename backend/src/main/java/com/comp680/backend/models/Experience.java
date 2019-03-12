@@ -49,10 +49,6 @@ public class Experience {
     @Column(name="current",nullable=false)
     private boolean current=true;
 
-    public Long getId() {
-        return id;
-    }
-
     public String getTitle() {
         return title;
     }

@@ -51,10 +51,6 @@ public class Education {
     @Column(name="in_progress", nullable=false)
     private boolean in_progress;
 
-    public Long getId() {
-        return id;
-    }
-    
     public User getUser(){
         return user;
     }

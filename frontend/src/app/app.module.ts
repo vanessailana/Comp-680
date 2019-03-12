@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgxPermissionsModule } from 'ngx-permissions';
-
+import {JobDescriptionComponent} from './posting/job-description/job-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -17,15 +16,14 @@ import { HttpErrorHandler } from './http-error-handler.service';
 import { MessageService } from './message.service';
 import { PostingService } from './posting/posting.service';
  import { PostingComponent } from './posting/posting.component';
-
+import {MatDialogModule,MatDialogRef} from "@angular/material";
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
-import { JobDescriptionComponent } from './posting/job-description/job-description.component';
-
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
   declarations: [
@@ -39,13 +37,12 @@ import { JobDescriptionComponent } from './posting/job-description/job-descripti
     JobDescriptionComponent
   ],
   imports: [
-NgbModule,
+NgbModule, MatDialogModule, NgxPaginationModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
     NgbModule,
-    NgxPermissionsModule.forRoot(),
 
     FormsModule,
     MatStepperModule,
@@ -53,9 +50,12 @@ NgbModule,
     MatInputModule,
     BrowserAnimationsModule
   ],
+  entryComponents:[ViewpostingComponent,
+    JobDescriptionComponent],
   providers: [ 
+
     AuthService, PostingService,
-    HttpErrorHandler, 
+    HttpErrorHandler, JobDescriptionComponent,
     MessageService, 
     NgbModal, 
     {provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}},

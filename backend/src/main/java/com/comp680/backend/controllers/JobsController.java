@@ -32,7 +32,11 @@ JobsRepository jobRepo;
     }
 
  @DeleteMapping("/jobs/{id}")
+<<<<<<< HEAD:backend/src/main/java/com/comp680/backend/controllers/JobsController.java
      public List<Job> delete(@PathVariable("id") Long id)
+=======
+     public List<Jobs> delete(@PathVariable("id") Long  job_id)
+>>>>>>> CRUD_Job_Posting_Backend:backend/src/main/java/com/comp680/backend/controllers/JobController.java
      {
          jobRepo.deleteById(id);
          return jobRepo.findAll();

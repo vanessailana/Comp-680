@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> CRUD_Job_Posting_Backend
 package com.comp680.backend.models;
 
 import javax.persistence.ManyToOne;
@@ -21,42 +17,8 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="questions")
-<<<<<<< HEAD
-public class Question {
 
-  @Id
-  @Column(name="question_id")
-  @GeneratedValue(strategy=GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(name="job_id",nullable=false)
-  private long job_id;
-
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name="job_id",referencedColumnName="job_id",insertable=false, updatable=false)
-  private Job job;
-  
-  @Column(name="question",nullable=true)
-  public String question;
-
-  public String getQuestion(){
-    return question;
-  }
-
-  public void setQuestion(String question){
-    this.question=question;
-  }
-
-  public Job getJob() {
-    return job;
-  }
-
-  public void setJob(Job job) {
-    this.job=job;
-  }
-=======
-
-public class Question {
+public class Questions {
 
 @Id
 @Column(name="question_id")
@@ -75,8 +37,25 @@ private Long question_id;
 public String getQuestion(){
 
 return question;
-
 }
+
+
+public Long getId() {
+return job_id;
+}
+
+public Long getQuestionId() {
+	return question_id;
+}
+
+public void setQuestionId(Long question_id) {
+	this.question_id=question_id;
+}
+
+public void setId() {
+this.job_id=job_id;
+}
+
 
 public Jobs getJob() {
 
@@ -86,20 +65,19 @@ return job;
 
 public void setJob(Jobs job) {
 
-job=job;
-return;
+this.job=job;
+
 
 }
 
 
 public void setQuestion(String question){
 
-question=question;
-return;
+this.question=question;
+
 
 }
  
 
 
->>>>>>> CRUD_Job_Posting_Backend
 }

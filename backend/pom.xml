@@ -20,6 +20,10 @@
 	</properties>
 
 	<dependencies>
+<<<<<<< HEAD
+=======
+
+>>>>>>> CRUD_Job_Posting_Backend
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

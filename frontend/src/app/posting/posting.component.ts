@@ -117,9 +117,11 @@ export class PostingComponent implements OnInit {
     
       }),
       questions : this.fb.array([
-        this.initQuestion(),
+        this.initQuestion()
 
       ])
+
+     
     })
 
   }

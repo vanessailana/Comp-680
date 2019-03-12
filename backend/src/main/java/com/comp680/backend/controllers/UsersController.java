@@ -147,7 +147,7 @@ public class UsersController {
     List<Education> patchEducation(@RequestBody Education edu)
     {
 
-        Education find = educationsRepository.findById(edu.getUser().getId());
+        Education find = educationsRepository.findById(edu.getUser().getId()).get();
         find.setMajor(edu.getMajor());
         find.setSchoolName(edu.getSchoolName());
         find.setDegree(edu.getDegree());
@@ -190,7 +190,7 @@ public class UsersController {
     List<Experience> patchExperience(@RequestBody Experience exp)
     {
 
-        Experience find = experiencesRepository.findById(exp.getUser().getId());
+        Experience find = experiencesRepository.findById(exp.getUser().getId()).get();
     
         find.setCompany(exp.getCompany());
         find.setTitle(exp.getTitle());

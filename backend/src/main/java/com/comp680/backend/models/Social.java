@@ -40,7 +40,7 @@ public class Social {
     @Id
     @Column(name="social_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name="user_id",nullable=false)
     private long user_id;

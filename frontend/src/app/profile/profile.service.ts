@@ -60,7 +60,7 @@ export class ProfileService {
 
   patchEdu(edu: any)
   {
-    return this.http.patch<any>(this.profileUrl+"/edu/patch",edu,httpOptions);
+    return this.http.post<any>(this.profileUrl+"/patchEdu",edu,httpOptions);
   }
 
   deleteEdu(users_id: any, edu_id: any)
@@ -88,7 +88,7 @@ export class ProfileService {
 
   patchExp(exp: any)
   {
-    return this.http.patch<any>(this.profileUrl+"/experience/patch",exp,httpOptions);
+    return this.http.post<any>(this.profileUrl+"/patchExp",exp,httpOptions);
   }
 
 

@@ -21,7 +21,7 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="socials")
-// @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Social {
     public Social(){}
 
@@ -42,11 +42,9 @@ public class Social {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="user_id",nullable=false)
-    private long user_id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name="linkedin",nullable=true)

@@ -5,6 +5,9 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
@@ -16,21 +19,20 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="educations")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Education {
 
     @Id
     @Column(name="education_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(name="user_id", nullable=false)
-    private long user_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName="user_id",insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name="school_name", nullable=false)
+    @Column(name="school_name")
     private String school_name;
 
     @Column(name="major", nullable=false)
@@ -51,6 +53,14 @@ public class Education {
     @Column(name="in_progress", nullable=false)
     private boolean in_progress;
 
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    public long getId()
+    {
+        return this.id;
+    }
     public User getUser(){
         return user;
     }
@@ -68,7 +78,7 @@ public class Education {
     }
     
     public String getMajor() {
-        return school_name;
+        return major;
     }
 
     public void setMajor(String major){

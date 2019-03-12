@@ -24,11 +24,8 @@ public class Experience {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="user_id", nullable=false)
-    private long user_id;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name="title",nullable=false)
@@ -48,6 +45,11 @@ public class Experience {
 
     @Column(name="current",nullable=false)
     private boolean current=true;
+
+    public long getId()
+    {
+        return this.id;
+    }
 
     public String getTitle() {
         return title;

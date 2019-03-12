@@ -39,19 +39,19 @@ export class ProfileComponent implements OnInit {
           console.log(res); 
           this.userInfo=res;
           this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
-            res => {console.log(res), this.socialInfo = res;},
+            res => {console.log(res); this.socialInfo = res;},
             err => console.log(err.message),
             ()=> console.log("Complete")
           );
 
           this.profileService.getEdu(this.userInfo.id).subscribe(
-            res => {console.log(res), this.eduInfo = res;},
+            res => {console.log(res); this.eduInfo = res;},
             err => console.log(err.message),
             ()=> console.log("Complete")
           )
 
           this.profileService.getExp(this.userInfo.id).subscribe(
-            res => {console.log(res), this.expInfo = res;},
+            res => {console.log(res); this.expInfo = res;},
             err => console.log(err.message),
             ()=> console.log("Complete")
           )
@@ -72,19 +72,19 @@ export class ProfileComponent implements OnInit {
             console.log(res); 
             this.userInfo=res;
             this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
-              res => {console.log(res), this.socialInfo = res;},
+              res => {console.log(res); this.socialInfo = res;},
               err => console.log(err.message),
               ()=> console.log("Complete")
             );
 
             this.profileService.getEdu(this.userInfo.id).subscribe(
-              res => {console.log(res), this.eduInfo = res;},
+              res => {console.log(res); this.eduInfo = res;},
               err => console.log(err.message),
               ()=> console.log("Complete")
             )
 
             this.profileService.getExp(this.userInfo.id).subscribe(
-              res => {console.log(res), this.expInfo = res;},
+              res => {console.log(res); this.expInfo = res;},
               err => console.log(err.message),
               ()=> console.log("Complete")
             )
@@ -152,7 +152,7 @@ export class ProfileComponent implements OnInit {
       }
       else if(this.currentBtn.name=="add_social")
       {
-        this.dynamicForm.value['users']=this.userInfo;
+        this.dynamicForm.value['user']=this.userInfo;
         //this.dynamicForm.value['users_id']=this.userInfo.id;
         console.log(this.dynamicForm.value);
         this.profileService.patchSocial(this.dynamicForm.value).subscribe(
@@ -164,7 +164,7 @@ export class ProfileComponent implements OnInit {
       }
       else if(this.currentBtn.name=="add_edu")
       {
-        this.dynamicForm.value['users']=this.userInfo;
+        this.dynamicForm.value['user']=this.userInfo;
         console.log(this.dynamicForm.value);
         this.profileService.postEdu(this.dynamicForm.value).subscribe(
           res => {console.log(res),this.eduInfo=res},
@@ -175,20 +175,20 @@ export class ProfileComponent implements OnInit {
       }
       else if(this.currentBtn.name=="edit_edu")
       {
-        this.dynamicForm.value['users']=this.userInfo;
+        this.dynamicForm.value['user']=this.userInfo;
         this.dynamicForm.value['id'] = this.eduId;
         console.log(this.dynamicForm.value);
         this.profileService.patchEdu(this.dynamicForm.value).subscribe(
           res => {console.log(res),this.eduInfo=res},
-          err => console.log(err),
+          err => console.log("Error: "+err),
           () => console.log("complete")
 
         )
       }
       else if (this.currentBtn.name=="add_exp")
       {
-        this.dynamicForm.value['users']=this.userInfo;
-        this.dynamicForm.value['users_id']=this.userInfo.id;
+        this.dynamicForm.value['user']=this.userInfo;
+        this.dynamicForm.value['id'] = this.expId;
         console.log(this.dynamicForm.value);
         this.profileService.postExp(this.dynamicForm.value).subscribe(
           res => {console.log(res),this.expInfo=res},
@@ -200,10 +200,10 @@ export class ProfileComponent implements OnInit {
       }
       else if(this.currentBtn.name=="edit_exp")
       {
-        this.dynamicForm.value['users']=this.userInfo;
+        this.dynamicForm.value['user']=this.userInfo;
         this.dynamicForm.value['id'] = this.expId;
         console.log(this.dynamicForm.value);
-        this.profileService.patchEdu(this.dynamicForm.value).subscribe(
+        this.profileService.patchExp(this.dynamicForm.value).subscribe(
           res => {console.log(res),this.expInfo=res},
           err => console.log(err),
           () => console.log("complete")
@@ -267,11 +267,11 @@ export class ProfileComponent implements OnInit {
 
         case "add_edu":
         this.dynamicForm = this.formBuilder.group({
-          school:[""],
+          schoolName:[""],
           degree:[""],
           major:[""],
-          start:[""],
-          end:[""],
+          startDate:[""],
+          endDate:[""],
           description:[""],
           inProgress:[""]
         });
@@ -306,11 +306,11 @@ export class ProfileComponent implements OnInit {
 
       case "edit_edu":
       this.dynamicForm = this.formBuilder.group({
-        school:[this.eduInfo[id].school],
+        schoolName:[this.eduInfo[id].schoolName],
         degree:[this.eduInfo[id].degree],
         major:[this.eduInfo[id].major],
-        start:[this.eduInfo[id].start],
-        end:[this.eduInfo[id].end],
+        startDate:[this.eduInfo[id].startDate],
+        endDate:[this.eduInfo[id].endDate],
         description:[this.eduInfo[id].description],
         inProgress:[this.eduInfo[id].inProgress]
       });

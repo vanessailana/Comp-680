@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true", allowedHeaders = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*", maxAge = 3600)
 @RestController
 public class UsersController {
 
@@ -95,7 +95,9 @@ public class UsersController {
     @RequestMapping(value = "/profile/social", method = {RequestMethod.GET,RequestMethod.POST})
     Social createOrSocialInfo(@RequestBody long id){
 
+
         Social social = socialsRepository.findByUserId(id);
+        
         if(social == null)
         {
             Social newSocial = new Social();
@@ -113,6 +115,7 @@ public class UsersController {
     @PostMapping("/profile/social/patch")
     Social patchSocial(@RequestBody Social social)
     {
+        System.out.println("ID: "+social.getUser().getId());
         Social find = socialsRepository.findByUserId(social.getUser().getId());
         find.setFacebook(social.getFacebook());
         find.setTwitter(social.getTwitter());
@@ -138,11 +141,11 @@ public class UsersController {
         return educationsRepository.findByUserId(edu.getUser().getId());
     }
 
-    @PatchMapping("/profile/edu/patch")
+    @RequestMapping(value = "/profile/patchEdu")
     List<Education> patchEducation(@RequestBody Education edu)
     {
 
-        Education find = educationsRepository.findById(edu.getUser().getId()).get();
+        Education find = educationsRepository.findById(edu.getId());
         find.setMajor(edu.getMajor());
         find.setSchoolName(edu.getSchoolName());
         find.setDegree(edu.getDegree());
@@ -181,11 +184,11 @@ public class UsersController {
         return experiencesRepository.findByUserId(exp.getUser().getId());
     }
 
-    @PatchMapping("/profile/experience/patch")
+    @RequestMapping(value = "/profile/patchExp")
     List<Experience> patchExperience(@RequestBody Experience exp)
     {
 
-        Experience find = experiencesRepository.findById(exp.getUser().getId()).get();
+        Experience find = experiencesRepository.findById(exp.getId());
     
         find.setCompany(exp.getCompany());
         find.setTitle(exp.getTitle());

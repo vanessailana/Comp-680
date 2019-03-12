@@ -1,8 +1,7 @@
 
-
 <pre class="full-profile">{{ profile | json }}</pre>
 
-<ng-template ngxPermissionsOnly="">
+
 <div class="container">
   
   <div class="row">
@@ -76,12 +75,12 @@
         <ul class="list-group">
             Education:
             <ul *ngFor="let edu of eduInfo; let i=index">
-                <li class="list-group-item"> School: {{ edu.school }} </li>
+                <li class="list-group-item"> School: {{ edu.schoolName }} </li>
                 <li class="list-group-item"> Degree: {{ edu.degree }} </li>
                 <li class="list-group-item"> Major: {{edu.major }} </li>
                 <li class="list-group-item"> Description: {{edu.description}}</li>
-                <li class="list-group-item"> StartDate: {{ edu.start }} </li>
-                <li class="list-group-item"> EndDate: {{ edu.end }} </li>
+                <li class="list-group-item"> StartDate: {{ edu.startDate }} </li>
+                <li class="list-group-item"> EndDate: {{ edu.endDate }} </li>
                 <li class="list-group-item"> InProgress: {{edu.inProgress ? "Yes": "No"}}</li>
                 <button #edit_edu name="edit_edu" class="btn-default btn-sm" (click)="open(content,edit_edu,i)"> <i class="fas fa-pencil-alt"></i>Edit Education</button> 
                 <button #delete_edu name="delete_edu" class="btn-default btn-sm" (click)="onDelete(delete_edu,i)"> <i class="fas fa-trash"></i>Delete Education</button> 
@@ -151,16 +150,16 @@
               <input type="date" class="form-control" formControlName="end_date" id="end_date" required >
         </div>
         <div *ngIf="currentBtn.name=='add_edu'||currentBtn.name=='edit_edu'" class="form-group">
-            <label for="school"> School Name </label>
-            <input type="text" class="form-control" formControlName="school" id="school" required>
+            <label for="schoolName"> School Name </label>
+            <input type="text" class="form-control" formControlName="schoolName" id="schoolName" required>
             <label for="degree"> Degree  </label>
             <input type="text" class="form-control" formControlName="degree" id="degree" required>
             <label for="major"> Major </label>
             <input type="text" class="form-control" formControlName="major" id="major" required>
-            <label for="start"> Start Date </label>
-            <input type="date" class="form-control" formControlName="start" id="start" required >
-            <label for="end"> End Date </label>
-            <input type="date" class="form-control" formControlName="end" id="end" required >
+            <label for="startDate"> Start Date </label>
+            <input type="date" class="form-control" formControlName="startDate" id="startDate" required >
+            <label for="endDate"> End Date </label>
+            <input type="date" class="form-control" formControlName="endDate" id="endDate" required >
             <label for="description"> Description </label>
           <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
           </textarea>
@@ -242,4 +241,4 @@
 <hr>
 
 <pre>{{closeResult}}</pre>
-</ng-template>
+

@@ -34,7 +34,7 @@ public class Skill {
     @Column(name="skill",nullable=true)
     private String skill;
 
-    @Column(name="novice",nullable=false)
+    @Column(name="novice",nullable=true)
     private boolean novice;
 
     @Column(name="intermediate",nullable=true)

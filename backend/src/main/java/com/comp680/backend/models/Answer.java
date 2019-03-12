@@ -73,7 +73,7 @@ public class Answer {
         return applicant;
     }
 
-    public void setApplicant(Applicant user){
+    public void setApplicant(Applicant applicant){
         this.applicant=applicant;
     }
 }

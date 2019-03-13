@@ -29,17 +29,16 @@ public class ApplicantsController {
     JobsRepository jobsRepository;
     
     @PostMapping("/apply")
-    public Applicant apply(@RequestBody Applicant applicant ){
-        return applicant;
+    public ResponseEntity<?> apply(@RequestBody Applicant applicant ){
         JSONObject obj = new JSONObject();
         boolean exists_job = jobsRepository.existsById(applicant.getJob().getId());
         boolean exists_user = usersRepository.existsById(applicant.getUser().getId());
-    //     if(exists_job && exists_user) {
-    //         Applicant new_applicant = applicantsRepository.save(applicant);
-    //         obj.put("applicant", new_applicant);
-    //         return new ResponseEntity<>(obj, HttpStatus.CREATED);
-    //     }
-    //     obj.put("message", "Job or user does not exists");
-    //     return new ResponseEntity<>(obj, HttpStatus.NOT_FOUND);
+        if(exists_job && exists_user) {
+            Applicant new_applicant = applicantsRepository.save(applicant);
+            obj.put("applicant", new_applicant);
+            return new ResponseEntity<>(obj, HttpStatus.CREATED);
+        }
+        obj.put("message", "Job or user does not exists");
+        return new ResponseEntity<>(obj, HttpStatus.NOT_FOUND);
     }
 }

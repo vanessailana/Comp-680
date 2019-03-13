@@ -28,8 +28,10 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    /*
+    @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL,mappedBy = "users")
     private Social social;
+    */
 
     @Column(name="first_name", nullable=true)
     private String first_name;
@@ -155,6 +157,7 @@ public class User {
     public void setImage(String profile_image){
         this.profile_image=profile_image;
     }
+    /*
 
     public Social getSocial(){
         return social;
@@ -163,4 +166,5 @@ public class User {
     public void  setSocial(Social social) {
         this.social=social;
     }
+    */
 }

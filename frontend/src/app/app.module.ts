@@ -26,7 +26,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+<<<<<<< HEAD
 import { MyJobsComponent } from './my-jobs/my-jobs.component'; 
+=======
+import { AppliedComponent } from './applied/applied.component'; 
+import { AppliedService } from './applied/applied.service';
+>>>>>>> master
 
 @NgModule({
   declarations: [
@@ -38,7 +43,11 @@ import { MyJobsComponent } from './my-jobs/my-jobs.component';
     PostingComponent,
     ViewpostingComponent,
     JobDescriptionComponent,
+<<<<<<< HEAD
     MyJobsComponent
+=======
+    AppliedComponent
+>>>>>>> master
   ],
   imports: [
 NgbModule, MatDialogModule, NgxPaginationModule,
@@ -58,7 +67,7 @@ NgbModule, MatDialogModule, NgxPaginationModule,
     JobDescriptionComponent],
   providers: [ 
 
-    AuthService, PostingService,
+    AuthService, PostingService, AppliedService,
     HttpErrorHandler, JobDescriptionComponent,
     MessageService, 
     NgbModal, 

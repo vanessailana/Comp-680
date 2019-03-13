@@ -5,6 +5,9 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
@@ -16,25 +19,30 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="educations")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Education {
 
     @Id
     @Column(name="education_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(name="user_id", nullable=false)
-    private long user_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", referencedColumnName="user_id",insertable=false, updatable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name="school_name", nullable=false)
+    @Column(name="school_name")
     private String school_name;
+
+    @Column(name="major", nullable=false)
+    private String major;
 
     @Column(name="degree", nullable=false)
     private String degree;
+
+    @Column(name="description", nullable=true,length=1000)
+    private String description;
 
     @Column(name="start_date", nullable=false)
     private String start_date;
@@ -42,18 +50,39 @@ public class Education {
     @Column(name="end_date", nullable=false)
     private String end_date;
 
-    @Column(name="description", nullable=true,length=1000)
-    private String description;
-
     @Column(name="in_progress", nullable=false)
     private boolean in_progress;
 
-    public String getSchool() {
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    public long getId()
+    {
+        return this.id;
+    }
+    public User getUser(){
+        return user;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public String getSchoolName() {
         return school_name;
     }
 
-    public void setSchool(String school_name){
+    public void setSchoolName(String school_name){
         this.school_name = school_name;
+    }
+    
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major){
+        this.major = major;
     }
 
     public String getDegree() {
@@ -62,6 +91,14 @@ public class Education {
 
     public void setDegree(String degree) {
         this.degree = degree;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     public String getStartDate() {
@@ -78,22 +115,6 @@ public class Education {
 
     public void setEndDate(String end_date) {
         this.end_date = end_date;
-    }
-
-    public String getDescription(){
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public User getUser(){
-        return user;
-    }
-
-    public void setUser(User user){
-        this.user = user;
     }
 
     public boolean getInProgress() {

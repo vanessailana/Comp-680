@@ -6,6 +6,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
 import{Router}  from '@angular/router';
 import {JobDescriptionComponent} from '../job-description/job-description.component';
+import { AppliedService } from 'src/app/applied/applied.service';
 
 @Component({
   selector: 'app-viewposting',
@@ -17,12 +18,9 @@ export class ViewpostingComponent  implements OnInit {
    p: number = 1;
   totalRec : number;
  jobs: Array<any>;
-  constructor(public dialog: MatDialog,private postingService: PostingService,private modalService: NgbModal,private _rotuer:Router) { }
+  constructor(public dialog: MatDialog, private appliedService: AppliedService, private postingService: PostingService,private modalService: NgbModal,private _rotuer:Router) { }
 
   ngOnInit() {
-
-
-
   this.postingService.getAll().subscribe(data => {
       this.jobs= data;
       console.log(this.jobs);
@@ -71,6 +69,20 @@ location.reload();
     });
 }
 
+  applyToJob(job) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    console.log(job);
+    console.log(user);
+    let applicant = {'job': job, 'user': user};
+
+    this.appliedService.apply(applicant).subscribe(
+    res => {
+      console.log("res: " + JSON.stringify(res));
+    },
+    err => {
+      console.log("err: " + JSON.stringify(err));
+    });
+  }
 
 }
 

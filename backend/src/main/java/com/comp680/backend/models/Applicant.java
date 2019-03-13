@@ -5,11 +5,15 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
 import java.util.Date;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;
@@ -36,9 +40,11 @@ public class Applicant {
   @JoinColumn(name="job_id",referencedColumnName="job_id",insertable=false, updatable=false)
   private Job job;
 
-  @Column(name="profile_link", nullable=false)
+  @Column(name="profile_link", nullable=true)
   private String profile_link;
 
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
   @Column(name="created_at", nullable=true)
   private Date created_at;
 
@@ -51,27 +57,27 @@ public class Applicant {
       return this.created_at;
   }
 
-  private User getUser(){
+  public User getUser(){
     return user;
   }
 
-  private void setUser(){
+  public void setUser(){
     this.user = user;
   }
 
-  private Job getJob(){
+  public Job getJob(){
     return job;
   }
 
-  private void setJob(){
+  public void setJob(){
     this.job = job;
   }
 
-  private String getProfileLink(){
+  public String getProfileLink(){
     return profile_link;
   }
 
-  private void setProfileLink(String profile_link){
+  public void setProfileLink(String profile_link){
     this.profile_link = profile_link;
   }
 }

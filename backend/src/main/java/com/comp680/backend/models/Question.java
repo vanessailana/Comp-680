@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 package com.comp680.backend.models;
 
 import javax.persistence.ManyToOne;
@@ -20,7 +23,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="questions")
 
+
 public class Question  {
+
 
   @Id
   @Column(name="question_id")
@@ -58,8 +63,5 @@ public class Question  {
   public void setJob(Job job) {
     this.job=job;
   }
-
-
-
 
 }

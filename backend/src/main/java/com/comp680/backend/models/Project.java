@@ -22,22 +22,20 @@ public class Project {
     @Id
     @Column(name="project_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    @Column(name="user_id" ,nullable=false)
-    private long user_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
-    private User user ;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name="project_name" ,nullable=false)
     private String project_name;
 
-    @Column(name="description" ,nullable=false, length=1000)
+    @Column(name="description" ,nullable=true, length=1000)
     private String description;
 
-    @Column(name="link" ,nullable=false)
+    @Column(name="link" ,nullable=true)
     private String link;
 
     @Column(name="start_date", nullable=true)
@@ -46,8 +44,13 @@ public class Project {
     @Column(name="end_date", nullable=true)
     private String end_date;
 
-    @Column(name="technologies" ,nullable=false)
+    @Column(name="technologies" ,nullable=true)
     private String technologies;
+
+    public long getId()
+    {
+        return this.id;
+    }
 
     public String getProjectName(){
         return project_name;

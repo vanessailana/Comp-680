@@ -5,11 +5,15 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
 import java.util.Date;
 
+import org.hibernate.annotations.ForeignKey;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;
@@ -17,18 +21,30 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="socials")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Social {
+    public Social(){}
+
+    public Social(long id, User users, String linkedin, String twitter, 
+        String facebook, String github, String website
+    ){
+        this.id = id;
+        this.user=users;
+        this.linkedin=linkedin;
+        this.twitter=twitter;
+        this.facebook=facebook;
+        this.github = github;
+        this.website = website;
+    }
 
     @Id
     @Column(name="social_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-    @Column(name="user_id",nullable=false)
-    private long user_id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name="linkedin",nullable=true)
@@ -84,5 +100,13 @@ public class Social {
 
     public void setWebsite(String website) {
         this.website=website;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
     }
 }

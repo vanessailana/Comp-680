@@ -35,12 +35,13 @@ public class Job {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
+
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name="user_id", nullable=false)
   private User user;
   
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
-  private boolean status = true; 
+  private boolean status = true;
 
   @Column(name="title",nullable=false)
   private String title;
@@ -70,6 +71,9 @@ public class Job {
   @Column(name = "updated_at")
   private Date updated_at;
 
+  public long getId() {
+    return id;
+  }
   public boolean getStatus() {
     return status;
   }

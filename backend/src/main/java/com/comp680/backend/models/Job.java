@@ -71,9 +71,10 @@ public class Job {
   @Column(name = "updated_at")
   private Date updated_at;
 
-  public long getId() {
+  public Long getId() {
     return id;
   }
+
   public boolean getStatus() {
     return status;
   }
@@ -92,10 +93,6 @@ public class Job {
 
   public String getTitle() {
     return title;
-  }
-
-  public Long getId(){
-    return id;
   }
 
   public void setId(Long id) {

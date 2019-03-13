@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 package com.comp680.backend.models;
 
 import javax.persistence.ManyToOne;
@@ -13,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
 import java.util.Date;
-import java.io.Serializable ;
+import java.io.Serializable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;

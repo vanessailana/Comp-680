@@ -51,27 +51,27 @@ public class Applicant {
       return this.created_at;
   }
 
-  private User getUser(){
+  public User getUser(){
     return user;
   }
 
-  private void setUser(){
+  public void setUser(){
     this.user = user;
   }
 
-  private Job getJob(){
+  public Job getJob(){
     return job;
   }
 
-  private void setJob(){
+  public void setJob(){
     this.job = job;
   }
 
-  private String getProfileLink(){
+  public String getProfileLink(){
     return profile_link;
   }
 
-  private void setProfileLink(String profile_link){
+  public void setProfileLink(String profile_link){
     this.profile_link = profile_link;
   }
 }

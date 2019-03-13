@@ -44,7 +44,7 @@ public class UsersController {
 
     private final SkillRepository skillRepository;
 
-    private final ProjectRepository projectRepository;
+    private final ProjectsRepository projectRepository;
 
     UsersController(
         UsersRepository usersRepository,
@@ -52,7 +52,7 @@ public class UsersController {
         EducationsRepository educationsRepository,
         ExperiencesRepository experiencesRepository,
         SkillRepository skillRepository,
-        ProjectRepository projectRepository
+        ProjectsRepository projectRepository
     ){
         this.usersRepository = usersRepository;
         this.socialsRepository = socialsRepository;

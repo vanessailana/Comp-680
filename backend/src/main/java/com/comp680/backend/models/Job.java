@@ -70,6 +70,9 @@ public class Job {
   @Column(name = "updated_at")
   private Date updated_at;
 
+  public long getId() {
+    return id;
+  }
   public boolean getStatus() {
     return status;
   }

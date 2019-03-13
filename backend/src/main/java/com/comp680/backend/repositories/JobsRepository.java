@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
 @CrossOrigin(origins = "http://localhost:4200")
 public interface JobsRepository extends JpaRepository<Job, Long> {
-
+    boolean existsById(long id);
 }

@@ -1,12 +1,13 @@
 package com.comp680.backend.repositories;
 
 import java.util.List;
-import com.comp680.backend.models.Users;
+import com.comp680.backend.models.User;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface UsersRepository extends CrudRepository<Users, Long> {
-
-    Users findByEmail(String email);
+public interface UsersRepository extends CrudRepository<User, Long> {
+    User findByEmail(String email);
+    User findById(long id);
+    boolean existsById(long id);
 }
 

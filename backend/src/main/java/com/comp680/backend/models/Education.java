@@ -5,6 +5,9 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
@@ -14,143 +17,111 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;
 
-
 @Entity
-@Table(name="education")
-
+@Table(name="educations")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Education {
 
-
-@Id
-@Column(name="ed_id")
-@GeneratedValue(strategy=GenerationType.IDENTITY)
-private Long ed_id;
-
-
-@Column(name="school_name", nullable=false)
-private String schoolName;
+    @Id
+    @Column(name="education_id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private long id;
 
 
-@Column(name="degree", nullable=false)
-private String degree;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
+    @Column(name="school_name")
+    private String school_name;
 
+    @Column(name="major", nullable=false)
+    private String major;
 
-@Column(name="user_id", nullable=false)
-private long user_id;
-@ManyToOne(fetch = FetchType.LAZY, optional = false)
-@JoinColumn(name = "id", nullable = false)
-private Users user;
+    @Column(name="degree", nullable=false)
+    private String degree;
 
+    @Column(name="description", nullable=true,length=1000)
+    private String description;
 
-@Column(name="startDate", nullable=false)
-private String startDate;
+    @Column(name="start_date", nullable=false)
+    private String start_date;
 
+    @Column(name="end_date", nullable=false)
+    private String end_date;
 
+    @Column(name="in_progress", nullable=false)
+    private boolean in_progress;
 
-@Column(name="endDate", nullable=false)
-private String endDate;
+    public void setId(long id)
+    {
+        this.id = id;
+    }
+    public long getId()
+    {
+        return this.id;
+    }
+    public User getUser(){
+        return user;
+    }
 
+    public void setUser(User user){
+        this.user = user;
+    }
 
+    public String getSchoolName() {
+        return school_name;
+    }
 
+    public void setSchoolName(String school_name){
+        this.school_name = school_name;
+    }
+    
+    public String getMajor() {
+        return major;
+    }
 
-@Column(name="description", nullable=true,length=1000)
-private String description;
+    public void setMajor(String major){
+        this.major = major;
+    }
 
+    public String getDegree() {
+        return degree;
+    }
 
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
 
-@Column(name="in_progress", nullable=false)
-private boolean in_progress;
+    public String getDescription(){
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public String getStartDate() {
+        return start_date;
+    }
 
+    public void setStartDate(String start_date) {
+        this.start_date = start_date;
+    }
 
+    public String getEndDate() {
+        return end_date;
+    }
 
-public String getSchool() {
+    public void setEndDate(String end_date) {
+        this.end_date = end_date;
+    }
 
-return schoolName;
+    public boolean getInProgress() {
+        return in_progress;
+    }
 
+    public void setInProgress(boolean in_progress) {
+        this.in_progress = in_progress;
+    }
 }
-
-
-public void setSchool(String schoolName){
-schoolName=schoolName;
-
-}
-
-
-public String getDegree() {
-
-return degree;
-
-}
-
-
-public void setDegree(String degree) {
-
-degree=degree;
-}
-
-
-public String getStart() {
-
-return startDate;
-
-}
-
-
-public void setStart(String startDate) {
-
-startDate=startDate;
-}
-
-
-public String getEnd() {
-
-return endDate;
-
-}
-
-
-
-public void setEnd(String endDate) {
-
-endDate=endDate;
-
-}
-
-
-public String getDescription(){
-return description;
-
-}
-
-
-public void setDescription(String description) {
-
-description=description;
-
-}
-
-public Users getUser(){
-return user;
-}
-
-public void setUser(Users user){
-user=user;
-}
-
-
-public boolean InProgress() {
-
-return in_progress;
-}
-
-
-public void setInProgress() {
-
-in_progress=in_progress;
-}
-
-}
-
-

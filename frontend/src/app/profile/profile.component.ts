@@ -44,6 +44,7 @@ export class ProfileComponent implements OnInit {
         { 
           console.log(res); 
           this.userInfo=res;
+          localStorage.setItem('user', JSON.stringify(this.userInfo));
           this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
             res => {console.log(res); this.socialInfo = res;},
             err => console.log(err.message),
@@ -83,6 +84,7 @@ export class ProfileComponent implements OnInit {
           { 
             console.log(res); 
             this.userInfo=res;
+            localStorage.setItem('user', JSON.stringify(this.userInfo));
             this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
               res => {console.log(res); this.socialInfo = res;},
               err => console.log(err.message),

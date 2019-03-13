@@ -23,7 +23,9 @@ import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import {NgxPaginationModule} from 'ngx-pagination';
+import { AppliedComponent } from './applied/applied.component'; 
+import { AppliedService } from './applied/applied.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     SupportFormComponent,
     PostingComponent,
     ViewpostingComponent,
-    JobDescriptionComponent
+    JobDescriptionComponent,
+    AppliedComponent
   ],
   imports: [
 NgbModule, MatDialogModule, NgxPaginationModule,
@@ -54,7 +57,7 @@ NgbModule, MatDialogModule, NgxPaginationModule,
     JobDescriptionComponent],
   providers: [ 
 
-    AuthService, PostingService,
+    AuthService, PostingService, AppliedService,
     HttpErrorHandler, JobDescriptionComponent,
     MessageService, 
     NgbModal, 

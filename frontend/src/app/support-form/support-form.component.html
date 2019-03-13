@@ -3,7 +3,8 @@
 
 <div class="container">
     <h1>Contact Support</h1>
-    <form   [formGroup]="supportForm" (ngSubmit)="onSubmit(submitBtn)" >
+    <div>
+    <form  [formGroup]="supportForm"  (ngSubmit)="onSubmit(submitBtn)" >
       <div class="form-group">
         <label for="name">Name</label>
         <input type="text" class="form-control" formControlName="name" id="name" required >
@@ -33,6 +34,7 @@
       <button #submitBtn type="submit" class="btn btn-success">Submit</button>
       
     </form>
+  </div>
     
     <div *ngIf="submitSuccess==true" class="alert alert-success">
         Message Sucessfully Sent!

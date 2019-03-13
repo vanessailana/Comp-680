@@ -14,6 +14,8 @@ export class AppComponent implements OnInit {
 
   perm : string;
 
+  isNavbarCollapsed : boolean = false;
+
   username : string;
   constructor(
     public auth: AuthService,
@@ -36,6 +38,11 @@ export class AppComponent implements OnInit {
     if(localStorage.getItem('isLoggedIn')) {
       this.auth.renewTokens();
     }
+  }
+
+  onSubmit(btn:HTMLButtonElement)
+  {
+
   }
 }
 

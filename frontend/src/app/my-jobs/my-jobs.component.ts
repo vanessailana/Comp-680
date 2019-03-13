@@ -10,7 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class MyJobsComponent implements OnInit {
 
   jobs:any;
-
+  p: number = 1;
   constructor(private postingService: PostingService,private modalService: NgbModal) { 
 
 

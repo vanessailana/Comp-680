@@ -20,63 +20,7 @@ export class SupportFormComponent implements OnInit {
   { 
       this.submitSuccess = false;
       this.submitFail = false;
-  }
 
-  onSubmit(submitBtn: HTMLButtonElement ) { 
-
-    submitBtn.disabled = true;
-  
-    if(this.supportForm.valid)
-    {
-      var sub = this.supportService.sumbitSupportRequest(this.supportForm.value);
-      sub.subscribe(
-        res => 
-        {
-
-          this.submitFail=true; 
-          this.submitSuccess = false;
-          console.log('HTTP Response', res);
-          this.supportForm.reset(); 
-        },
-        err => 
-        { 
-          this.submitFail=true; 
-          this.submitSuccess = false;
-          console.log('HTTP Error', err);
-          submitBtn.disabled = false;
-        },
-        () => 
-        {
-          console.log('HTTP request completed.');
-          submitBtn.disabled = false;
-        }
-
-      )        
-    }
-    else
-    {
-
-      console.log("invlaid input");
-      submitBtn.disabled = false;
-      this.submitFail=true; 
-      this.submitSuccess = false;
-
-    }
-
-    console.log(this.submitFail);
-    console.log(this.submitSuccess);
-
-    
-    
-  }
-
-  get diagnostic() { return JSON.stringify(this.supportForm.value); }
-
-  ngOnInit() {
-
-    this.submitSuccess = false;
-    this.submitFail = false;
-    
     if(this.auth.userProfile)
     {
       this.supportForm = this.formBuilder.group({
@@ -92,6 +36,62 @@ export class SupportFormComponent implements OnInit {
         message: ['',[Validators.required,Validators.minLength(10)]]
       });
   }
+  }
+
+  onSubmit(submitBtn: HTMLButtonElement ) { 
+
+    submitBtn.disabled = true;
+  
+    if(this.supportForm.valid)
+    {
+      var sub = this.supportService.sumbitSupportRequest(this.supportForm.value);
+      sub.subscribe(
+        res => 
+        {
+
+          this.submitSuccess = true;
+          console.log('HTTP Response', res);
+          this.supportForm.reset(); 
+          
+        },
+        err => 
+        { 
+          this.submitFail=true; 
+          
+          console.log('HTTP Error', err);
+          submitBtn.disabled = false;
+        },
+        () => 
+        {
+          
+          console.log('HTTP request completed.');
+          submitBtn.disabled = false;
+        }
+
+      )        
+    }
+    else
+    {
+
+      submitBtn.disabled = false;
+      
+
+
+    }
+
+
+
+    
+    
+  }
+
+  get diagnostic() { return JSON.stringify(this.supportForm.value); }
+
+  ngOnInit() {
+
+    this.submitSuccess = false;
+    this.submitFail = false;
+    
   }
 
 }

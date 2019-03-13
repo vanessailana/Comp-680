@@ -47,14 +47,14 @@ export class ProfileComponent implements OnInit {
           console.log(res); 
           this.userInfo=res;
           localStorage.setItem('user',JSON.stringify(this.userInfo));
-          let role = localStorage.getItem('roles');
+/*           let role = localStorage.getItem('roles');
 
           if(role == 'admin')
           {
             this.router.navigate(['/posting']);
           }
           
-          
+           */
           this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
             res => {console.log(res); this.socialInfo = res;},
             err => console.log(err.message),
@@ -95,13 +95,13 @@ export class ProfileComponent implements OnInit {
             console.log(res); 
             this.userInfo=res;
             localStorage.setItem('user',JSON.stringify(this.userInfo));
-
+/* 
             let role = localStorage.getItem('roles');
 
             if(role == 'admin')
             {
               this.router.navigate(['/posting']);
-            }
+            } */
             
             this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
               res => {console.log(res); this.socialInfo = res;},
@@ -414,16 +414,16 @@ export class ProfileComponent implements OnInit {
 
     case "edit_info":
         this.dynamicForm = this.formBuilder.group({
-        first_name:[""],
-        last_name:[""],
+        firstName:[""],
+        lastName:[""],
         email:[""],
         address:[""],
         city:[""],
-        zip_code:[""],
-        phone_number:[""],
+        zipCode:[""],
+        phoneNumber:[""],
         objective:[""],
         resume:[""],
-        profile_image:[""]
+        profileImage:[""]
       });
 
       break;

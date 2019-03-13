@@ -20,6 +20,23 @@ export class PostingComponent implements OnInit {
   constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
     this.submitSuccess = false;
     this.submitFail = false;
+    this.formGroup = this.fb.group({
+      job : this.fb.group({
+        title: ["",[Validators.required]],
+        description: ["",[Validators.required]],
+        location: ["",[Validators.required]],
+        startCompensation: ["",[Validators.required]],
+        endCompensation: [""],
+        employmentType: [""]
+  
+    }),
+    questions : this.fb.array([
+      this.initQuestion()
+
+    ])
+
+   
+  })
 
   }
 
@@ -135,23 +152,7 @@ get job_id(): any {
 
   ngOnInit() {
   
-    this.formGroup = this.fb.group({
-        job : this.fb.group({
-          title: ["",[Validators.required]],
-          description: ["",[Validators.required]],
-          location: ["",[Validators.required]],
-          startCompensation: ["",[Validators.required]],
-          endCompensation: [""],
-          employmentType: [""]
-    
-      }),
-      questions : this.fb.array([
-        this.initQuestion()
 
-      ])
-
-     
-    })
 
   }
 

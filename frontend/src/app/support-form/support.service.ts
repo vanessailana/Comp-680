@@ -15,7 +15,7 @@ const httpOptions = {
 })
 export class SupportService {
 
-  supportUrl = 'http://localhost:8080/support';  // URL to web api
+  supportUrl = 'https://dry-coast-23307.herokuapp.com';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
@@ -25,7 +25,7 @@ export class SupportService {
   }
 
   sumbitSupportRequest(support: any): Observable<any> {
-  	return this.http.post<any>(this.supportUrl,support,httpOptions);
+  	return this.http.post<any>(this.supportUrl+"/support",support,httpOptions);
   }
 
 }

@@ -15,7 +15,7 @@ export class AppliedService {
 
   private handleError: HandleError;
 
-  url_apply = 'http://localhost:8080/apply';  // URL to web api
+  url_apply = 'https://dry-coast-23307.herokuapp.com/apply';  // URL to web api
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
     this.handleError = httpErrorHandler.createHandleError('PostingService');

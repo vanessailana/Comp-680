@@ -21,7 +21,7 @@ export class AuthService {
     clientID: 'Rn9gH_Xwv3LL6GkmAs6R9vm7hMEL8DsB',
     domain: 'comp586proj.auth0.com',
     responseType: 'token id_token',
-    redirectUri: 'http://localhost:4200/callback',
+    redirectUri: 'https://mysterious-harbor-56923.herokuapp.com/callback',
     scope: 'openid profile email'
   });
 

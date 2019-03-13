@@ -16,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
-
+//https://mysterious-harbor-56923.herokuapp.com
 @RestController
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders="*", maxAge = 3600)
+@CrossOrigin
 public class ApplicantsController {
 
     @Autowired 

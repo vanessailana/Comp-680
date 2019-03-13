@@ -16,13 +16,14 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+//https://mysterious-harbor-56923.herokuapp.com
 @EnableWebMvc
 @Controller
 public class SupportsController {
 	@Autowired
 	private JavaMailSender sender;
 	
-	@CrossOrigin(origins = "http://localhost:4200")
+	@CrossOrigin
 	@RequestMapping(value = "/support", method = RequestMethod.POST, consumes="application/json",produces = "application/json")
 	public @ResponseBody ResponseEntity<?> sendEmail(@RequestBody Support request) {
 		JSONObject obj = new JSONObject();

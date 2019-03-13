@@ -14,7 +14,7 @@ const httpOptions = {
 })
 export class ProfileService {
 
-  profileUrl = 'http://localhost:8080/profile';  // URL to web api
+  profileUrl = 'https://dry-coast-23307.herokuapp.com/profile';  // URL to web api
   constructor(private http: HttpClient) { 
 
   }

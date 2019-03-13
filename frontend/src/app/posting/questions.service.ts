@@ -12,7 +12,7 @@ import 'rxjs/add/observable/throw';
 })
 export class QuestionsService {
 
-questionUrl = 'http://localhost:8080/createQuestion';
+questionUrl = 'https://dry-coast-23307.herokuapp.com';
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
 

@@ -1,0 +1,10 @@
+{
+    "/products": {
+      "target": "https://limitless-fjord-5537.herokuapp.com",
+      "secure": true,
+      "pathRewrite": {
+      "^/products": ""
+    },
+      "changeOrigin": true
+    }
+  }

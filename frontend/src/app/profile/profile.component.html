@@ -207,10 +207,10 @@
     </div>
 
     <div *ngIf="currentBtn.name=='edit_info'" class="form-group">
-        <label for="first_name"> First Name: </label>
-        <input type="text" class="form-control" formControlName="firstName" id="first_name">
-        <label for="last_name">  Last Name: </label>
-        <input type="text" class="form-control" formControlName="lastName" id="last_name">
+        <label for="firstName"> First Name: </label>
+        <input type="text" class="form-control" formControlName="firstName" id="firstName">
+        <label for="lastName">  Last Name: </label>
+        <input type="text" class="form-control" formControlName="lastName" id="lastName">
         <label for="email"> <i class="fas fa-envelope"></i> Email: </label>
         <input type="email" readonly class="form-control" formControlName="email" id="email">
         <label for="address">  Street Adress: </label>
@@ -219,16 +219,16 @@
         <input type="text" class="form-control" formControlName="city" id="city">
         <label for="state"> State: </label>
         <input type="text" class="form-control" formControlName="state" id="state">
-        <label for="zip_code">  Zip Code: </label>
-        <input type="numeric" class="form-control" formControlName="zipCode" id="zip_code">
-        <label for="phone_number">  Phone: </label>
-        <input type="tel" class="form-control" formControlName="number" id="phone_number">
+        <label for="zipCode">  Zip Code: </label>
+        <input type="numeric" class="form-control" formControlName="zipCode" id="zipCode">
+        <label for="phoneNumber">  Phone: </label>
+        <input type="tel" class="form-control" formControlName="number" id="phoneNumber">
         <label for="objective">  Objective: </label>
         <textarea class="form-control" formControlName="objective" rows=5  id="objective"></textarea>
         <label for="resume">  Resume: </label>
         <input type="file" class="form-control" formControlName="resume" id="resume">
-        <label for="image"> Profile Photo: </label>
-        <input type="file" class="form-control" formControlName="image"id="image">
+        <label for="profileImage"> Profile Photo: </label>
+        <input type="file" class="form-control" formControlName="profileImage" id="profileImage">
   </div>
      
   <div *ngIf="currentBtn.name=='add_social'" class="form-group">

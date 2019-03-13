@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-@CrossOrigin(origins = "*", allowCredentials = "true", allowedHeaders = "*", maxAge = 3600)
+//https://mysterious-harbor-56923.herokuapp.com
+@CrossOrigin
 @RestController
 public class UsersController {
 
@@ -63,7 +63,7 @@ public class UsersController {
     }
 
 
-    @PostMapping("/profile/user")
+    @RequestMapping(value = "/profile/user", method = {RequestMethod.GET,RequestMethod.POST})
     User createOrGetUser(@RequestBody String email) 
     {
         User users = usersRepository.findByEmail(email);

@@ -6,8 +6,6 @@ import com.comp680.backend.models.Question;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 @Repository
-
-
-public interface QuestionRepository extends JpaRepository<Question, Long> {
+public interface QuestionsRepository extends JpaRepository<Question, Long> {
 
 }

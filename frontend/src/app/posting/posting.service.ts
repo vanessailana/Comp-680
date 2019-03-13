@@ -21,6 +21,7 @@ export class PostingService {
  
   supportUrl = 'http://localhost:8080/createJob';  // URL to web api
   viewJobs = 'http://localhost:8080/all';  // URL to web api
+  deleteJobs = 'http://localhost:8080/jobs';  // URL to web api
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
@@ -46,9 +47,7 @@ export class PostingService {
   }
 
 
- createPost(posting:Posting) {
-    return this.http.post(this.supportUrl,posting).catch(this.errorHandler);
-  }
+
 
 
    updatePosting(posting:Posting){
@@ -58,7 +57,7 @@ export class PostingService {
       }
 
   deletePosting(post) {
-    return this.http.delete(this.supportUrl + "/"+ post.id);
+    return this.http.delete(this.deleteJobs + "/"+ post.id);
   }
 
 

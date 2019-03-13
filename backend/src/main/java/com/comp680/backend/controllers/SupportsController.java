@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @Controller
-public class SupportController {
+public class SupportsController {
 	@Autowired
 	private JavaMailSender sender;
 	

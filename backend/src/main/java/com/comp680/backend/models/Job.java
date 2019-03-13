@@ -23,8 +23,11 @@ import javax.persistence.Temporal;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="jobs")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Job {
 
   @Id
@@ -32,9 +35,9 @@ public class Job {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
-  @Column(name="user_id", nullable=true)
-  private long user_id;
-
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name="user_id", nullable=false)
+  private User user;
   
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true; 
@@ -130,4 +133,15 @@ public class Job {
   public void setEndCompensation (Double  end_compensation) {
     this.end_compensation = end_compensation;
   }
+
+  public User getUser()
+  {
+    return this.user;
+  }
+
+  public void setUser(User user)
+  {
+    this.user = user;
+  }
+
 }

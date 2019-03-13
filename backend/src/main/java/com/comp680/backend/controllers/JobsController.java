@@ -22,7 +22,7 @@ JobsRepository jobRepo;
 
 
 
- @GetMapping("/all")
+    @GetMapping("jobs/all")
     public List<Job> findAll()
     {
         return jobRepo.findAll();
@@ -35,12 +35,20 @@ JobsRepository jobRepo;
         return jobRepo.save(job);
     }
 
- @DeleteMapping("/jobs/{id}")
-     public List<Job> delete(@PathVariable("id") Long id)
+    @DeleteMapping("recruiter/my_jobs/{id}/{user_id}")
+     public List<Job> delete(@PathVariable("id") Long id,@PathVariable("user_id") Long user_id)
 
      {
          jobRepo.deleteById(id);
-         return jobRepo.findAll();
+         return jobRepo.findByUserId(user_id);
+     }
+
+     @GetMapping("/recruiter/my_jobs/{id}")
+     public List<Job>  getMyJobs(@PathVariable("id") Long id)
+     {
+        List<Job> jobs = jobRepo.findByUserId(id);
+
+        return jobs;
      }
 
  }

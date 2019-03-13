@@ -44,11 +44,18 @@ export class PostingService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/all');
+    return this.http.get('http://localhost:8080/jobs/all',httpOptions);
+  }
+
+
+  getMyJobs(id :any ): Observable<any>
+  {
+    return this.http.get("http://localhost:8080/recruiter/my_jobs/"+id,httpOptions);
+
   }
 
   createQuestion(question: any) :Observable<any> {
-return this.http.post<any>(this.quest,question,httpOptions);
+    return this.http.post<any>(this.quest,question,httpOptions);
 
   }
 

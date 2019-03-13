@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import {JobDescriptionComponent} from './posting/job-description/job-description.component';
 import { BrowserModule } from '@angular/platform-browser';
+
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from './auth/auth.service';
@@ -23,7 +25,8 @@ import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import {NgxPaginationModule} from 'ngx-pagination';
+import { MyJobsComponent } from './my-jobs/my-jobs.component'; 
 
 @NgModule({
   declarations: [
@@ -34,7 +37,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     SupportFormComponent,
     PostingComponent,
     ViewpostingComponent,
-    JobDescriptionComponent
+    JobDescriptionComponent,
+    MyJobsComponent
   ],
   imports: [
 NgbModule, MatDialogModule, NgxPaginationModule,
@@ -43,7 +47,7 @@ NgbModule, MatDialogModule, NgxPaginationModule,
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
     NgbModule,
-
+    NgxPermissionsModule.forRoot(),
     FormsModule,
     MatStepperModule,
     MatFormFieldModule,

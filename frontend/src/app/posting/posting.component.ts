@@ -67,7 +67,7 @@ done() {
 
      
       sub.subscribe(
-        res => 
+        (res) => 
         {
 
           this.jobMetadata = res;
@@ -77,12 +77,13 @@ done() {
           let questions = this.formGroup.controls.questions.value;
 
           let job = this.jobMetadata;
+          let service = this.postingService;
           questions.forEach(function (question)
           {
           
             
             question['job'] = job;
-            this.postingService.createQuestion(question).subscribe(response=> {
+            service.createQuestion(question).subscribe(response=> {
             console.log(response);
             });
           
@@ -124,17 +125,6 @@ save() {
   }
 
 
-  saveQuest() {
-   this.postingService.createQuestion(this.question).subscribe(result => {
-       console.log('HTTP Response', result.id);
-       
-
-     console.log(this.formGroup.controls.job);
-
-    }, error => console.error(error));
-   
-     console.log(this.formGroup.controls.job.value.id);
-  }
 
 
 get job_id(): any {

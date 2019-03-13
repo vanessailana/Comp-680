@@ -23,10 +23,17 @@
         <a class="nav-link dropdown-toggle" id="id01"  ngbDropdownToggle>Jobs</a>
         <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
           
+      <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
 
+       
+            <div *ngxPermissionsOnly="['admin', 'user']">
+          <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
+          </div>
+          <ng-template ngxPermissionsOnly="admin">
           <a class="dropdown-item" *ngIf="auth.isAuthenticated()" routerLink="/posting">Create a Job</a>
-            
-          <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
+            </ng-template>
+
+        
         </div>
       </li>
 

@@ -29,7 +29,9 @@ export class ProfileComponent implements OnInit {
       console.log(this.profile.email);
 
       this.profileService.createOrUserInfo(this.profile.email).subscribe(
-        res=>{ console.log(res); this.userInfo=res;},
+        res=>{ console.log(res); this.userInfo=res;
+          localStorage.setItem('user',JSON.stringify(this.userInfo));
+        },
         err=>console.log(err.message),
         () => console.log("Complete")
       );
@@ -40,9 +42,9 @@ export class ProfileComponent implements OnInit {
      
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
-
+        
         this.profileService.createOrUserInfo(this.profile.email).subscribe(
-          res=> { console.log(res); this.userInfo=res;},
+          res=> { console.log(res); this.userInfo=res; localStorage.setItem('user',JSON.stringify(this.userInfo));},
           err=>console.log(err),
           () => console.log("Complete")
         );

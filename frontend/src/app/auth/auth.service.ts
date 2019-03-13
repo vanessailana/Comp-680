@@ -116,7 +116,7 @@ public getProfile(cb): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-
+    localStorage.removeItem('user');
     localStorage.removeItem('scopes');
        localStorage.removeItem('roles');
     // Go back to the home route

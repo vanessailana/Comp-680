@@ -140,9 +140,9 @@ get job_id(): any {
           title: ["",[Validators.required]],
           description: ["",[Validators.required]],
           location: ["",[Validators.required]],
-          start_compensation: ["",[Validators.required]],
-          end_compensation: [""],
-          employment_type: [""]
+          startCompensation: ["",[Validators.required]],
+          endCompensation: [""],
+          employmentType: [""]
     
       }),
       questions : this.fb.array([

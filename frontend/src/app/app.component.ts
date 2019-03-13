@@ -12,6 +12,9 @@ export class AppComponent implements OnInit {
   profile:any;
   searchForm : FormGroup;
 
+  perm : string;
+
+  username : string;
   constructor(
     public auth: AuthService,
     private http: HttpClient,
@@ -21,9 +24,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
-    const perm = localStorage.getItem('roles');
-    console.log(perm);
-    
+    this.perm = localStorage.getItem('roles');
+    this.username = JSON.parse(localStorage.getItem('user')).firstName;
+    console.log(this.perm);
+
     this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],
       location: [""]

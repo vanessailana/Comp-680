@@ -18,6 +18,11 @@ export class ViewpostingComponent  implements OnInit {
    p: number = 1;
   totalRec : number;
  jobs: Array<any>;
+
+
+ userApplied: boolean;
+
+
   constructor(public dialog: MatDialog, private appliedService: AppliedService, private postingService: PostingService,private modalService: NgbModal,private _rotuer:Router) { }
 
   ngOnInit() {
@@ -65,11 +70,11 @@ location.reload();
 
   dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-  
+      this.userApplied = false;
     });
 }
 
-  applyToJob(job) {
+  applyToJob(job,btn:HTMLButtonElement) {
     let user = JSON.parse(localStorage.getItem('user'));
     console.log(job);
     console.log(user);
@@ -78,6 +83,8 @@ location.reload();
     this.appliedService.apply(applicant).subscribe(
     res => {
       console.log("res: " + JSON.stringify(res));
+      btn.disabled = true;
+      this.userApplied = true;
     },
     err => {
       console.log("err: " + JSON.stringify(err));

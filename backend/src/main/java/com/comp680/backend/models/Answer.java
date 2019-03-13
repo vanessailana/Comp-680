@@ -24,18 +24,13 @@ public class Answer {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="applicant_id", nullable=false)
-    private long applicant_id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="applicant_id",referencedColumnName="applicant_id",insertable=false, updatable=false)
+    @JoinColumn(name="applicant_id", nullable=false)
     private Applicant applicant;
 
-    @Column(name="question_id", nullable=false)
-    private long question_id;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name="question_id",referencedColumnName="question_id",insertable=false, updatable=false)
+    @JoinColumn(name="question_id", nullable=false)
     private Question question;
 
     @Column(name="answer", nullable=false)

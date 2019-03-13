@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 import { AuthService } from './../auth/auth.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -34,23 +35,26 @@ export class ProfileComponent implements OnInit {
   skillId: number;
   projectId : number;
 
-  constructor(public auth: AuthService, private modalService: NgbModal,private profileService:ProfileService, private formBuilder: FormBuilder) {
+  constructor(public auth: AuthService, private modalService: NgbModal,private profileService:ProfileService, private formBuilder: FormBuilder,
+    private router: Router) {
 
     if (this.auth.userProfile) {
       this.profile = this.auth.userProfile;
 
       this.profileService.createOrUserInfo(this.profile.email).subscribe(
-
-        res=>{ console.log(res); this.userInfo=res;
-          localStorage.setItem('user',JSON.stringify(this.userInfo));
-        },
-        err=>console.log(err.message),
-
         res=> 
         { 
           console.log(res); 
           this.userInfo=res;
-          localStorage.setItem('user', JSON.stringify(this.userInfo));
+          localStorage.setItem('user',JSON.stringify(this.userInfo));
+          let role = localStorage.getItem('roles');
+
+          if(role == 'admin')
+          {
+            this.router.navigate(['/posting']);
+          }
+          
+          
           this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
             res => {console.log(res); this.socialInfo = res;},
             err => console.log(err.message),
@@ -76,7 +80,6 @@ export class ProfileComponent implements OnInit {
           )
         },
         err=>console.log(err),
-
         () => console.log("Complete")
       );
      
@@ -86,17 +89,20 @@ export class ProfileComponent implements OnInit {
      
       this.auth.getProfile((err, profile) => {
         this.profile = profile;
-
-        
-        this.profileService.createOrUserInfo(this.profile.email).subscribe(
-          res=> { console.log(res); this.userInfo=res; localStorage.setItem('user',JSON.stringify(this.userInfo));},
-
         this.profileService.createOrUserInfo(this.profile.email).subscribe(
           res=> 
           { 
             console.log(res); 
             this.userInfo=res;
-            localStorage.setItem('user', JSON.stringify(this.userInfo));
+            localStorage.setItem('user',JSON.stringify(this.userInfo));
+
+            let role = localStorage.getItem('roles');
+
+            if(role == 'admin')
+            {
+              this.router.navigate(['/posting']);
+            }
+            
             this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
               res => {console.log(res); this.socialInfo = res;},
               err => console.log(err.message),
@@ -126,7 +132,6 @@ export class ProfileComponent implements OnInit {
               ()=> console.log("Complete")
             )
           },
->>>>>>> master
           err=>console.log(err),
           () => console.log("Complete")
         );

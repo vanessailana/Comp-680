@@ -22,21 +22,24 @@
       <li class="nav-item dropdown" ngbDropdown>
         <a class="nav-link dropdown-toggle" id="id01"  ngbDropdownToggle>Jobs</a>
         <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
-          
-      <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
-
        
-            <div *ngxPermissionsOnly="['admin', 'user']">
-          <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
+      <div *ngIf="perm=='admin'"  >
+          <div>
+              <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
           </div>
-          <ng-template ngxPermissionsOnly="admin">
-          <a class="dropdown-item" *ngIf="auth.isAuthenticated()" routerLink="/posting">Create a Job</a>
-            </ng-template>
+     
+          <a class="dropdown-item" routerLink="/posting">Create a Job</a>
+      </div>
 
-        
-        </div>
-      </li>
+      <div *ngIf="perm=='user'"  >
+      <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
+      </div>
 
+
+      </div>
+      </li> 
+     
+   
       <a
 
       id="qsLoginBtn"
@@ -46,15 +49,17 @@
         Login
       </a>
 
-      <a class="nav-link" *ngIf="auth.isAuthenticated()" routerLink="/profile">
-        Profile   
-      </a>
-
+    
+      <div *ngIf="perm=='user'">
+        <a  class="nav-link" routerLink="/profile">
+          Profile   
+        </a>
+      </div>
 
 
 
       <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
-          Log Out:  
+          <i class="fas fa-user"> </i> Log Out: {{username}}
 
       </a>
     </ul>
@@ -86,7 +91,9 @@
     
 </div>
 
-<div style="padding-top: 65px"> </div>
+
+
+
 
 <main class="container">
   <router-outlet></router-outlet>

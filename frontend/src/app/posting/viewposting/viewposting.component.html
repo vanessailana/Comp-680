@@ -37,11 +37,16 @@
     <p>{{job.description}}</p>
   </div>
   <div class="modal-footer">
-    <button (click)="applyToJob(job)">Apply</button>
+    <button #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
+  </div>
+
+  <div *ngIf="userApplied" class="alert alert-success">
+    Thank you for applying 
   </div>
 </ng-template>
 
 <button class="btn btn-outline-dark" (click)="open(content)">View Job Description</button>
+
  </td>
 
 

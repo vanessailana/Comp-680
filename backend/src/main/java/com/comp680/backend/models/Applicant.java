@@ -24,20 +24,19 @@ public class Applicant {
 
   @Id
   @Column(name="applicant_id")
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name="user_id", nullable=false)
-  private long user_id;
+
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name="user_id",referencedColumnName="user_id",insertable=false, updatable=false)
+  @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  @Column(name="job_id", nullable=false)
-  private long job_id;
+
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name="job_id",referencedColumnName="job_id",insertable=false, updatable=false)
+  @JoinColumn(name = "job_id", nullable = false)
   private Job job;
 
   @Column(name="profile_link", nullable=true)

@@ -12,7 +12,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 })
 export class PostingComponent implements OnInit {
-  question: Question;
+  jobMetadata: any;
   formGroup: FormGroup;
    submitSuccess: boolean;
   submitFail: boolean;
@@ -65,35 +65,33 @@ done() {
     console.log(this.formGroup);
       var sub = this.postingService.sumbitPost(this.formGroup.controls.job.value);
 
+     
       sub.subscribe(
         res => 
         {
 
-          this.submitFail=true; 
-          this.submitSuccess = false;
+          this.jobMetadata = res;
+          console.log("Meta DAta"+JSON.stringify(this.jobMetadata));
           console.log('HTTP Response', res);
           console.log(this.formGroup.value.id);
-    
+          let questions = this.formGroup.controls.questions.value;
 
-          localStorage.setItem("id",this.formGroup.value.id)
-
+          let job = this.jobMetadata;
+          questions.forEach(function (question)
+          {
           
-        },
-        err => 
-        { 
-          this.submitFail=true; 
-          this.submitSuccess = false;
-          console.log('HTTP Error', err)
-          submitBtn.disabled = false;
-        },
-        () => 
-        {
-          console.log('HTTP request completed.');
-          submitBtn.disabled = false;
-          console.log(sub);
-        }
+            
+            question['job'] = job;
+            this.postingService.createQuestion(question).subscribe(response=> {
+            console.log(response);
+            });
+          
 
-      )        
+          });
+          
+        });
+
+       
     }
     else
     {

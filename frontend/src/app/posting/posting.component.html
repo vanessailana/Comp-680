@@ -68,15 +68,12 @@
           <div *ngFor="let quest of formGroup.controls.questions.controls; let i=index"  [formGroupName]="i">
             <ng-template matStepLabel>Questions to ask candidates</ng-template>
             <mat-form-field>
-              <input matInput placeholder="Question" formControlName="question" required>
+              <input matInput placeholder="Question" formControlName="question">
             </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="job_id"  formControlName="job_id" required> {{job_id}}
-            </mat-form-field>
+         
         <button  class="btn btn-danger" (click)="removeQuestion(i)"> Remove Question </button>
           </div>
         <div>
-          <button (click)="saveQuest()"> Save Questions</button>
           <button class="btn btn-dark" mat-button matStepperPrevious>Back</button>
           <button class="btn btn-dark" (click)="done()" mat-button matStepperNext>Next</button>
         </div>

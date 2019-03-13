@@ -27,12 +27,9 @@ public class Question  {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
-  @Column(name="job_id",nullable=false)
-  private long job_id;
 
-  @JsonIgnore
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name="job_id",referencedColumnName="job_id",insertable=false, updatable=false)
+  @JoinColumn(name="job_id",nullable=false)
   private Job job;
   
   @Column(name="question",nullable=true)
@@ -42,12 +39,12 @@ public class Question  {
     return question;
   }
 
-  public Long getJobId(){
-  	return job_id;
+  public Long getId(){
+ 	return id;
   }
 
-  public void setJobId(Long job_id) {
-  	this.job_id=job_id;
+  public  void setId(Long id){
+ 	this.id=id;
   }
 
   public void setQuestion(String question){

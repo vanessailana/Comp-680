@@ -31,7 +31,7 @@
           <a class="dropdown-item" routerLink="/posting">Create a Job</a>
       </div>
 
-      <div *ngIf="perm=='user'"  >
+      <div *ngIf="perm!='admin'"  >
       <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
       </div>
 

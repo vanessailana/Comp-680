@@ -23,11 +23,8 @@ export class AppComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     auth.handleAuthentication();
-  }
-
-  ngOnInit(){
     this.perm = localStorage.getItem('roles');
-    this.username = JSON.parse(localStorage.getItem('user')).firstName;
+    this.username = localStorage.getItem('user');
     console.log(this.perm);
 
     this.searchForm = this.formBuilder.group({
@@ -38,6 +35,10 @@ export class AppComponent implements OnInit {
     if(localStorage.getItem('isLoggedIn')) {
       this.auth.renewTokens();
     }
+  }
+
+  ngOnInit(){
+   
   }
 
   onSubmit(btn:HTMLButtonElement)

@@ -22,6 +22,7 @@ export class AuthService {
     domain: 'comp586proj.auth0.com',
     responseType: 'token id_token',
     redirectUri: 'https://mysterious-harbor-56923.herokuapp.com/callback',
+    //redirectUri: 'http://localhost:4200',
     scope: 'openid profile email'
   });
 

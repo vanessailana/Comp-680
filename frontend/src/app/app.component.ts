@@ -23,9 +23,9 @@ export class AppComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     auth.handleAuthentication();
-    this.perm = localStorage.getItem('roles');
-    this.username = localStorage.getItem('user');
-    console.log(this.perm);
+    //this.perm = localStorage.getItem('roles');
+    //this.username = localStorage.getItem('user');
+    //console.log(this.perm);
 
     this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],

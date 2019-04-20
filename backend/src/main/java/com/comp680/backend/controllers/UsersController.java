@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //https://mysterious-harbor-56923.herokuapp.com
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200" , maxAge = 3600 )
 @RestController
 public class UsersController {
 

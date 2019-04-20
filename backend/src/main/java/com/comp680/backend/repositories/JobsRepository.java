@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface JobsRepository extends JpaRepository<Job, Long> {
 
 
-    List<Job> findByUserId(Long id);
+    //List<Job> findByUserId(Long id);
 
     boolean existsById(long id);
 

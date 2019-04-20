@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Date;
 import java.sql.Timestamp;
 import org.springframework.web.multipart.MultipartFile;
+
+import net.bytebuddy.implementation.bytecode.constant.LongConstant;
+
 import java.time.LocalDateTime;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -36,9 +39,8 @@ public class Job {
   private Long id;
 
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name="user_id", nullable=false)
-  private User user;
+  @JoinColumn(name="user_id", nullable=true)
+  private Long user_id;
   
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true;
@@ -52,8 +54,6 @@ public class Job {
   @Column(name="start_compensation",nullable=false)
   private double start_compensation;
 
-  @Column(name="end_compensation",nullable=true)
-  private double end_compensation;
 
   @Column(name="employment_type",nullable=true)
   public String employment_type;
@@ -127,22 +127,15 @@ public class Job {
     this.start_compensation = start_compensation;
   }
 
-  public double getEndCompensation() {
-    return end_compensation;
-  }
 
-  public void setEndCompensation (Double  end_compensation) {
-    this.end_compensation = end_compensation;
-  }
-
-  public User getUser()
+  public Long getUser()
   {
-    return this.user;
+    return this.user_id;
   }
 
-  public void setUser(User user)
+  public void setUser(Long user_id)
   {
-    this.user = user;
+    this.user_id = user_id;
   }
 
 }

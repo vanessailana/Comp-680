@@ -21,7 +21,8 @@ export class PostingService {
  
   supportUrl = 'https://dry-coast-23307.herokuapp.com/createJob';  // URL to web api
   viewJobs = 'https://dry-coast-23307.herokuapp.com/all';  // URL to web api
-  deleteJobs = 'https://dry-coast-23307.herokuapp.com/jobs';  // URL to web api
+  //deleteJobs = 'https://dry-coast-23307.herokuapp.com/jobs';  // URL to web api
+  deleteJobs='https://localhost:8080/'
   quest= 'https://dry-coast-23307.herokuapp.com/createQuestion'; 
   private handleError: HandleError;
 
@@ -44,13 +45,13 @@ export class PostingService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get('https://dry-coast-23307.herokuapp.com/jobs/all',httpOptions);
+    return this.http.get('//localhost:8080/jobs/all/');
   }
 
 
   getMyJobs(id :any ): Observable<any>
   {
-    return this.http.get("https://dry-coast-23307.herokuapp.com/recruiter/my_jobs/"+id,httpOptions);
+    return this.http.get("https://localhost:8080/recruiter/my_jobs/"+id,httpOptions);
 
   }
 
@@ -70,7 +71,7 @@ export class PostingService {
       }
 
   deletePosting(post) {
-    return this.http.delete(this.deleteJobs + "/"+ post.id);
+    return this.http.delete(this.deleteJobs +'recruiter/my_jobs/'+post.id+'/'+post.user_id);
   }
 
 

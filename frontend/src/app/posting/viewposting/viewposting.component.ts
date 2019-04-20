@@ -19,27 +19,31 @@ export class ViewpostingComponent  implements OnInit {
   totalRec : number;
  jobs: Array<any>;
 
+
  appliedJobs : any;
 
 
  userApplied: boolean;
 
 
-  constructor(public dialog: MatDialog, private appliedService: AppliedService, private postingService: PostingService,private modalService: NgbModal,private _rotuer:Router) { }
+  constructor(public dialog: MatDialog, 
+    private appliedService: AppliedService, 
+    private postingService: PostingService,
+    private modalService: NgbModal,private _rotuer:Router) { }
 
   ngOnInit() {
-  this.postingService.getAll().subscribe(data => {
+   this.postingService.getAll().subscribe(data => {
       this.jobs= data;
-      console.log(this.jobs);
+    
     });
+
+  
   }
 
   open(content) {
     this.modalService.open(content);
   }
-  test(){
-  this._rotuer.navigate(['/view_jobs']);
-  }
+
 
   delete(contentd) {
     this.modalService.open(contentd);

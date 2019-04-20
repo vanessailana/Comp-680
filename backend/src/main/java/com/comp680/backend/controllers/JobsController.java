@@ -14,7 +14,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestBody;
 //https://mysterious-harbor-56923.herokuapp.com
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200" , maxAge = 3600 )
 public class JobsController {
 
 @Autowired 
@@ -40,15 +40,15 @@ JobsRepository jobRepo;
 
      {
          jobRepo.deleteById(id);
-         return jobRepo.findByUserId(user_id);
+         return null;
      }
 
      @GetMapping("/recruiter/my_jobs/{id}")
      public List<Job>  getMyJobs(@PathVariable("id") Long id)
      {
-        List<Job> jobs = jobRepo.findByUserId(id);
+       // List<Job> jobs = jobRepo.findByUserId(id);
 
-        return jobs;
+        return  null;
      }
 
  }

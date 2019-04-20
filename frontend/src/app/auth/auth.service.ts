@@ -1,5 +1,3 @@
-// src/app/auth/auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
@@ -21,8 +19,8 @@ export class AuthService {
     clientID: 'Rn9gH_Xwv3LL6GkmAs6R9vm7hMEL8DsB',
     domain: 'comp586proj.auth0.com',
     responseType: 'token id_token',
-    redirectUri: 'https://mysterious-harbor-56923.herokuapp.com/callback',
-    //redirectUri: 'http://localhost:4200',
+    //redirectUri: 'https://localhost:4200/callback',
+    redirectUri: 'http://localhost:4200',
     scope: 'openid profile email'
   });
 
@@ -179,5 +177,4 @@ public getProfile(cb): void {
   }
 
 }
-
 

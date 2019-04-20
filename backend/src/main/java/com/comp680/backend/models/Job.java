@@ -55,7 +55,7 @@ public class Job {
   @Column(name="end_compensation",nullable=true)
   private double end_compensation;
 
-  @Column(name="employment_type",nullable=false)
+  @Column(name="employment_type",nullable=true)
   public String employment_type;
 
   @Column(name="location",nullable=false)

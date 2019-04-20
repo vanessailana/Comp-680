@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import {Posting} from './posting.model';
-import {Question} from './question.model';
+import {question} from './question.model';
 import {PostingService} from './posting.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -16,7 +16,7 @@ export class PostingComponent implements OnInit {
   formGroup: FormGroup;
    submitSuccess: boolean;
   submitFail: boolean;
-   test=localStorage.getItem('job_id');
+  test=localStorage.getItem('job_id');
   constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
     this.submitSuccess = false;
     this.submitFail = false;
@@ -30,30 +30,29 @@ export class PostingComponent implements OnInit {
         employmentType: [""]
   
     }),
-    questions : this.fb.array([
-      this.initQuestion()
+    questionForm : this.fb.group({
+      questions: this.fb.array([{
+        question: ['', Validators.required],
+        job_id: ['']
+      }])
+    }
+    )
 
-    ])
+    })
 
    
-  })
-
   }
 
-
-  initQuestion() {
-    // initialize our address
-    return this.fb.group({
-      question: ['', Validators.required],
-      job_id: ['']
-    });
-  }
 
   addQuestion() {
-    const control = <FormArray>this.formGroup.controls['questions'];
-    control.push(this.initQuestion());
+    
+    this.questions.push(new FormControl({
+      question: ['', Validators.required],
+      job_id: ['']
+    }));
   }
 
+get questions(): FormArray { return this.formGroup.controls.questionForm.get('questions') as FormArray; }
 
 done() {
   localStorage.removeItem("job_id");
@@ -65,8 +64,7 @@ done() {
   }
 
   removeQuestion(i: number) {
-    const control = <FormArray>this.formGroup.controls['questions'];
-    control.removeAt(i);
+    this.questions.removeAt(i);
   }
 
   get diagnostic() { return JSON.stringify(this.formGroup.controls.job.value); }

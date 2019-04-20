@@ -11,9 +11,10 @@ export class MyJobsComponent implements OnInit {
 
   jobs:any;
   p: number = 1;
+  showButton: boolean;
   constructor(private postingService: PostingService,private modalService: NgbModal) { 
 
-
+    this.showButton = false;
  
 
   }
@@ -21,12 +22,25 @@ export class MyJobsComponent implements OnInit {
   ngOnInit() {
 
     let user = JSON.parse(localStorage.getItem('user'));
+
+
+   if(this.jobs!=null) {
+
+   
+    
     this.postingService.getMyJobs(user.id).subscribe(
-      (res)=> {this.jobs = res; console.log(res);},
-      (err)=> console.log(err),
-      ()=>console.log("Completed")
-    );
+      (res)=> {this.jobs = res; 
+        console.log(res.jobs.user.id);
+      },
+   
+      ()=> console.log(this.jobs));
 
+    }
+    else {
+     this.showButton = true;
+    }
+  
   }
-
 }
+
+

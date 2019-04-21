@@ -18,7 +18,7 @@ export class ViewpostingComponent  implements OnInit {
    p: number = 1;
   totalRec : number;
  jobs: Array<any>;
-
+searchText;
 
  appliedJobs : any;
 

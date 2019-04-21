@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import {JobDescriptionComponent} from './posting/job-description/job-description.component';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -47,7 +48,7 @@ import { AppliedService } from './applied/applied.service';
   ],
   imports: [
 NgbModule, MatDialogModule, NgxPaginationModule,
-    BrowserModule,
+    BrowserModule, Ng2SearchPipeModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,

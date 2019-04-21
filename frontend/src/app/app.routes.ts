@@ -15,5 +15,5 @@ export const ROUTES: Routes = [
   { path: 'support', component: SupportFormComponent},
   { path: 'view_jobs', component: ViewpostingComponent},
   { path: 'my_jobs', component: MyJobsComponent},
-  { path: '**', redirectTo: '' }
+  { path: '**', component: ViewpostingComponent}
 ];

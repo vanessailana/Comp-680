@@ -67,27 +67,8 @@
 </nav>
 
 <div class="container border" style="margin-top: 5%">
-    <form   [formGroup]="searchForm" (ngSubmit)="onSubmit(submitBtn)" >
-      <div class="form-group row">
-        <div class="col-xs-3 col-md-3">
-        <label for="keyword"> </label>
-        <input  placeholder="Keyword" type="text" class="form-control" formControlName="keyword" id="keyword" required >
-        <div *ngIf="searchForm.controls['keyword'].invalid && (searchForm.controls['keyword'].dirty)"  
-        class="alert alert-danger">
-          Keyword is required
-        </div>
-        </div>
-    
-        <div class="col-xs-3 col-md-3 offset-md-1">
-        <label for="location">  </label>
-        <input placeholder="Location" type="text" formControlName="location" class="form-control" id="location" required>
-        </div>
-        <div class="hidden-lg hidden-md hidden-sm">&nbsp;</div>
-        <div style="display : flex; align-items : center;" class="col-xs-3 col-md-3 offset-md-1">
-          <button #submitBtn type="submit" class="button-align btn btn-lg btn-dark"> <i class="fa fa-search-plus" aria-hidden="true"></i>Search </button>
-        </div>
-      </div>
-    </form>
+ 
+   
     
 </div>
 

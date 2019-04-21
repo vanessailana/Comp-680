@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl, AbstractControl } from '@angular/forms';
 import {Posting} from './posting.model';
 import {question} from './question.model';
 import {PostingService} from './posting.service';
@@ -30,29 +30,31 @@ export class PostingComponent implements OnInit {
         employmentType: [""]
   
     }),
-    questionForm : this.fb.group({
-      questions: this.fb.array([{
-        question: ['', Validators.required],
-        job_id: ['']
-      }])
-    }
-    )
+    
+    questions: this.fb.array(
+      [
+        this.fb.group({
+          question : ["", [Validators.required]]
+        })
+      ]
+      )
 
     })
 
-   
   }
 
 
-  addQuestion() {
-    
-    this.questions.push(new FormControl({
-      question: ['', Validators.required],
-      job_id: ['']
-    }));
-  }
-
-get questions(): FormArray { return this.formGroup.controls.questionForm.get('questions') as FormArray; }
+addQuestion() {
+  const control = this.formGroup.get('questions');
+  //control.push(this.initQuestion());
+}
+initQuestion()
+{
+  return this.fb.group({
+    question : ["", [Validators.required]]
+  })
+}
+get questions(): FormArray { return this.formGroup.get('questions') as FormArray }
 
 done() {
   localStorage.removeItem("job_id");
@@ -68,6 +70,10 @@ done() {
   }
 
   get diagnostic() { return JSON.stringify(this.formGroup.controls.job.value); }
+
+
+  get d2() { return JSON.stringify(this.formGroup.controls.questions.value); }
+
 
 
   onSubmit(submitBtn: HTMLButtonElement){

@@ -1,4 +1,7 @@
 {{ diagnostic }}
+
+{{d2}}
+
 <mat-horizontal-stepper [linear]="true" #stepper completed=true>
     <mat-step [stepControl]="formGroup.controls.job">
       <form class="form-group" [formGroup]="formGroup.controls.job">
@@ -31,12 +34,14 @@
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="formGroup.controls.questionForm" [optional]="true">
-        <form [formGroup]="formGroup.controls.questionForm">
+    <mat-step [stepControl]="formGroup.controls.questions" [optional]="true">
+        <form [formGroup]="formGroup">
             <div formArrayName="questions">
-              <div *ngFor="let question of questions.controls; index as i">
-                <input [formControlName]="i" placeholder="Question">
-                <button (click)="removeQuestion(i)">Remove</button>
+              <div *ngFor="let quest of questions.value; index as i">
+                  <mat-form-field [formGroupName]="i">
+                      <input type="text" matInput placeholder="question" formControlName="question">
+                  </mat-form-field>
+                  <button (click)="removeQuestion(i)">Remove</button>
               </div>
             </div>
          

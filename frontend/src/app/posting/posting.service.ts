@@ -49,9 +49,10 @@ export class PostingService {
   }
 
 
-  getMyJobs(id :any ): Observable<any>
+  getMyJobs(): Observable<any>
   {
-    return this.http.get("https://localhost:8080/recruiter/my_jobs/"+id,httpOptions);
+    let user = JSON.parse(localStorage.getItem('user'));
+    return this.http.get('//localhost:8080/recruiter/my_jobs/'+user.id);
 
   }
 

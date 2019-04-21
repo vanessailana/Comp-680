@@ -19,11 +19,11 @@ const httpOptions = {
 export class PostingService {
  private posting = new Posting();
  
-  supportUrl = 'https://dry-coast-23307.herokuapp.com/createJob';  // URL to web api
-  viewJobs = 'https://dry-coast-23307.herokuapp.com/all';  // URL to web api
+  supportUrl = 'http://localhost:8080/createJob';  // URL to web api
+  viewJobs = 'http://localhost:8080/all';  // URL to web api
   //deleteJobs = 'https://dry-coast-23307.herokuapp.com/jobs';  // URL to web api
-  deleteJobs='https://localhost:8080/'
-  quest= 'https://dry-coast-23307.herokuapp.com/createQuestion'; 
+  deleteJobs='http://localhost:8080/'
+  quest= 'http://localhost:8080/createQuestion'; 
   private handleError: HandleError;
 
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
@@ -51,8 +51,11 @@ export class PostingService {
 
   getMyJobs(): Observable<any>
   {
+
     let user = JSON.parse(localStorage.getItem('user'));
     return this.http.get('//localhost:8080/recruiter/my_jobs/'+user.id);
+
+
 
   }
 
@@ -79,7 +82,7 @@ export class PostingService {
 
    errorHandler(error:Response){
 
-     return Observable.throw(error||"SERVER ERROR");
+    return Observable.throw(error||"SERVER ERROR");
   }
 
 }

@@ -19,11 +19,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //https://mysterious-harbor-56923.herokuapp.com
 @EnableWebMvc
 @Controller
+@CrossOrigin(origins = "http://localhost:4200" , maxAge = 3600 )
 public class SupportsController {
 	@Autowired
 	private JavaMailSender sender;
 	
-	@CrossOrigin
 	@RequestMapping(value = "/support", method = RequestMethod.POST, consumes="application/json",produces = "application/json")
 	public @ResponseBody ResponseEntity<?> sendEmail(@RequestBody Support request) {
 		JSONObject obj = new JSONObject();

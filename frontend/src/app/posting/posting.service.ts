@@ -53,7 +53,7 @@ export class PostingService {
   {
 
     let user = JSON.parse(localStorage.getItem('user'));
-    return this.http.get('//localhost:8080/recruiter/my_jobs/'+user.id);
+    return this.http.get('//localhost:8080/recruiter/my_jobs/'+user.id+'/');
 
 
 

@@ -4,6 +4,8 @@ import {Posting} from './posting.model';
 import {question} from './question.model';
 import {PostingService} from './posting.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import{Router}  from '@angular/router';
+
 
 @Component({
   selector: 'app-posting',
@@ -16,8 +18,10 @@ export class PostingComponent implements OnInit {
   formGroup: FormGroup;
    submitSuccess: boolean;
   submitFail: boolean;
-  test=localStorage.getItem('job_id');
-  constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
+  test=localStorage.getItem('job_id')
+  
+  constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal, 
+    private router: Router) {
     this.submitSuccess = false;
     this.submitFail = false;
     this.formGroup = this.fb.group({
@@ -157,6 +161,17 @@ get job_id(): any {
   ngOnInit() {
   
 
+   var role= localStorage.getItem('roles');
+   
+    
+    if(role!=='admin') {
+
+    
+
+    
+
+      this.router.navigateByUrl('/view_jobs');
+    }
 
   }
 

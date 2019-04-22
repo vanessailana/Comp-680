@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+
+import { NgxPermissionsService } from 'ngx-permissions';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms' 
 import { HttpClient } from '@angular/common/http';
 @Component({
@@ -10,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   profile:any;
+
+  check= localStorage.getItem('roles');
   searchForm : FormGroup;
 
   perm : string;
@@ -19,7 +23,7 @@ export class AppComponent implements OnInit {
   username : string;
   constructor(
     public auth: AuthService,
-    private http: HttpClient,
+    private http: HttpClient, private permissionsService: NgxPermissionsService,
     private formBuilder: FormBuilder
   ) {
     auth.handleAuthentication();
@@ -38,7 +42,14 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
+   var check= localStorage.getItem('roles');
+   const role= [localStorage.getItem('roles')];
+   this.permissionsService.loadPermissions(role);
+
    
+
+ 
+    
   }
 
   onSubmit(btn:HTMLButtonElement)

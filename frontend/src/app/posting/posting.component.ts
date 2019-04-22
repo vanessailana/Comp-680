@@ -18,7 +18,9 @@ export class PostingComponent implements OnInit {
   submitFail: boolean;
   test=localStorage.getItem('job_id');
   constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
+    
     this.submitSuccess = false;
+
     this.submitFail = false;
     this.formGroup = this.fb.group({
       job : this.fb.group({
@@ -31,30 +33,29 @@ export class PostingComponent implements OnInit {
   
     }),
     
-    questions: this.fb.array(
-      [
-        this.fb.group({
-          question : ["", [Validators.required]]
-        })
-      ]
-      )
+    questions: this.initQuestion()
 
     })
 
   }
 
+  initQuestion() {
+    var formArray = this.fb.array([]);
+    formArray.push(this.fb.group({
+        question: ['', [Validators.required]],
+      }))
+    return formArray;
+  }
 
-addQuestion() {
-  const control = this.formGroup.get('questions');
-  //control.push(this.initQuestion());
-}
-initQuestion()
-{
-  return this.fb.group({
-    question : ["", [Validators.required]]
-  })
-}
-get questions(): FormArray { return this.formGroup.get('questions') as FormArray }
+  addQuestion() {
+    const controls = <FormArray>this.formGroup.controls['questions'];
+    let formGroup = this.fb.group({
+      question: ['', [Validators.required]]
+    });
+    controls.push(formGroup);
+  }
+   
+get getQuestions(): FormArray { return this.formGroup.get('questions') as FormArray }
 
 done() {
   localStorage.removeItem("job_id");
@@ -66,7 +67,7 @@ done() {
   }
 
   removeQuestion(i: number) {
-    this.questions.removeAt(i);
+    this.getQuestions.removeAt(i);
   }
 
   get diagnostic() { return JSON.stringify(this.formGroup.controls.job.value); }

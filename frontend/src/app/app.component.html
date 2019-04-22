@@ -6,9 +6,7 @@
   </button>
   <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarsDefault">
     <ul class="navbar-nav mr-auto">
-        <a class="nav-link" routerLink="/">
-          Home
-        </a>
+       
 
        
       <li class="nav-item dropdown" ngbDropdown>
@@ -25,10 +23,13 @@
        
       <div>
           <div>
+              <ng-template ngxPermissionsOnly="admin">
               <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
+            </ng-template>
           </div>
-     
+          <ng-template ngxPermissionsOnly="admin">
           <a class="dropdown-item" routerLink="/posting">Create a Job</a>
+          </ng-template>
       </div>
 
       <div>
@@ -49,12 +50,12 @@
         Login
       </a>
 
-    
-      <div *ngIf="perm=='user'">
+      <ng-template ngxPermissionsOnly="user">
         <a  class="nav-link" routerLink="/profile">
-          Profile   
+         Profile
         </a>
-      </div>
+        </ng-template>
+    
 
 
 

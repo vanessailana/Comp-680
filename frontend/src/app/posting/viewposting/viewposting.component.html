@@ -40,9 +40,12 @@
   <div class="modal-body">
     <p>{{job.description}}</p>
   </div>
+ 
+  <ng-template ngxPermissionsOnly="user">
   <div class="modal-footer">
     <button #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
   </div>
+  </ng-template>
 
   <div *ngIf="userApplied" class="alert alert-success">
     Thank you for applying 

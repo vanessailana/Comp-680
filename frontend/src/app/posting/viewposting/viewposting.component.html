@@ -21,7 +21,7 @@
 
 
 
-<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} |filter:searchText">
+<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} |filter:searchText; let i = index ">
 
 <td> {{job.title}} </td>
 <td> {{job.location}} </td>
@@ -39,10 +39,27 @@
   </div>
   <div class="modal-body">
     <p>{{job.description}}</p>
+   
+
+    <form [formGroup]="formGroup">
+        <div formArrayName="answers" >
+            <div *ngFor="let quest of questions; let i=index">
+                <mat-form-field [formGroupName]="i">
+                    <p> {{ quest.question }} </p>
+                    <input type="text" matInput placeholder="answer" formControlName="answer">
+                </mat-form-field>
+                
+            </div>
+        </div>
+
+    </form>
+
+    
   </div>
  
   <ng-template ngxPermissionsOnly="user">
   <div class="modal-footer">
+
     <button #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
   </div>
   </ng-template>
@@ -52,7 +69,7 @@
   </div>
 </ng-template>
 
-<button class="btn btn-outline-dark" (click)="open(content)">View Job Description</button>
+<button class="btn btn-outline-dark" (click)="open(i,content)">View Job Description</button>
 
  </td>
 

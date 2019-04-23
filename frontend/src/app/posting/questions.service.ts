@@ -14,19 +14,18 @@ export class QuestionsService {
 
 questionUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
+  constructor(private http: HttpClient) {
 
 
    }
 
 
- sumbitQuestion(quest: any): Observable<any> {
-  	return this.http.post<any>(this.questionUrl,quest).catch(this.errorHandler);
+  getQuestions(job_id: number)
+  {
+    return this.http.get<any>(this.questionUrl+"/questions/"+job_id);
   }
-
-
-    errorHandler(error:Response){
-
-     return Observable.throw(error||"SERVER ERROR");
+  sumbitAnswers(quest: any): Observable<any> {
+  	return this.http.post<any>(this.questionUrl+"/answers",quest);
   }
+  
 }

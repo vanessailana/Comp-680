@@ -38,6 +38,13 @@ public List<Question> create(@RequestBody List<Question> quest)
     return res;
 }
 
+
+@GetMapping("/questions/{id}")
+public List<Question> questions(@PathVariable("id") Long job_id)
+{
+    return questRepo.findByJobId(job_id);
+}
+
  @DeleteMapping("/questions/{id}")
      public List<Question> delete(@PathVariable("id") Long  question_id)
      {

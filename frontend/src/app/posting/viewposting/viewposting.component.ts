@@ -8,6 +8,9 @@ import{Router}  from '@angular/router';
 import {JobDescriptionComponent} from '../job-description/job-description.component';
 import { AppliedService } from 'src/app/applied/applied.service';
 import { NgxPermissionsService } from 'ngx-permissions';
+import { QuestionsService } from '../questions.service';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { fbind } from 'q';
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
@@ -25,11 +28,26 @@ searchText;
 
  userApplied: boolean;
 
+ questions: any;
 
-  constructor(public dialog: MatDialog, 
-    private appliedService: AppliedService, private permissionsService: NgxPermissionsService,
+ formGroup : FormGroup;
+
+  constructor(public dialog: MatDialog,
+    private questionService: QuestionsService,
+    private appliedService: AppliedService, 
+    private permissionsService: NgxPermissionsService,
     private postingService: PostingService,
-    private modalService: NgbModal,private _rotuer:Router) { }
+    private modalService: NgbModal,private _rotuer:Router,
+    private formBuilder: FormBuilder) { 
+
+
+      this.formGroup = this.formBuilder.group({
+        answers : this.initAnswers()
+      })
+
+      console.log("Yo"+JSON.stringify(this.formGroup.value));
+
+    }
 
   ngOnInit() {
 
@@ -46,8 +64,36 @@ searchText;
   
   }
 
-  open(content) {
+  initAnswers() {
+    var formArray = this.formBuilder.array([]);
+    return formArray;
+  }
+ 
+  initAnswer() {
+    const controls = <FormArray>this.formGroup.controls['answers'];
+    let formGroup = this.formBuilder.group({
+      answer: ['', [Validators.required]]
+    });
+    controls.push(formGroup);
+  }
+   
+
+  open(i,content) {
     this.modalService.open(content);
+    
+    this.questionService.getQuestions(this.jobs[i].id).subscribe(
+      (res)=>
+      {
+        this.questions=res;
+        this.questions.forEach(q => {
+            this.initAnswer(); 
+        });
+
+       
+      },
+      (err)=>console.log(err),
+      ()=>console.log("complete"));
+    
   }
 
 
@@ -97,6 +143,17 @@ location.reload();
       console.log("res: " + JSON.stringify(res));
       btn.disabled = true;
       this.userApplied = true;
+
+      console.log(this.formGroup.value);
+      this.questions = this.formGroup.value;
+      this.questions['applicant'] = applicant;
+      this.questionService.sumbitAnswers(this.questions).subscribe(
+        (res)=>console.log(res),
+        (err)=>console.log(err),
+        ()=>console.log("complete")
+      )
+      
+      
     },
     err => {
       console.log("err: " + JSON.stringify(err));

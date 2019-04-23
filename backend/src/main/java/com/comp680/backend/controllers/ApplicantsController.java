@@ -59,12 +59,13 @@ public class ApplicantsController {
         return res;
     }
     @GetMapping("/answers/{job_id}/{user_id}")
-    public Applicant hasApplied(@PathVariable("job_id") Long job_id,@PathVariable("user_id") Long user_id)
+    public Applicant hasApplied(@PathVariable("job_id") long job_id,@PathVariable("user_id") long user_id)
     {
         List<Applicant> app = applicantsRepository.findByUserId(user_id);
-
+        
         if(app==null)
         {
+            System.out.println("null");
             return null;
         }else{
             for(Applicant a : app)

@@ -86,30 +86,39 @@ searchText;
     this.modalService.open(content);
     let user = JSON.parse(localStorage.getItem('user'));
 
-    var alreadyApplied = null;
-    this.appliedService.hasApplied(this.jobs[i].id,user.id).subscribe(
-      (res)=> res != null ? this.alreadyApplied = true: this.alreadyApplied = false,
-      (err)=>console.log(err)
-    );
+    this.formGroup = this.formBuilder.group({
+      answers : this.initAnswers()
+    })
 
-    if(this.alreadyApplied){
+ 
+    this.alreadyApplied = true;
+    this.appliedService.hasApplied(this.jobs[i].id,user.id).subscribe(
+      (res)=> {console.log("hasApplied:"+res);if(res==null){this.alreadyApplied=false};},
+      (err)=>console.log(err),
+      () => {
+        if(this.alreadyApplied){
 
       
 
-    }else{
-    this.questionService.getQuestions(this.jobs[i].id).subscribe(
-      (res)=>
-      {
-        this.questions=res;
-        this.questions.forEach(q => {
-            this.initAnswer(); 
-        });
+        }else{
+        this.questionService.getQuestions(this.jobs[i].id).subscribe(
+          (res)=>
+          {
+            this.questions=res;
+           
+            this.questions.forEach(q => {
+                this.initAnswer(); 
+            });
+    
+           
+          },
+          (err)=>console.log(err),
+          ()=>console.log("complete"));
+        }
+      }
+    );
 
-       
-      },
-      (err)=>console.log(err),
-      ()=>console.log("complete"));
-    }
+    
 
     
     
@@ -134,12 +143,12 @@ location.reload();
 
   onNoClick(): void {
      this.dialog.closeAll();
-     this.userApplied = false;
+
   }
 
    onCloseCancel() {
      this._rotuer.navigate(['view_jobs']);
-     this.userApplied = false;
+     
   }
 
  openDialog(): void {
@@ -151,10 +160,17 @@ location.reload();
 
 
 
+
   dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.userApplied = false;
     });
+}
+
+close():void
+{
+  this.userApplied = false;
+  this.formGroup = null;
 }
 
   applyToJob(job,btn:HTMLButtonElement) {

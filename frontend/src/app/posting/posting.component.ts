@@ -70,6 +70,7 @@ done() {
 }
 
 
+
    open(content) {
     this.modalService.open(content);
   }

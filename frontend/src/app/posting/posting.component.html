@@ -1,8 +1,8 @@
 
 <mat-horizontal-stepper [linear]="true" #stepper completed=true>
     <mat-step [stepControl]="formGroup.controls.job">
-      <form class="form-group" [formGroup]="formGroup.controls.job">
-        <div class="form-group">
+      <form class="row form-group" [formGroup]="formGroup.controls.job">
+        <div class="col-12" class="form-group">
         <ng-template matStepLabel>Fill out the job information</ng-template>
         <mat-form-field>
           <input matInput placeholder="Job Title" formControlName="title" required>
@@ -34,8 +34,8 @@
     <mat-step [stepControl]="formGroup.controls.questions" [optional]="true">
         <form [formGroup]="formGroup">
           <div formArrayName="questions" >
-              <div *ngFor="let quest of formGroup.get('questions').controls; let i=index">
-                  <mat-form-field [formGroupName]="i">
+              <div class="row" *ngFor="let quest of formGroup.get('questions').controls; let i=index">
+                  <mat-form-field class="col-12" [formGroupName]="i">
                       <input type="text" matInput placeholder="question" formControlName="question">
                   </mat-form-field>
                   <button (click)="removeQuestion(i)">Remove</button>

@@ -38,7 +38,9 @@
     </button>
   </div>
   <div class="modal-body">
-    <p>{{job.description}}</p>
+    <p>{{job.description}}
+    
+    </p>
    
     <div *ngIf="alreadyApplied; else elseBlock" class="alert alert-success">
       You have already applied for this position.
@@ -78,7 +80,7 @@
 </div>
 </ng-template>
 
-<button class="btn btn-dark" (click)="open(i,content)">View Job Description</button>
+<button class="btn btn-dark" (click)="open(job.id,content)">View Job Description</button>
 
  </td>
 

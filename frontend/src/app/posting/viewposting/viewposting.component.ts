@@ -92,8 +92,8 @@ searchText;
 
  
     this.alreadyApplied = true;
-    this.appliedService.hasApplied(this.jobs[i].id,user.id).subscribe(
-      (res)=> {console.log("hasApplied:"+res);if(res==null){this.alreadyApplied=false};},
+    this.appliedService.hasApplied(i,user.id).subscribe(
+      (res)=> {console.log("hasApplied:"+res+this.jobs[i].id);if(res==null){this.alreadyApplied=false};},
       (err)=>console.log(err),
       () => {
         if(this.alreadyApplied){

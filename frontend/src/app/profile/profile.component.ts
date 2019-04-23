@@ -158,17 +158,16 @@ export class ProfileComponent implements OnInit {
 
    
     
-    if(role="user") {
-
-     this.router.navigateByUrl("/profile");
+    if(role="user") 
+    {
+        this.router.navigateByUrl("/profile");
     }
-    if(role="admin") {
-      
-      this.router.navigateByUrl("/posting");
-    }
-
-    if(role!=="admin" && role!=="user") {
-      this.router.navigateByUrl("/view_jobs");
+    else if(role="admin") 
+    {
+        this.router.navigateByUrl("/posting");
+    }else
+    {
+        this.router.navigateByUrl("/view_jobs");
     }
      
   }

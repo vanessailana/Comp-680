@@ -28,8 +28,17 @@ export class AppComponent implements OnInit {
   ) {
     auth.handleAuthentication();
     //this.perm = localStorage.getItem('roles');
-    //this.username = localStorage.getItem('user');
+    
+    localStorage.getItem('user') == null ? this.username = "" : this.username =  JSON.parse(localStorage.getItem('user')).firstName;;
     //console.log(this.perm);
+
+    var check= localStorage.getItem('roles');
+    const role= [localStorage.getItem('roles')];
+    console.log(role);
+    this.permissionsService.loadPermissions(role);
+ 
+    console.log(this.permissionsService.getPermissions());
+    
 
     this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],
@@ -42,14 +51,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
-   var check= localStorage.getItem('roles');
-   const role= [localStorage.getItem('roles')];
-   this.permissionsService.loadPermissions(role);
-
-   
-
- 
-    
+  
   }
 
   onSubmit(btn:HTMLButtonElement)

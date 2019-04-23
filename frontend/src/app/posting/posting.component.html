@@ -1,6 +1,3 @@
-{{ diagnostic }}
-
-{{d2}}
 
 <mat-horizontal-stepper [linear]="true" #stepper completed=true>
     <mat-step [stepControl]="formGroup.controls.job">
@@ -61,13 +58,14 @@
       <ng-template matStepLabel>Done</ng-template>
           You are now done.
       <div>
+
         <button class="btn btn-dark " mat-button matStepperPrevious type="button">Back</button>
         <button #submitBtn class="btn btn-success" (click)="onSubmit(submitBtn)"> Submit </button>
 
-        <div *ngIf="submitSuccess==true" class="alert alert-success">
+        <div *ngIf="submitted==1" class="alert alert-success">
             Job Post Sucessfully Created!
         </div>
-        <div *ngIf="submitFail" class="alert alert-danger">
+        <div *ngIf="submitted==-1" class="alert alert-danger">
             Could Not Create Job Post!
         </div>
       </div>

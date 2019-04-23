@@ -4,6 +4,11 @@ import {Posting} from './posting.model';
 import {question} from './question.model';
 import {PostingService} from './posting.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import{Router}  from '@angular/router';
+
+const INIT:number = 0;
+const SUCCESS:number = 1;
+const FAIL:number = -1;
 
 @Component({
   selector: 'app-posting',
@@ -14,9 +19,16 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class PostingComponent implements OnInit {
   jobMetadata: any;
   formGroup: FormGroup;
-  submitted : boolean;
-  constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
+  submitted : number;
+
+  constructor(
+    private postingService:PostingService,
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private router: Router
+    ) {
     
+    this.submitted = INIT;
 
     this.formGroup = this.fb.group({
       job : this.fb.group({
@@ -66,12 +78,6 @@ done() {
     this.getQuestions.removeAt(i);
   }
 
-  get diagnostic() { return JSON.stringify(this.formGroup.controls.job.value); }
-
-
-  get d2() { return JSON.stringify(this.formGroup.controls.questions.value); }
-
-
 
   onSubmit(submitBtn: HTMLButtonElement){
 
@@ -98,19 +104,20 @@ done() {
           });
           this.postingService.createQuestion(questions).subscribe(
             (res)=>console.log(res),
-            (err)=>console.log(err),
-            () => console.log("questions complete")
+            (err)=>{this.submitted=FAIL; submitBtn.disabled = false;},
+            () => {console.log("questions complete");this.submitted=SUCCESS;}
           );
         },
-        (err)=>console.log(err),
-        ()=>{console.log("Complete"); this.submitted=true;});
+        (err)=>{this.submitted=FAIL; submitBtn.disabled = false;},
+        ()=>{console.log("Complete");this.submitted=SUCCESS;});
 
     }
     else
     {
 
       console.log("invlaid input");
-     
+      submitBtn.disabled = false;
+      this.submitted=FAIL;
 
     }
 
@@ -120,7 +127,12 @@ done() {
 
   ngOnInit() {
   
+   var role= localStorage.getItem('roles');
+       
+    if(role!=='admin') {
 
+      this.router.navigateByUrl('/view_jobs');
+    }
 
   }
 

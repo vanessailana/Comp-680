@@ -7,7 +7,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import{Router}  from '@angular/router';
 import {JobDescriptionComponent} from '../job-description/job-description.component';
 import { AppliedService } from 'src/app/applied/applied.service';
-
+import { NgxPermissionsService } from 'ngx-permissions';
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
@@ -18,7 +18,7 @@ export class ViewpostingComponent  implements OnInit {
    p: number = 1;
   totalRec : number;
  jobs: Array<any>;
-
+searchText;
 
  appliedJobs : any;
 
@@ -27,11 +27,17 @@ export class ViewpostingComponent  implements OnInit {
 
 
   constructor(public dialog: MatDialog, 
-    private appliedService: AppliedService, 
+    private appliedService: AppliedService, private permissionsService: NgxPermissionsService,
     private postingService: PostingService,
     private modalService: NgbModal,private _rotuer:Router) { }
 
   ngOnInit() {
+
+   const role= [localStorage.getItem('roles')];
+ 
+    this.permissionsService.loadPermissions(role);
+
+ 
    this.postingService.getAll().subscribe(data => {
       this.jobs= data;
     

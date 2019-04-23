@@ -23,6 +23,30 @@ import javax.persistence.JoinTable;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
+    public User()
+    {
+
+    }
+    public User (Long id,String email,String address,
+     String city, String state, 
+     String objective, String resume, String phone_number,String profile_image,
+    String first_name, String last_name, int zip_code)
+    {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip_code = zip_code;
+        this.phone_number = phone_number;
+        this.objective = objective;
+        this.resume = resume;
+        this.profile_image = profile_image;
+    }
+
+
     @Id
     @Column(name="user_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)

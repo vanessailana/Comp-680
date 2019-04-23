@@ -14,14 +14,10 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class PostingComponent implements OnInit {
   jobMetadata: any;
   formGroup: FormGroup;
-   submitSuccess: boolean;
-  submitFail: boolean;
-  test=localStorage.getItem('job_id');
+  submitted : boolean;
   constructor(private postingService:PostingService,private fb: FormBuilder,private modalService: NgbModal) {
     
-    this.submitSuccess = false;
 
-    this.submitFail = false;
     this.formGroup = this.fb.group({
       job : this.fb.group({
         title: ["",[Validators.required]],
@@ -84,76 +80,43 @@ done() {
   
     if(this.formGroup.valid)
     {
-    console.log(this.formGroup);
-      var sub = this.postingService.sumbitPost(this.formGroup.controls.job.value);
-
-     
+    
+      this.jobMetadata = this.formGroup.controls.job.value;
+      this.jobMetadata['user'] = JSON.parse(localStorage.getItem('user'));
+      var sub = this.postingService.sumbitPost(this.jobMetadata);
       sub.subscribe(
         (res) => 
         {
-
-          this.jobMetadata = res;
+          this.jobMetadata = res; 
           console.log("Meta DAta"+JSON.stringify(this.jobMetadata));
           console.log('HTTP Response', res);
           console.log(this.formGroup.value.id);
           let questions = this.formGroup.controls.questions.value;
-
           let job = this.jobMetadata;
-          let service = this.postingService;
-          questions.forEach(function (question)
-          {
-          
-            
-            question['job'] = job;
-            service.createQuestion(question).subscribe(response=> {
-            console.log(response);
-            });
-          
-
+          questions.forEach(q => {
+              q['job'] = job;           
           });
-          
-        });
+          this.postingService.createQuestion(questions).subscribe(
+            (res)=>console.log(res),
+            (err)=>console.log(err),
+            () => console.log("questions complete")
+          );
+        },
+        (err)=>console.log(err),
+        ()=>{console.log("Complete"); this.submitted=true;});
 
-       
     }
     else
     {
 
       console.log("invlaid input");
-      submitBtn.disabled = false;
-      this.submitFail=true; 
-      this.submitSuccess = false;
+     
 
     }
-
-    console.log(this.submitFail);
-    console.log(this.submitSuccess);
 
     
 
   }
-
-
-save() {
-   this.postingService.sumbitPost(this.formGroup.controls.job.value).subscribe(result => {
-       console.log('HTTP Response', result.id);
-       
-
-     console.log(this.formGroup.controls.job);
-
-    }, error => console.error(error));
-   
-     console.log(this.formGroup.controls.job.value.id);
-  }
-
-
-
-
-get job_id(): any {
-    return localStorage.getItem('job_id');
-}
-
-
 
   ngOnInit() {
   

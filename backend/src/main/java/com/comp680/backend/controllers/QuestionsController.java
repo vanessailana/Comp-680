@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.ArrayList;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -20,17 +21,22 @@ public class QuestionsController {
 @Autowired 
 QuestionsRepository questRepo;
 
- @GetMapping("/questions")
-    public List<Question> findAll()
-    {
-        return questRepo.findAll();
-    }
+@GetMapping("/questions")
+public List<Question> findAll()
+{
+    return questRepo.findAll();
+}
 
- @PostMapping("/createQuestion")
-    public Question create(@RequestBody Question quest)
+@PostMapping("/createQuestion")
+public List<Question> create(@RequestBody List<Question> quest)
+{
+    List<Question> res = new ArrayList();
+    for(Question q : quest)
     {
-    	 return questRepo.save(quest);
+        res.add(questRepo.save(q));
     }
+    return res;
+}
 
  @DeleteMapping("/questions/{id}")
      public List<Question> delete(@PathVariable("id") Long  question_id)

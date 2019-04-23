@@ -20,13 +20,6 @@ public class JobsController {
 @Autowired 
 JobsRepository jobRepo;
 
-    @GetMapping("jobs/example")
-    public String example()
-    {
-        return "Hello World";
-    }
-
-
     @GetMapping("jobs/all")
     public List<Job> findAll()
     {

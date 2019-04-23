@@ -52,8 +52,9 @@ public class ApplicantsController {
     public List<Answer> answers(@RequestBody List<Answer> answers) {
         List<Answer> res = new ArrayList<>();
         for (Answer var : answers) {
-            res.add(var);
-            this.answerRepository.save(var);
+            res.add(
+            this.answerRepository.save(var)
+            );
         }
         return res;
     }

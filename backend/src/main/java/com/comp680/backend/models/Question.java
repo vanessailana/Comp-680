@@ -25,11 +25,11 @@ public class Question  {
 
   @Id
   @Column(name="question_id")
-  @GeneratedValue(strategy=GenerationType.AUTO)
+  @GeneratedValue
   private Long id;
 
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY,optional = false)
   @JoinColumn(name="job_id",nullable=false)
   private Job job;
   

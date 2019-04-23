@@ -22,7 +22,7 @@ public class QuestionsController {
 QuestionsRepository questRepo;
 
 @GetMapping("/questions")
-public List<Question> findAll()
+public Iterable<Question> findAll()
 {
     return questRepo.findAll();
 }
@@ -46,7 +46,7 @@ public List<Question> questions(@PathVariable("id") Long job_id)
 }
 
  @DeleteMapping("/questions/{id}")
-     public List<Question> delete(@PathVariable("id") Long  question_id)
+     public Iterable<Question> delete(@PathVariable("id") Long  question_id)
      {
          questRepo.deleteById(question_id);
          return questRepo.findAll();

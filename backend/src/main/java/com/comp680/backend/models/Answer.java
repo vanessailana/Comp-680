@@ -19,17 +19,30 @@ import javax.persistence.JoinTable;
 @Table(name="answers")
 public class Answer {
 
+
+    public Answer()
+    {
+
+    }
+
+    public Answer(String answer, Applicant applicant, Question question)
+    {
+        this.answer = answer;
+        this.applicant = applicant;
+        this.question = question;
+    }
+
     @Id
     @Column(name="answer_id")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST, optional = true)
     @JoinColumn(name="applicant_id", nullable=false)
     private Applicant applicant;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name="question_id", nullable=false)
     private Question question;
 

@@ -11,6 +11,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { fbind } from 'q';
+import { element } from '@angular/core/src/render3';
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
@@ -77,7 +78,6 @@ searchText;
     controls.push(formGroup);
   }
    
-
   open(i,content) {
     this.modalService.open(content);
     
@@ -138,16 +138,26 @@ location.reload();
     console.log(user);
     let applicant = {'job': job, 'user': user};
 
+    var answers = this.formGroup.controls['answers'].value;
+
+    console.log(answers);
+
     this.appliedService.apply(applicant).subscribe(
     res => {
       console.log("res: " + JSON.stringify(res));
       btn.disabled = true;
       this.userApplied = true;
 
-      console.log(this.formGroup.value);
-      this.questions = this.formGroup.value;
-      this.questions['applicant'] = applicant;
-      this.questionService.sumbitAnswers(this.questions).subscribe(
+      var i = 0 ;
+  
+      answers.forEach(element=>{
+        element['applicant'] = applicant;
+        element['question'] = this.questions[i];
+        
+        i+=1;
+      })
+     
+       this.questionService.sumbitAnswers(answers).subscribe(
         (res)=>console.log(res),
         (err)=>console.log(err),
         ()=>console.log("complete")

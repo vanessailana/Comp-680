@@ -45,7 +45,7 @@ export class PostingService {
   }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/jobs/all/');
+    return this.http.get('//localhost:8080/jobs/all');
   }
 
 

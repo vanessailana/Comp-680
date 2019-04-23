@@ -7,6 +7,7 @@ import com.comp680.backend.repositories.UsersRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.validation.Valid;
 import com.comp680.backend.models.Applicant;
+import com.comp680.backend.models.User;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,4 +42,16 @@ public class ApplicantsController {
         obj.put("message", "Job or user does not exists");
         return new ResponseEntity<>(obj, HttpStatus.NOT_FOUND);
     }
+    
+    //get applicant jobs 
+    @GetMapping("/applicant/view_applied_jobs/{user_id}")
+    public List<Applicant>  getMyJobs(@PathVariable("user_id") Long user_id)
+    {
+ 
+        return applicantsRepository.findByUserId(user_id);
+
+
+    }
+
+  
 }

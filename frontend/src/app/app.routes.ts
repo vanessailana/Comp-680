@@ -7,6 +7,7 @@ import { PostingComponent } from './posting/posting.component';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
 import { MyJobsComponent } from './my-jobs/my-jobs.component';
 import { AppliedComponent } from './applied/applied.component';
+import { ViewApplicantsComponent } from './view-applicants/view-applicants.component';
 
 import { NgxPermissionsGuard } from 'ngx-permissions';
 export const ROUTES: Routes = [
@@ -17,7 +18,7 @@ export const ROUTES: Routes = [
   { path: 'support', component: SupportFormComponent},
   { path: 'view_jobs', component: ViewpostingComponent},
   { path: 'applied', component: AppliedComponent},
-      
+  { path: 'applicants', component:ViewApplicantsComponent},
   { path: 'my_jobs', component: MyJobsComponent},
   { path: '**', component: ViewpostingComponent}
 ];

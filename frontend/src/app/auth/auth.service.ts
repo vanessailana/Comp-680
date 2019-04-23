@@ -66,6 +66,7 @@ constructor(public router: Router) {
     
      localStorage.setItem('roles', roles);
        localStorage.setItem('name', name);
+ 
     return roles.indexOf('admin') > -1;
   }
 
@@ -79,7 +80,7 @@ public getProfile(cb): void {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile && this._checkAdmin(profile)) {
         self.userProfile = profile;
-         
+ 
      
 
       }
@@ -106,6 +107,7 @@ public getProfile(cb): void {
     localStorage.setItem('id_token', authResult.nickname);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
+  
    
     this.scheduleRenewal();
   }

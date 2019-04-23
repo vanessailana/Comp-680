@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import {JobDescriptionComponent} from './posting/job-description/job-description.component';
-import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng2SearchPipeModule } from 'node_modules/ng2-search-filter';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,13 +22,13 @@ import {MatDialogModule,MatDialogRef} from "@angular/material";
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { ViewpostingComponent } from './posting/viewposting/viewposting.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { MyJobsComponent } from './my-jobs/my-jobs.component'; 
 import { AppliedComponent } from './applied/applied.component'; 
 import { AppliedService } from './applied/applied.service';
+import {BrowserModule} from '@angular/platform-browser'; 
 
 
 @NgModule({
@@ -47,7 +47,7 @@ import { AppliedService } from './applied/applied.service';
   ],
   imports: [
 NgbModule, MatDialogModule, NgxPaginationModule,
-    BrowserModule,
+    BrowserModule,Ng2SearchPipeModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
     ReactiveFormsModule,
@@ -75,6 +75,7 @@ NgbModule, MatDialogModule, NgxPaginationModule,
   ],
   exports:[
     NgxPermissionsModule,
+
   ],
   bootstrap: [AppComponent]
 })

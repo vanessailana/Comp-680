@@ -4,6 +4,7 @@ import { AuthService } from './../auth/auth.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProfileService } from './profile.service';
+import { stringify } from '@angular/compiler/src/util';
 
 
 
@@ -15,7 +16,6 @@ import { ProfileService } from './profile.service';
 export class ProfileComponent implements OnInit {
   closeResult: string;
   profile: any;
-
   currentBtn : HTMLButtonElement;
   dynamicForm: FormGroup;
 
@@ -153,10 +153,29 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    
+   
+    var role= localStorage.getItem('roles');
 
    
+    
+    if(role="user") 
+    {
+        this.router.navigateByUrl("/profile");
     }
+    else if(role="admin") 
+    {
+        this.router.navigateByUrl("/posting");
+    }else
+    {
+        this.router.navigateByUrl("/view_jobs");
+    }
+     
+  }
+    
+    
+
+
+  
 
    
 

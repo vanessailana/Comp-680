@@ -1,9 +1,18 @@
-<h2 class="d-flex justify-content-center">Jobs Currently Posted</h2>
+<h2 class="d-flex justify-content-center">Jobs I Created</h2>
  
+<div class="container">
+    <div class="row">
+      <div class="search">
+        <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a job by title, location, or keyword">
+      </div>
+
 <div *ngIf="showButton" class="alert alert-info" role="alert">
   You have not created any jobs.
   <button class="btn btn-lg btn-dark" routerLink="/posting"> Create A Job </button>
-</div>
+
+ </div>
+
+
  <table class="table table-bordered">
 
 
@@ -11,7 +20,6 @@
 <td> Title </td>
 <td> Location </td>
 <td> Start Compensation </td>
-<td> End Compensation </td>
 <td> Employment Type </td>
 <td>  Still Accepting Candidates? </td>
 <td> Description </td>
@@ -21,12 +29,11 @@
 
 
 
-<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p}">
+<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} | filter:searchText">
 
 <td> {{job.title}} </td>
 <td> {{job.location}} </td>
  <td> ${{job.startCompensation}}</td>
-  <td> ${{job.endCompensation}}</td>
 <td> {{job.employment_type}} </td>
 <td> {{job.status}} </td>
 

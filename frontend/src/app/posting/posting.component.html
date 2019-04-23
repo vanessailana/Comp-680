@@ -1,4 +1,4 @@
-{{ diagnostic }}
+
 <mat-horizontal-stepper [linear]="true" #stepper completed=true>
     <mat-step [stepControl]="formGroup.controls.job">
       <form class="form-group" [formGroup]="formGroup.controls.job">
@@ -31,15 +31,16 @@
         </div>
       </form>
     </mat-step>
-    <mat-step [stepControl]="formGroup.controls.questionForm" [optional]="true">
-        <form [formGroup]="formGroup.controls.questionForm">
-            <div formArrayName="questions">
-              <div *ngFor="let question of questions.controls; index as i">
-                <input [formControlName]="i" placeholder="Question">
-                <button (click)="removeQuestion(i)">Remove</button>
+    <mat-step [stepControl]="formGroup.controls.questions" [optional]="true">
+        <form [formGroup]="formGroup">
+          <div formArrayName="questions" >
+              <div *ngFor="let quest of formGroup.get('questions').controls; let i=index">
+                  <mat-form-field [formGroupName]="i">
+                      <input type="text" matInput placeholder="question" formControlName="question">
+                  </mat-form-field>
+                  <button (click)="removeQuestion(i)">Remove</button>
               </div>
-            </div>
-         
+          </div>
           </form>
           
           <button (click)="addQuestion()">Add</button>
@@ -57,13 +58,14 @@
       <ng-template matStepLabel>Done</ng-template>
           You are now done.
       <div>
+
         <button class="btn btn-dark " mat-button matStepperPrevious type="button">Back</button>
         <button #submitBtn class="btn btn-success" (click)="onSubmit(submitBtn)"> Submit </button>
 
-        <div *ngIf="submitSuccess==true" class="alert alert-success">
+        <div *ngIf="submitted==1" class="alert alert-success">
             Job Post Sucessfully Created!
         </div>
-        <div *ngIf="submitFail" class="alert alert-danger">
+        <div *ngIf="submitted==-1" class="alert alert-danger">
             Could Not Create Job Post!
         </div>
       </div>

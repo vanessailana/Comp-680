@@ -1,13 +1,18 @@
-<h2 class="d-flex justify-content-center">Jobs Currently Posted</h2>
- 
- <table class="table table-bordered">
 
+    <h1>Jobs Currently Posted</h1>
+    <div class="container">
+        <div class="row">
+          <div class="search">
+            <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a job by title, location, or keyword">
+          </div>
+ <table class="table table-bordered">
+ 
 
 <tr>
 <td> Title </td>
 <td> Location </td>
 <td> Start Compensation </td>
-<td> End Compensation </td>
+
 <td> Employment Type </td>
 <td>  Still Accepting Candidates? </td>
 <td> Description </td>
@@ -16,12 +21,11 @@
 
 
 
-<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p}">
+<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} |filter:searchText; let i = index ">
 
 <td> {{job.title}} </td>
 <td> {{job.location}} </td>
  <td> ${{job.startCompensation}}</td>
-  <td> ${{job.endCompensation}}</td>
 <td> {{job.employment_type}} </td>
 <td> {{job.status}} </td>
 
@@ -35,17 +39,37 @@
   </div>
   <div class="modal-body">
     <p>{{job.description}}</p>
+   
+
+    <form [formGroup]="formGroup">
+        <div formArrayName="answers" >
+            <div *ngFor="let quest of questions; let i=index">
+                <mat-form-field [formGroupName]="i">
+                    <p> {{ quest.question }} </p>
+                    <input type="text" matInput placeholder="answer" formControlName="answer">
+                </mat-form-field>
+                
+            </div>
+        </div>
+
+    </form>
+
+    
   </div>
+ 
+  <ng-template ngxPermissionsOnly="user">
   <div class="modal-footer">
+
     <button #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
   </div>
+  </ng-template>
 
   <div *ngIf="userApplied" class="alert alert-success">
     Thank you for applying 
   </div>
 </ng-template>
 
-<button class="btn btn-outline-dark" (click)="open(content)">View Job Description</button>
+<button class="btn btn-outline-dark" (click)="open(i,content)">View Job Description</button>
 
  </td>
 
@@ -78,6 +102,5 @@
 </tbody>
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
- 
 </table>
 

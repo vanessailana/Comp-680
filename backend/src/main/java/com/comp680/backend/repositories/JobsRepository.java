@@ -11,9 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JobsRepository extends JpaRepository<Job, Long> {
 
-
-    //List<Job> findByUserId(Long id);
-
+    List<Job> findByUserId(long userId);
     boolean existsById(long id);
 
 }

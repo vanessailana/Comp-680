@@ -17,68 +17,41 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class PostingService {
- private posting = new Posting();
- 
-  supportUrl = 'http://localhost:8080/createJob';  // URL to web api
-  viewJobs = 'http://localhost:8080/all';  // URL to web api
-  //deleteJobs = 'https://dry-coast-23307.herokuapp.com/jobs';  // URL to web api
-  deleteJobs='http://localhost:8080/'
-  quest= 'http://localhost:8080/createQuestion'; 
-  private handleError: HandleError;
 
+  postingUrl = 'http://localhost:8080';  // URL to web api
+  
   constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) { 
 
-    this.handleError = httpErrorHandler.createHandleError('PostingService');
-
-  }
-
-  setter(posting:Posting){
-     this.posting=posting;
-   }
-
-  getter(){
-    return this.posting;
   }
 
   sumbitPost(post: any): Observable<any> {
-  	return this.http.post<any>(this.supportUrl,post,httpOptions);
+  	return this.http.post<any>(this.postingUrl+"/createJob",post,httpOptions);
   }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/jobs/all/');
+    return this.http.get(this.postingUrl+"/jobs/all");
   }
 
-
-  getMyJobs(id :any ): Observable<any>
+  getMyJobs(): Observable<any>
   {
-    return this.http.get("http://localhost:8080/recruiter/my_jobs/"+id,httpOptions);
-
+    let user = JSON.parse(localStorage.getItem('user'));
+    return this.http.get(this.postingUrl+"/recruiter/my_jobs/"+user.id);
   }
 
   createQuestion(question: any) :Observable<any> {
-    return this.http.post<any>(this.quest,question,httpOptions);
+    return this.http.post<any>(this.postingUrl+"/createQuestion",question,httpOptions);
+  }
 
+  updatePosting(posting: any){
+    return this.http.put(this.postingUrl,posting);
+  }
+
+  deletePosting(post : any) {
+    return this.http.delete(this.postingUrl +'/recruiter/my_jobs/'+post.id+'/'+post.user_id);
   }
 
 
 
 
-
-   updatePosting(posting:Posting){
-
-   return this.http.put(this.supportUrl,posting).catch(this.errorHandler);
-
-      }
-
-  deletePosting(post) {
-    return this.http.delete(this.deleteJobs +'recruiter/my_jobs/'+post.id+'/'+post.user_id);
-  }
-
-
-
-   errorHandler(error:Response){
-
-    return Observable.throw(error||"SERVER ERROR");
-  }
 
 }

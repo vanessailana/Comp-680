@@ -39,8 +39,10 @@ public class Job {
   private Long id;
 
 
-  @JoinColumn(name="user_id", nullable=true)
-  private Long user_id;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
+
   
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true;
@@ -128,14 +130,14 @@ public class Job {
   }
 
 
-  public Long getUser()
+  public User getUser()
   {
-    return this.user_id;
+    return this.user;
   }
 
-  public void setUser(Long user_id)
+  public void setUser(User user)
   {
-    this.user_id = user_id;
+    this.user = user;
   }
 
 }

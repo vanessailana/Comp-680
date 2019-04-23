@@ -58,4 +58,24 @@ public class ApplicantsController {
         }
         return res;
     }
+    @GetMapping("/answers/{job_id}/{user_id}")
+    public Applicant hasApplied(@PathVariable("job_id") Long job_id,@PathVariable("user_id") Long user_id)
+    {
+        List<Applicant> app = applicantsRepository.findByUserId(user_id);
+
+        if(app==null)
+        {
+            return null;
+        }else{
+            for(Applicant a : app)
+            {
+                if(a.getJob().getId()==job_id)
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
+    
+    }
 }

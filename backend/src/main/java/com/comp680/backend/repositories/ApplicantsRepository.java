@@ -9,4 +9,5 @@ public interface ApplicantsRepository extends CrudRepository<Applicant, Long> {
 
     // List<Applicant> findByUserId(long id);
     Applicant findById(long id);
+    List<Applicant> findByUserId(long id);
 }

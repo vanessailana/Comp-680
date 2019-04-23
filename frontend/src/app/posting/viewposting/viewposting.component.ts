@@ -33,6 +33,8 @@ searchText;
 
  formGroup : FormGroup;
 
+ alreadyApplied : boolean;
+
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
     private appliedService: AppliedService, 
@@ -41,6 +43,8 @@ searchText;
     private modalService: NgbModal,private _rotuer:Router,
     private formBuilder: FormBuilder) { 
 
+
+      this.alreadyApplied = false;
 
       this.formGroup = this.formBuilder.group({
         answers : this.initAnswers()
@@ -80,7 +84,19 @@ searchText;
    
   open(i,content) {
     this.modalService.open(content);
-    
+    let user = JSON.parse(localStorage.getItem('user'));
+
+    var alreadyApplied = null;
+    this.appliedService.hasApplied(this.jobs[i].id,user.id).subscribe(
+      (res)=> res != null ? this.alreadyApplied = true: this.alreadyApplied = false,
+      (err)=>console.log(err)
+    );
+
+    if(this.alreadyApplied){
+
+      
+
+    }else{
     this.questionService.getQuestions(this.jobs[i].id).subscribe(
       (res)=>
       {
@@ -93,6 +109,9 @@ searchText;
       },
       (err)=>console.log(err),
       ()=>console.log("complete"));
+    }
+
+    
     
   }
 
@@ -115,16 +134,22 @@ location.reload();
 
   onNoClick(): void {
      this.dialog.closeAll();
+     this.userApplied = false;
   }
 
    onCloseCancel() {
      this._rotuer.navigate(['view_jobs']);
+     this.userApplied = false;
   }
 
  openDialog(): void {
     const dialogRef = this.dialog.open(JobDescriptionComponent, {
       width: '250px'
     });
+
+   
+
+
 
   dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -142,6 +167,7 @@ location.reload();
 
     console.log(answers);
 
+   
     this.appliedService.apply(applicant).subscribe(
     res => {
       console.log("res: " + JSON.stringify(res));

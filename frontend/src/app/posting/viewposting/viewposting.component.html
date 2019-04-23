@@ -40,7 +40,11 @@
   <div class="modal-body">
     <p>{{job.description}}</p>
    
+    <div *ngIf="alreadyApplied" class="alert alert-success">
+      You have already applied for this position.
+    </div>
 
+    <div *ngIf="!alreadyApplied">
     <form [formGroup]="formGroup">
         <div formArrayName="answers" >
             <div *ngFor="let quest of questions; let i=index">
@@ -53,9 +57,9 @@
         </div>
 
     </form>
-
+  
     
-  </div>
+  
  
   <ng-template ngxPermissionsOnly="user">
   <div class="modal-footer">
@@ -67,6 +71,8 @@
   <div *ngIf="userApplied" class="alert alert-success">
     Thank you for applying 
   </div>
+  </div>
+</div>
 </ng-template>
 
 <button class="btn btn-outline-dark" (click)="open(i,content)">View Job Description</button>

@@ -31,4 +31,9 @@ export class AppliedService {
     return this.http.get<any>(this.url_apply+"/answers/"+job_id+"/"+user_id, httpOptions);
 
   }
+
+  getAppliedJobs(user_id: number)
+  {
+    return this.http.get<any>(this.url_apply+"/applied/"+user_id,httpOptions);
+  }
 }

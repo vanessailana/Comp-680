@@ -28,7 +28,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { MyJobsComponent } from './my-jobs/my-jobs.component'; 
 import { AppliedComponent } from './applied/applied.component'; 
 import { AppliedService } from './applied/applied.service';
-import {BrowserModule} from '@angular/platform-browser'; 
+import {BrowserModule} from '@angular/platform-browser';
+ 
 
 
 @NgModule({

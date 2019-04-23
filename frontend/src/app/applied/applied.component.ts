@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { RouterModule, Router, Routes } from '@angular/router';
+import { AppliedService } from './applied.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-applied',
   templateUrl: './applied.component.html',
@@ -8,7 +10,18 @@ import { RouterModule, Router, Routes } from '@angular/router';
 })
 export class AppliedComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  jobs : any;
+  closeResult : any;
+  constructor(private router: Router, private appliedService:AppliedService,
+    private modalService:NgbModal) { 
+
+
+    var user = JSON.parse(localStorage.getItem('user'));
+    this.appliedService.getAppliedJobs(user.id).subscribe(
+      (res)=>this.jobs = res,
+    );
+
+  }
 
   ngOnInit() {
     
@@ -25,6 +38,28 @@ export class AppliedComponent implements OnInit {
     this.router.navigateByUrl('/view_jobs');
   } 
  
+  }
+
+  open(content : HTMLTemplateElement) {
+
+    
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
 }

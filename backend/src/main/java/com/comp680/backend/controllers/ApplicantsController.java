@@ -8,6 +8,7 @@ import com.comp680.backend.repositories.UsersRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.validation.Valid;
 import com.comp680.backend.models.Applicant;
+import com.comp680.backend.models.Job;
 import com.comp680.backend.models.Answer;
 
 import org.json.simple.JSONObject;
@@ -78,5 +79,17 @@ public class ApplicantsController {
             return null;
         }
     
+    }
+
+    @GetMapping("/applied/{user_id}")
+    public List<Job> appliedJobs(@PathVariable("user_id") long user_id)
+    {
+        List<Job> job = new ArrayList<>();
+        List<Applicant> app = applicantsRepository.findByUserId(user_id);
+        for(Applicant a: app)
+        {
+            job.add(a.getJob());
+        }
+        return job;
     }
 }

@@ -92,8 +92,9 @@ searchText;
 
  
     this.alreadyApplied = true;
+
     this.appliedService.hasApplied(i,user.id).subscribe(
-      (res)=> {console.log("hasApplied:"+res+this.jobs[i].id);if(res==null){this.alreadyApplied=false};},
+      (res)=> {console.log("hasApplied:"+res+i);if(res==null){this.alreadyApplied=false};},
       (err)=>console.log(err),
       () => {
         if(this.alreadyApplied){
@@ -101,7 +102,7 @@ searchText;
       
 
         }else{
-        this.questionService.getQuestions(this.jobs[i].id).subscribe(
+        this.questionService.getQuestions(i).subscribe(
           (res)=>
           {
             this.questions=res;
@@ -169,6 +170,7 @@ location.reload();
 
 close():void
 {
+  this.alreadyApplied = false;
   this.userApplied = false;
   this.formGroup = null;
 }

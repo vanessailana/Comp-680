@@ -8,12 +8,9 @@ import com.comp680.backend.repositories.UsersRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import javax.validation.Valid;
 import com.comp680.backend.models.Applicant;
-<<<<<<< HEAD
 import com.comp680.backend.models.Job;
 import com.comp680.backend.models.Answer;
-=======
 import com.comp680.backend.models.User;
->>>>>>> applications
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +49,6 @@ public class ApplicantsController {
         obj.put("message", "Job or user does not exists");
         return new ResponseEntity<>(obj, HttpStatus.NOT_FOUND);
     }
-<<<<<<< HEAD
 
     @PostMapping("/answers")
     public List<Answer> answers(@RequestBody List<Answer> answers) {
@@ -97,7 +93,6 @@ public class ApplicantsController {
         }
         return job;
     }
-=======
     
     //get applicant jobs 
     @GetMapping("/applicant/view_applied_jobs/{user_id}")
@@ -110,5 +105,4 @@ public class ApplicantsController {
     }
 
   
->>>>>>> applications
 }

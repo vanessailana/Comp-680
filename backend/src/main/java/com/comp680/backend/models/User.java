@@ -55,7 +55,7 @@ public class User {
  
   
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
-    orphanRemoval = true, mappedBy = "users")
+    orphanRemoval = true, mappedBy = "user")
     private List<Skill> skills;
     
     /*

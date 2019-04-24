@@ -11,7 +11,9 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
+import java.util.Set;
 import java.util.Date;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,12 +28,14 @@ import javax.persistence.Temporal;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="jobs")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Job {
+public class Job implements Serializable  {
 
   @Id
   @Column(name="job_id",unique=true, nullable=false)
@@ -42,6 +46,12 @@ public class Job {
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
+
+
+  
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "job")
+  private List<Applicant> applicant;
+  
 
   
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
@@ -139,5 +149,18 @@ public class Job {
   {
     this.user = user;
   }
+
+
+  public List<Applicant> getApplicant()
+  {
+    return this.applicant;
+  }
+
+  public void setApplicant( List<Applicant> applicant)
+  {
+    this.applicant=applicant;
+  }
+   
+
 
 }

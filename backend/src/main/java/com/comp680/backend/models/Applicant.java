@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,7 @@ public class Applicant {
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "job_id", nullable = false)
+  @JsonBackReference
   private Job job;
 
   @Column(name="profile_link", nullable=true)
@@ -46,6 +48,7 @@ public class Applicant {
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name="created_at", nullable=true)
   private Date created_at;
+
 
   @PrePersist
   protected void onCreated() {
@@ -64,6 +67,8 @@ public class Applicant {
     this.user = user;
   }
 
+
+  
   public Job getJob(){
     return job;
   }

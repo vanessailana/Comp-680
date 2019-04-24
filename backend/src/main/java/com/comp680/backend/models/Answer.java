@@ -38,9 +38,12 @@ public class Answer {
     private Long id;
 
 
+<<<<<<< HEAD
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST, optional = true)
     @JoinColumn(name="applicant_id", nullable=false)
     private Applicant applicant;
+=======
+>>>>>>> applications
 
     @OneToOne(fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name="question_id", nullable=false)
@@ -77,11 +80,5 @@ public class Answer {
         this.question=question;
     }
 
-    public Applicant getApplicant(){
-        return applicant;
-    }
 
-    public void setApplicant(Applicant applicant){
-        this.applicant=applicant;
-    }
 }

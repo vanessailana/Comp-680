@@ -33,6 +33,7 @@ import { AppliedService } from './applied/applied.service';
 import { ViewApplicantsComponent } from './view-applicants/view-applicants.component';
 import { ApplicantsService} from './view-applicants/applicants.service';
 
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { ApplicantsService} from './view-applicants/applicants.service';
     ViewApplicantsComponent
 
   ],
-  imports: [
+  imports: [OrderModule,
 NgbModule, MatDialogModule, NgxPaginationModule,
     BrowserModule, Ng2SearchPipeModule,
     HttpClientModule,

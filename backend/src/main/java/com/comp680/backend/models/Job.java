@@ -50,7 +50,7 @@ public class Job implements Serializable  {
 
   
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "job")
-  private Set<Applicant> applicant;
+  private List<Applicant> applicant;
   
 
   
@@ -151,12 +151,12 @@ public class Job implements Serializable  {
   }
 
 
-  public Set<Applicant> getApplicant()
+  public List<Applicant> getApplicant()
   {
     return this.applicant;
   }
 
-  public void setApplicant( Set<Applicant> applicant)
+  public void setApplicant( List<Applicant> applicant)
   {
     this.applicant=applicant;
   }

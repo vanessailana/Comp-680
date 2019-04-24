@@ -1,9 +1,58 @@
-<h2>Applicants</h2>
+Search my Applicants
+<div class="container">
+    <div class="row">
+      <div class="search">
+        <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Search by Keyword">
+      </div>
 
-<div *ngFor="let applicant of applicants">
+<table class="table table-bordered">
+ 
 
-  {{applicant.user.email}}
-  {{applicant.user.firstName}}
-  {{applicant.user.createdAt}}
+    <tr>
+    <td> Job Title </td>
+    <td> Applicant Metadata </td>
+    </tr>
+    
+    
+    
 
-</div>
+        
+        <tbody *ngFor="let applicant of applicants   | paginate: { itemsPerPage: 10, currentPage: p} | filter:searchText |  orderBy: order">
+            <td> {{applicant.title}} </td>
+
+            <div *ngFor="let widget of applicant.applicant">
+            
+            
+            <td> {{widget.user.firstName}} </td>
+        
+            <td>  {{widget.user.lastName}} </td>
+        
+             <td>   {{widget.user.email}} </td>
+        
+                
+             <td> {{widget.user.address}} </td>
+        
+        
+             <td>  {{widget.user.city}} </td>
+        
+        
+             <td>  {{widget.user.state}} </td>
+        
+        
+        
+            <td>  {{widget.user.zipCode}} </td>
+        
+               
+             <td>{{widget.resume}} </td>
+        
+            <td> {{widget.number}} </td>
+        
+             <td>{{widget.profileLink}} </td>
+        
+            <td>  {{widget.createdAt}} </td>
+            </div>
+            </tbody>
+      </table>
+
+
+ 

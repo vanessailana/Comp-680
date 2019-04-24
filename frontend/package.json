@@ -45,6 +45,7 @@
     "mongoose": "^5.4.11",
     "ng2-search-filter": "^0.4.7",
     "ngx-bootstrap": "^3.2.0",
+    "ngx-order-pipe": "^2.0.2",
     "ngx-pagination": "^3.2.1",
     "ngx-permissions": "^6.0.5",
     "rxjs": "6.3",

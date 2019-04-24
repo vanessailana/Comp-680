@@ -28,6 +28,12 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+ 
+  
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
+    orphanRemoval = true, mappedBy = "users")
+    private List<Skill> skills;
+    
     /*
     @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL,mappedBy = "users")
     private Social social;
@@ -157,14 +163,16 @@ public class User {
     public void setImage(String profile_image){
         this.profile_image=profile_image;
     }
-    /*
 
-    public Social getSocial(){
-        return social;
+    
+  
+
+    public List<Skill> getSkill(){
+        return skills;
     }
 
-    public void  setSocial(Social social) {
-        this.social=social;
+    public void  setSkills(List<Skill> skills) {
+        this.skills=skills;
     }
-    */
+  
 }

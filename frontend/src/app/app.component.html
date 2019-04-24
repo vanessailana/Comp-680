@@ -22,14 +22,19 @@
         <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
        
       <div>
-          <div>
+         
               <ng-template ngxPermissionsOnly="admin">
               <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
             </ng-template>
-          </div>
+       
           <ng-template ngxPermissionsOnly="admin">
           <a class="dropdown-item" routerLink="/posting">Create a Job</a>
           </ng-template>
+
+          <ng-template ngxPermissionsOnly="admin">
+              <a class="dropdown-item" routerLink="/applicants">View My Applicants</a>
+              </ng-template>
+          
       </div>
 
       <div>

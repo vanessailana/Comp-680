@@ -1,7 +1,7 @@
 package com.comp680.backend.models;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+
+
 import javax.annotation.Generated;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
@@ -17,7 +17,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.bytebuddy.implementation.bytecode.constant.LongConstant;
 
 import java.time.LocalDateTime;
 import javax.persistence.JoinTable;
@@ -31,6 +30,8 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 
 @Entity
 @Table(name="jobs")
@@ -73,12 +74,13 @@ public class Job implements Serializable  {
   @Column(name="location",nullable=false)
   private String location;
 
-  @CreationTimestamp
+ 
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
   private Date created_at;
 
-  @UpdateTimestamp
+ 
+  
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated_at")
   private Date updated_at;

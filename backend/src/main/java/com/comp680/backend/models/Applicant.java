@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import java.util.List;
 import java.util.Date;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;
@@ -44,7 +43,7 @@ public class Applicant {
   @Column(name="profile_link", nullable=true)
   private String profile_link;
 
-  @CreationTimestamp
+  
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name="created_at", nullable=true)
   private Date created_at;

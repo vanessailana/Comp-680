@@ -169,15 +169,26 @@ public class MessageController {
         }
         return true;
     }
-    @GetMapping("/kafka/subscribe/{fromUser}/{toUser}")
-    public List<MyMessage> messages(
-        @PathVariable("fromUser") long fromUser,
+    @GetMapping("/kafka/subscribe/from/{fromUser}")
+    public List<MyMessage> fromMessages(
+        @PathVariable("fromUser") long fromUser) {
+
+        messageList.stream().forEach(System.out::println);
+        List<MyMessage> result = new ArrayList<>();
+        messageList.stream()
+        .filter(e -> ((e.getFromUser()==fromUser))).forEach(x -> result.add(x) );
+        return result;
+        
+    }
+
+    @GetMapping("/kafka/subscribe/to/{toUser}")
+    public List<MyMessage> toMessages(
         @PathVariable("toUser") long toUser) {
 
         messageList.stream().forEach(System.out::println);
         List<MyMessage> result = new ArrayList<>();
         messageList.stream()
-        .filter(e -> ((e.getFromUser()==fromUser)&&(e.getToUser()==toUser))).forEach(x -> result.add(x) );
+        .filter(e -> ((e.getToUser()==toUser))).forEach(x -> result.add(x) );
         return result;
         
     }

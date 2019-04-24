@@ -29,11 +29,7 @@ export class PostingService {
   }
 
   getAll(): Observable<any> {
-<<<<<<< HEAD
     return this.http.get(this.postingUrl+"/jobs/all");
-=======
-    return this.http.get('//localhost:8080/jobs/all');
->>>>>>> applications
   }
 
   getMyJobs(): Observable<any>

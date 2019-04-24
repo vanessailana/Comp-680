@@ -28,13 +28,10 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { MyJobsComponent } from './my-jobs/my-jobs.component'; 
 import { AppliedComponent } from './applied/applied.component'; 
 import { AppliedService } from './applied/applied.service';
-<<<<<<< HEAD
 import {BrowserModule} from '@angular/platform-browser';
  
-=======
 import { ViewApplicantsComponent } from './view-applicants/view-applicants.component';
 import { ApplicantsService} from './view-applicants/applicants.service';
->>>>>>> applications
 
 import { OrderModule } from 'ngx-order-pipe';
 

@@ -15,6 +15,9 @@ import java.util.Set;
 import java.util.Date;
 import java.io.Serializable;
 import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -23,7 +26,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Temporal;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -74,13 +76,12 @@ public class Job implements Serializable  {
   @Column(name="location",nullable=false)
   private String location;
 
- 
+  @CreationTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "created_at")
   private Date created_at;
 
- 
-  
+  @UpdateTimestamp
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "updated_at")
   private Date updated_at;

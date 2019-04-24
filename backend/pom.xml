@@ -18,57 +18,15 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-kafka.version>2.2.2.RELEASE</spring-kafka.version>
-        <hibernate.version> 3.5.6-Final </hibernate.version>
 	</properties>
 
-
 	<dependencies>
-
-	<dependency>
-        <groupId>javax.xml.bind</groupId>
-        <artifactId>jaxb-api</artifactId>
-        <version>2.3.0</version>
-</dependency>
-
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-core</artifactId>
-    <version>${hibernate.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-annotations</artifactId>
-    <version>3.5.6-Final</version>
-</dependency>
-
-
-<dependency>
-    <groupId>org.hibernate.common</groupId>
-    <artifactId>hibernate-commons-annotations</artifactId>
-    <version>5.1.0.Final</version>
-</dependency>
-
-
-<dependency>
-    <groupId>org.hibernate.javax.persistence</groupId>
-    <artifactId>hibernate-jpa-2.0-api</artifactId>
-    <version>1.0.1.Final</version>
-</dependency>
-
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-entitymanager</artifactId>
-    <version>${hibernate.version}</version>
-</dependency>
 
 
 	 <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-
-
 
 
 
@@ -166,12 +124,9 @@
 		
 	</dependencies>
 
-	
-
-
 	<build>
 		<plugins>
-	
+			
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -198,6 +153,5 @@
             </plugin>
 		</plugins>
 	</build>
-
 
 </project>

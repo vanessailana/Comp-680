@@ -1,0 +1,43 @@
+<p>
+  {{messages | json}}
+  {{fromUsers | json}} 
+</p>
+
+<div class="row">
+<div class="border col-5" style="overflow-y: scroll; height:400px;">  
+<div *ngFor="let fromUser of fromUsers; let i = index">
+  <div *ngIf="fromUser.id!=user.id" class="my-primary" (click)="displayMessage(fromUser.id)">
+    <div class="row">
+      <div class="col-8">
+        <p style="float: left;vertical-align: middle" class="text-light"> {{ email(fromUser.id) }} </p> 
+      </div>
+    <div class="col-4">
+      <i style="float: right" class="fas fa-user fa-4x my-light"></i>
+    </div>
+    </div>
+  </div>
+<br/>
+</div>
+</div>
+
+
+
+<div id="messageDIV" class="border col-5 offset-2" style="overflow-y: scroll; height:400px;">
+    <div *ngFor="let message of currentMessages; let i = index" >
+      {{updateScroll()}}
+      <div *ngIf="message.fromUser==myId()">
+          <div class="alert alert-primary"> {{message.message}} </div>
+      </div>
+      <div *ngIf="message.toUser==myId()">
+          <div class="alert alert-success"> {{message.message}} </div>
+      </div>
+    </div>
+</div >
+
+</div>
+
+
+{{currentMessages | json}}
+
+
+

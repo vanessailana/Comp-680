@@ -10,30 +10,23 @@ import { AppliedService } from 'src/app/applied/applied.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { fbind } from 'q';
-import { element } from '@angular/core/src/render3';
+
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
   styleUrls: ['./viewposting.component.css']
 })
 export class ViewpostingComponent  implements OnInit {
- posting:Posting[];
-   p: number = 1;
+  posting:Posting[];
+  p: number = 1;
   totalRec : number;
- jobs: Array<any>;
-searchText;
-
- appliedJobs : any;
-
-
- userApplied: boolean;
-
- questions: any;
-
- formGroup : FormGroup;
-
- alreadyApplied : boolean;
+  jobs: Array<any>;
+  searchText:any;
+  appliedJobs : any;
+  userApplied: boolean;
+  questions: any;
+  formGroup : FormGroup;
+  alreadyApplied : boolean;
 
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
@@ -50,22 +43,27 @@ searchText;
         answers : this.initAnswers()
       })
 
-      console.log("Yo"+JSON.stringify(this.formGroup.value));
+
+      this.postingService.getAll().subscribe((res) => {
+        this.jobs = res;
+        console.log(res);
+      
+      },
+      (err)=>(console.log(err)),
+      ()=>(console.log("GETALLJOBS")));
+
+      const role= [localStorage.getItem('roles')];
+ 
+      this.permissionsService.loadPermissions(role);
+  
+   
+
 
     }
 
   ngOnInit() {
 
-   const role= [localStorage.getItem('roles')];
  
-    this.permissionsService.loadPermissions(role);
-
- 
-   this.postingService.getAll().subscribe(data => {
-      this.jobs= data;
-    
-    });
-
   
   }
 

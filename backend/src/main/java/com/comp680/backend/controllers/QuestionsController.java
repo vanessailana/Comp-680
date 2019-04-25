@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 //https://mysterious-harbor-56923.herokuapp.com
-@RestController
 @CrossOrigin(origins = "http://localhost:4200" , maxAge = 3600 )
+@RestController
 public class QuestionsController {
 
 @Autowired 

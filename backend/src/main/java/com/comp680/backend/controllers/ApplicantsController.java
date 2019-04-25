@@ -29,10 +29,13 @@ public class ApplicantsController {
 
     @Autowired 
     ApplicantsRepository applicantsRepository;
+    
     @Autowired 
     AnswerRepository answerRepository;
+
     @Autowired
     UsersRepository usersRepository;
+
     @Autowired
     JobsRepository jobsRepository;
     

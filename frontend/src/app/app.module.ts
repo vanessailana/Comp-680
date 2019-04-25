@@ -34,6 +34,7 @@ import { ViewApplicantsComponent } from './view-applicants/view-applicants.compo
 import { ApplicantsService} from './view-applicants/applicants.service';
 
 import { OrderModule } from 'ngx-order-pipe';
+import { MyMessageComponent } from './my-message/my-message.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { OrderModule } from 'ngx-order-pipe';
     JobDescriptionComponent,
     MyJobsComponent,
     AppliedComponent,
-    ViewApplicantsComponent
+    ViewApplicantsComponent,
+    MyMessageComponent
 
   ],
   imports: [OrderModule,
@@ -68,7 +70,8 @@ NgbModule, MatDialogModule, NgxPaginationModule,
     JobDescriptionComponent],
   providers: [ 
     ApplicantsService,
-    AuthService, PostingService, AppliedService,
+    PostingService,
+    AuthService, AppliedService,
     HttpErrorHandler, JobDescriptionComponent,
     MessageService, 
     NgbModal, 

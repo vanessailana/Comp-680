@@ -1,6 +1,6 @@
 
-    <h1>Jobs Currently Posted</h1>
-    <button class="btn btn-dark" routerLink="/applied" > View Applied Jobs </button>
+    <h1 class="my-light"> Jobs Currently Posted</h1>
+    <button class="my-btn-primary btn-lg" routerLink="/applied" > View Applied Jobs </button>
     <div class="container">
         <div class="row">
           <div class="search">
@@ -70,7 +70,7 @@
   <ng-template ngxPermissionsOnly="user">
   <div class="modal-footer">
 
-    <button class="btn btn-dark" #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
+    <button class="my-btn-primary btn-lg" #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
   </div>
   </ng-template>
 
@@ -81,7 +81,7 @@
 </div>
 </ng-template>
 
-<button class="btn btn-dark" (click)="open(job.id,content)">View Job Description</button>
+<button class="my-btn-primary" (click)="open(job.id,content)">View Job Description</button>
 
  </td>
 

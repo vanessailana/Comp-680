@@ -20,6 +20,7 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="applicants")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Applicant {
 
   @Id

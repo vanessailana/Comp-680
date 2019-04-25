@@ -2,11 +2,11 @@
 
 
 <div class="container">
-  
+  <h1 class="my-light"> Profile </h1>
   <div class="row">
-    <div class=" bg-light rounded form-group border border-dark col-xs-5 col-md-5">
+    <div class="form-group border my-primary col-xs-5 col-md-5">
     
-      <ul class="list-group">
+      <ul class="my-primary list-group">
       Profile: 
         <li class="list-group-item"> <img src="{{profile?.picture}}" class="avatar profile-image" alt="avatar"></li>
         <li class="list-group-item"> Name: {{ userInfo?.firstName }} </li>
@@ -16,11 +16,11 @@
         <li class="list-group-item"> Objective: {{userInfo?.objective}} </li>
         <li class="list-group-item"> <i class="fas fa-file"></i> Resume: </li>
         <li class="list-group-item"> <i class="fas fa-camera"></i> Photo: </li>
-        <li class="list-group-item">  <button #edit_info name="edit_info" class="btn-default btn-lg" (click)="open(content,edit_info)"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
+        <li class="list-group-item">  <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="open(content,edit_info)"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
       </ul> 
     </div>
 
-    <div class="bg-light form-group border border-dark rounded col-xs-5 col-md-5 offset-md-2">
+    <div class="form-group border my-primary  col-xs-5 col-md-5 offset-md-2">
         <ul class="list-group">
             Socials: 
             <li class="list-group-item"> <i class="fab fa-linkedin-in"></i> {{socialInfo?.linkedin}} </li>
@@ -28,7 +28,7 @@
             <li class="list-group-item">  <i class="fab fa-facebook"></i> {{socialInfo?.facebook}} </li>
             <li class="list-group-item"> <i class="fab fa-github"></i> {{socialInfo?.github}}  </li>
             <li class="list-group-item"> <i class="fas fa-globe">   </i> {{ socialInfo?.website }}</li>
-            <li class="list-group-item">  <button #add_social name="add_social" class="btn-default btn-lg" (click)="open(content,add_social)"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
+            <li class="list-group-item">  <button #add_social name="add_social" class="my-btn-primary btn-lg" (click)="open(content,add_social)"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
           </ul>   
     </div>
  
@@ -42,9 +42,9 @@
 <div class="row top-row">
    
 
-    <div class="bg-light rounded form-group border border-dark col-xs-5 col-md-5">
+    <div class=" form-group border my-primary col-xs-5 col-md-5">
        
-        <ul class="list-group">
+        <ul class="list-group ">
             Work Experience:
               <ul *ngFor="let exp of expInfo; let i=index">
                 <li class="list-group-item"> Title: {{ exp.title }} </li>
@@ -54,13 +54,13 @@
                 <li class="list-group-item"> EndDate: {{ exp.endDate }} </li>
                 <li class="list-group-item"> Current: {{exp.current ? "Yes": "No"}}</li>
                
-                <button #edit_exp name="edit_exp" class="btn-default btn-sm" (click)="open(content,edit_exp,i)"> <i class="fas fa-pencil-alt"></i>Edit</button> 
-                <button #delete_exp name="delete_exp" class="btn-default btn-sm" (click)="onDelete(delete_exp,i)"> <i class="fas fa-trash"></i>Delete</button> 
+                <button #edit_exp name="edit_exp" class="my-btn-primary btn-sm" (click)="open(content,edit_exp,i)"> <i class="fas fa-pencil-alt"></i>Edit</button> 
+                <button #delete_exp name="delete_exp" class="my-btn-primary btn-sm" (click)="onDelete(delete_exp,i)"> <i class="fas fa-trash"></i>Delete</button> 
               </ul> 
            
             <li class="list-group-item"> </li>
             <li class="list-group-item"> 
-              <button #add_exp name="add_exp"  class="btn-default btn-lg" (click)="open(content,add_exp)"> 
+              <button #add_exp name="add_exp"  class="my-btn-primary btn-lg"  (click)="open(content,add_exp)"> 
                 <i class="fas fa-plus"> </i> Work Experience
               </button>
             </li>
@@ -70,8 +70,8 @@
         
       </div>
 
-    <div class="bg-light form-group border border-dark col-xs-5 col-md-5 offset-md-2">
-        <ul class="list-group">
+    <div class=" form-group border my-primary col-xs-5 col-md-5 offset-md-2">
+        <ul class=" list-group">
             Education:
             <ul *ngFor="let edu of eduInfo; let i=index">
                 <li class="list-group-item"> School: {{ edu.schoolName }} </li>
@@ -81,17 +81,17 @@
                 <li class="list-group-item"> StartDate: {{ edu.startDate }} </li>
                 <li class="list-group-item"> EndDate: {{ edu.endDate }} </li>
                 <li class="list-group-item"> InProgress: {{edu.inProgress ? "Yes": "No"}}</li>
-                <button #edit_edu name="edit_edu" class="btn-default btn-sm" (click)="open(content,edit_edu,i)"> <i class="fas fa-pencil-alt"></i>Edit Education</button> 
-                <button #delete_edu name="delete_edu" class="btn-default btn-sm" (click)="onDelete(delete_edu,i)"> <i class="fas fa-trash"></i>Delete Education</button> 
+                <button #edit_edu name="edit_edu" class="my-btn-primary btn-sm" (click)="open(content,edit_edu,i)"> <i class="fas fa-pencil-alt"></i>Edit Education</button> 
+                <button #delete_edu name="delete_edu" class="my-btn-primary btn-sm" (click)="onDelete(delete_edu,i)"> <i class="fas fa-trash"></i>Delete Education</button> 
               </ul>
             <li class="list-group-item"> </li>
-            <li class="list-group-item">  <button #add_edu name="add_edu" class="btn-default btn-lg" (click)="open(content,add_edu)"> <i class="fas fa-plus"></i>Add Education</button> </li>
+            <li class="list-group-item">  <button #add_edu name="add_edu" class="my-btn-primary btn-lg" (click)="open(content,add_edu)"> <i class="fas fa-plus"></i>Add Education</button> </li>
         </ul>
     </div>
 </div>
 
   <div class="row top-row">
-      <div class="bg-light form-group border border-dark rounded col-xs-5 col-md-5">
+      <div class="form-group border my-primary rounded col-xs-5 col-md-5">
 
           
           <ul class="list-group">
@@ -107,22 +107,22 @@
                 <button #delete_project name="delete_project" class="btn-default btn-sm" (click)="onDelete(delete_project,i)"> <i class="fas fa-trash"></i>Delete</button> 
               </ul>
               <li class="list-group-item">  </li>
-              <li class="list-group-item">  <button name="add_project"  #add_project class="btn-default btn-lg" (click)="open(content,add_project)"> <i class="fas fa-plus"></i>Add Project</button> </li>
+              <li class="list-group-item">  <button name="add_project"  #add_project class="my-btn-primary btn-lg" (click)="open(content,add_project)"> <i class="fas fa-plus"></i>Add Project</button> </li>
             </ul>   
       </div>
   
-      <div class="bg-light form-group border border-dark col-xs-5 col-md-5 offset-md-2">
-          <ul class="list-group">
+      <div class="my-primary form-group border my-primary col-xs-5 col-md-5 offset-md-2">
+          <ul class="list-group my-primary">
               Skills: 
 
               <ul *ngFor="let skill of skillInfo; let i=index">
                 <li class="list-group-item"> School: {{ skill.skill }} </li>
                 <li class="list-group-item"> Level: {{ skill.level }}</li>
-                <button #edit_skill name="edit_skill" class="btn-default btn-sm" (click)="open(content,edit_skill,i)"> <i class="fas fa-pencil-alt"></i>Edit</button> 
-                <button #delete_skill name="delete_skill" class="btn-default btn-sm" (click)="onDelete(delete_skill,i)"> <i class="fas fa-trash"></i>Delete</button> 
+                <button #edit_skill name="edit_skill" class="my-btn-primary btn-sm" (click)="open(content,edit_skill,i)"> <i class="fas fa-pencil-alt"></i>Edit</button> 
+                <button #delete_skill name="delete_skill" class="my-btn-primary btn-sm" (click)="onDelete(delete_skill,i)"> <i class="fas fa-trash"></i>Delete</button> 
               </ul>
               <li class="list-group-item"> </li>
-              <li class="list-group-item">  <button name="add_skill"  #add_skill class="btn-default btn-lg"  (click)="open(content,add_skill)"> <i class="fas fa-plus"></i>Add Skill</button> </li>
+              <li class="list-group-item">  <button name="add_skill"  #add_skill class="my-btn-primary btn-lg"  (click)="open(content,add_skill)"> <i class="fas fa-plus"></i>Add Skill</button> </li>
           </ul>
       </div>
     </div>
@@ -244,7 +244,7 @@
       <label for="website"> <i class="fas fa-globe"></i> </label>
       <input type="text" class="form-control" formControlName="website" id="website">
 </div>
-        <button #submitBtn type="submit" class="btn btn-dark"> <i class="fas fa-pencil-alt"></i> Save </button>
+        <button #submitBtn type="submit" class="my-btn-primary"> <i class="fas fa-pencil-alt"></i> Save </button>
     </form>
 
   </div>

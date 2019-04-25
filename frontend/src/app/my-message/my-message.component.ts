@@ -18,10 +18,13 @@ export class MyMessageComponent implements OnInit {
 
   fromUsers: Array<any>;
 
+  currentMessages: Array<any>;
+
   constructor( messageService : MyMessageService) { 
 
     this.user = JSON.parse(localStorage.getItem('user'));
 
+   
   
 
     messageService.getFromMessage(this.user.id).subscribe(
@@ -52,10 +55,11 @@ export class MyMessageComponent implements OnInit {
 
         this.fromUsers = new Array<any>();
         
-        this.messages.sort((a, b) => (a.toUser > b.toUser && a.fromUser > b.fromUser) ? 1 : -1);
+        //this.messages.sort((a, b) => (a.toUser > b.toUser && a.fromUser > b.fromUser) ? 1 : -1);
 
         console.log(this.messages);
-        var distinct = []
+
+        var distinct:Array<number> = []
         for (var i = 0; i < this.messages.length; i++)
         {
           if (!distinct.find((e)=> e == this.messages[i].fromUser))
@@ -63,14 +67,18 @@ export class MyMessageComponent implements OnInit {
               distinct.push(this.messages[i].fromUser);
           }
         }
-          distinct.forEach(id => {
-              messageService.getFromUser(id).subscribe(
-                (res)=>{this.fromUsers.push(res)},
-                (err)=>{},
-                ()=>{}
-              )          
-          });
           
+              messageService.getFromUser(distinct).subscribe(
+                (res)=>{this.fromUsers = res },
+                (err)=>{},
+                ()=>{
+
+                  this.fromUsers = this.fromUsers.filter((e)=>e!=null);
+                  console.log(this.fromUsers);
+
+                }
+              )          
+         
         
       }
     )
@@ -86,12 +94,33 @@ export class MyMessageComponent implements OnInit {
     return this.user.id;
   }
 
+  displayMessage(fromId)
+  {
+
+    this.currentMessages = new Array<any>();
+
+    this.messages.forEach((e)=>{
+      if((e.fromUser==this.user.id&&e.toUser==fromId)||
+      (e.fromUser==fromId&&e.toUser==this.user.id))
+      {
+        this.currentMessages.push(e);
+      }
+    })
+
+  }
+
   email(fromId:number)
   { 
-    var result = this.fromUsers.find((e)=>(e.id == fromId));
-    return result == null? null:result.email;
+   
+    var result  = this.fromUsers.find((e)=>(e.id==fromId));
+    return result == null ? null : result.email;
   }
   
+  updateScroll()
+  {
+    var element = document.getElementById("messageDIV");
+    element.scrollTop = element.scrollHeight;
+  }
 
   ngOnInit() {
   }

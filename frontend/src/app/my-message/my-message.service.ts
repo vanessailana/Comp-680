@@ -32,7 +32,7 @@ export class MyMessageService {
   	return this.http.get<any>(this.myMessageUrl+"/kafka/to/"+toUser,httpOptions);
   }
 
-  getFromUser(from : number) : Observable<any>
+  getFromUser(from : Array<number>) : Observable<any>
   {
     return this.http.get<any>(this.myMessageUrl+"/kafka/fromUser/"+from,httpOptions);
   }  

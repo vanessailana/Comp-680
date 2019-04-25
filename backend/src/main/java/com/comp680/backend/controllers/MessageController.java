@@ -167,8 +167,12 @@ public class MessageController {
     }
 
     @GetMapping("/kafka/fromUser/{id}")
-    public User Test(@PathVariable long id) {
-        return userRepo.findById(id);
+    public List<User> fromUser(@PathVariable long [] id) {
+        List<User> result = new ArrayList<>();
+        for (long var : id) {
+            result.add(userRepo.findById(var));
+        }
+        return result;
     }
 
    
@@ -195,14 +199,6 @@ public class MessageController {
         
     }
 
-    @RequestMapping(value = "/testing", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public @ResponseBody ResponseEntity<JSONObject> HelloWorld() {
-    JSONObject res = new JSONObject();
-    System.out.println("HelloWorld Test!");
-    res.put("data", "hello world!");
-    res.put("errCode", 0);
-    return ResponseEntity.status(HttpStatus.OK).body(res);
-}
 
 
 

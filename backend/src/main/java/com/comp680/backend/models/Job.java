@@ -40,23 +40,35 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Job implements Serializable  {
 
+
+  public Job()
+  {
+
+  }
+
+  public Job(User user, boolean status, 
+  String title, String description, double start, String location)
+  {
+    this.user = user;
+
+    this.status = status;
+    this.title = title;
+    this.description = description;
+    this.start_compensation =start;
+    this.location = location;
+
+  }
   @Id
   @Column(name="job_id",unique=true, nullable=false)
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
 
-  
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "job")
-  private List<Applicant> applicant;
-  
-
-  
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true;
 
@@ -154,16 +166,7 @@ public class Job implements Serializable  {
   }
 
 
-  public List<Applicant> getApplicant()
-  {
-    return this.applicant;
-  }
 
-  public void setApplicant( List<Applicant> applicant)
-  {
-    this.applicant=applicant;
-  }
-   
 
 
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MyMessageService } from './my-message.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -20,71 +21,71 @@ export class MyMessageComponent implements OnInit {
 
   currentMessages: Array<any>;
 
-  constructor( messageService : MyMessageService) { 
+  messageForm : FormGroup; 
 
+
+  toUserId : number;
+
+
+  constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef) { 
+
+
+    this.toUserId = -1;
     this.user = JSON.parse(localStorage.getItem('user'));
 
-   
+    this.currentMessages = new Array<any>();
+    this.fromMessages = new Array<any>();
+    this.toMessages = new Array<any>();
+
+    this.loadMessages();
+
   
+    this.messageForm = this.fb.group({
+      toUser : ["",Validators.required],
+      fromUser : ["",Validators.required],
+      message : ["", Validators.required]
+    })
 
-    messageService.getFromMessage(this.user.id).subscribe(
-      (res)=>{
-        
-        this.fromMessages = res
+  }
 
-      },
-      (err)=>console.log(err),
-      () => {
-
-       
-      }
+  loadMessages(){ 
 
 
-    
-    )
 
-    messageService.getToMessage(this.user.id).subscribe(
-      (res)=>this.toMessages = res,
-      (err)=>console.log(err),
-      ()=>{
-        console.log(JSON.stringify(this.toMessages));
-        this.messages = this.fromMessages.concat(this.toMessages);
-        console.log("Messages"+this.messages);
 
-        var sort = [];
+    this.messages = new Array<any>();
 
-        this.fromUsers = new Array<any>();
-        
-        //this.messages.sort((a, b) => (a.toUser > b.toUser && a.fromUser > b.fromUser) ? 1 : -1);
+    this.fromUsers = new Array<any>();
 
-        console.log(this.messages);
+    this.messageService.getMessages(this.user.id).subscribe((res)=>{
+      this.messages = res;
+      console.log("Messages"+res);
 
-        var distinct:Array<number> = []
-        for (var i = 0; i < this.messages.length; i++)
+
+      var distinct:Array<number> = []
+      for (var i = 0; i < this.messages.length; i++)
+      {
+        if (!distinct.find((e)=> e == this.messages[i].fromUser))
         {
-          if (!distinct.find((e)=> e == this.messages[i].fromUser))
-          {
-              distinct.push(this.messages[i].fromUser);
-          }
+            distinct.push(this.messages[i].fromUser);
         }
-          
-              messageService.getFromUser(distinct).subscribe(
-                (res)=>{this.fromUsers = res },
-                (err)=>{},
-                ()=>{
-
-                  this.fromUsers = this.fromUsers.filter((e)=>e!=null);
-                  console.log(this.fromUsers);
-
-                }
-              )          
-         
-        
       }
-    )
 
-    
-    
+      this.messageService.getFromUser(distinct).subscribe(
+        (res)=>{this.fromUsers = res },
+        (err)=>{},
+        ()=>{
+          this.fromUsers = this.fromUsers.filter((e)=>e!=null);
+          console.log(this.fromUsers);
+        }
+      )
+
+      if(this.toUserId > -1)
+      {
+        this.displayMessage(this.toUserId);
+      }
+
+    })
 
   }
 
@@ -97,7 +98,19 @@ export class MyMessageComponent implements OnInit {
   displayMessage(fromId)
   {
 
-    this.currentMessages = new Array<any>();
+    console.log("OUTSIDE");
+
+    this.toUserId = fromId;
+
+    this.messageForm.controls['toUser'].setValue(this.toUserId);
+    this.messageForm.controls['fromUser'].setValue(this.myId());
+
+    while(this.currentMessages.length > 0)
+    {
+      this.currentMessages.pop();
+    }
+
+   
 
     this.messages.forEach((e)=>{
       if((e.fromUser==this.user.id&&e.toUser==fromId)||
@@ -106,6 +119,8 @@ export class MyMessageComponent implements OnInit {
         this.currentMessages.push(e);
       }
     })
+
+    console.log("Current"+JSON.stringify(this.currentMessages));
 
   }
 
@@ -120,6 +135,26 @@ export class MyMessageComponent implements OnInit {
   {
     var element = document.getElementById("messageDIV");
     element.scrollTop = element.scrollHeight;
+  }
+
+  get diagnostic() { return JSON.stringify(this.messageForm.value); }
+
+
+  onSubmit(content)
+  {
+    if(this.messageForm.valid)
+    {
+    this.messageService.postMessage(this.messageForm.value).subscribe((res)=>{
+        if(res==true)
+        {
+          console.log("load");
+          this.loadMessages();
+          
+          
+        }
+      }
+    )
+    }
   }
 
   ngOnInit() {

@@ -3,26 +3,22 @@
   {{fromUsers | json}} 
 </p>
 
-<div class="row">
-<div class="border col-5" style="overflow-y: scroll; height:400px;">  
+<div style="border-width:3px !important;" class="row">
+<div class="col-5 my-primary" style="overflow-y: scroll; height:400px;">  
 <div *ngFor="let fromUser of fromUsers; let i = index">
-  <div *ngIf="fromUser.id!=user.id" class="my-primary" (click)="displayMessage(fromUser.id)">
-    <div class="row">
-      <div class="col-8">
-        <p style="float: left;vertical-align: middle" class="text-light"> {{ email(fromUser.id) }} </p> 
+  <div  class="row border" *ngIf="fromUser.id!=user.id" class="my-primary" (click)="displayMessage(fromUser.id)">
+    <div class="row border">
+      <div class="col-8 align-middle">
+        <p  class="align-middle text-light">{{ email(fromUser.id) }}</p> 
       </div>
     <div class="col-4">
-      <i style="float: right" class="fas fa-user fa-4x my-light"></i>
+      <i style="float: right" class="fas fa-user fa-6x my-light"></i>
     </div>
     </div>
   </div>
-<br/>
 </div>
 </div>
-
-
-
-<div id="messageDIV" class="border col-5 offset-2" style="overflow-y: scroll; height:400px;">
+<div id="messageDIV" class="col-7" style="overflow-y: scroll; height:400px;">
     <div *ngFor="let message of currentMessages; let i = index" >
       {{updateScroll()}}
       <div *ngIf="message.fromUser==myId()">
@@ -32,11 +28,22 @@
           <div class="alert alert-success"> {{message.message}} </div>
       </div>
     </div>
-</div >
+  </div>
+
 
 </div>
 
+<div class="row">
+    <div style="width:100%">
+      <form [formGroup]="messageForm"   (click)="onSubmit(submitBtn)">
+          <textarea formControlName="message" class="form-control rounded-0" rows=7 id="message"  required>
+          </textarea>
+        <button style="width: 100%" #submitBtn type="submit" class="my-btn-primary btn-lg">Send Message</button>
+      </form>
+    </div>
+</div>
 
+{{ diagnostic }}
 {{currentMessages | json}}
 
 

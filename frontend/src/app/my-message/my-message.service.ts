@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
@@ -22,20 +22,22 @@ export class MyMessageService {
 
   }
 
-  getFromMessage(fromUser:number): Observable<any> {
-
-  	return this.http.get<any>(this.myMessageUrl+"/kafka/from/"+fromUser,httpOptions);
+  getMessages(userId:number): Observable<any> {
+  	return interval(5000).flatMap(()=>{
+      return this.http.get<any>(this.myMessageUrl+"/kafka/messages/"+userId,httpOptions)
+    });
   }
 
-  getToMessage(toUser:number): Observable<any> {
-
-  	return this.http.get<any>(this.myMessageUrl+"/kafka/to/"+toUser,httpOptions);
-  }
 
   getFromUser(from : Array<number>) : Observable<any>
   {
     return this.http.get<any>(this.myMessageUrl+"/kafka/fromUser/"+from,httpOptions);
-  }  
+  }
+
+  postMessage(message : any)
+  {
+    return this.http.post<any>(this.myMessageUrl+"/kafka/publish",message,httpOptions);
+  }
 
 
 }

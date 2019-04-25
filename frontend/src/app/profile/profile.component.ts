@@ -47,6 +47,7 @@ export class ProfileComponent implements OnInit {
           console.log(res); 
           this.userInfo=res;
           localStorage.setItem('user',JSON.stringify(this.userInfo));
+
 /*           let role = localStorage.getItem('roles');
 
           if(role == 'admin')
@@ -95,13 +96,6 @@ export class ProfileComponent implements OnInit {
             console.log(res); 
             this.userInfo=res;
             localStorage.setItem('user',JSON.stringify(this.userInfo));
-/* 
-            let role = localStorage.getItem('roles');
-
-            if(role == 'admin')
-            {
-              this.router.navigate(['/posting']);
-            } */
             
             this.profileService.createOrSocialInfo(this.userInfo.id).subscribe(
               res => {console.log(res); this.socialInfo = res;},

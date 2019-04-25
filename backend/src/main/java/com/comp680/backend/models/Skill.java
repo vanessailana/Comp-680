@@ -29,7 +29,6 @@ public class Skill {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-
     private User user;
 
     @Column(name="skill",nullable=true)
@@ -70,4 +69,5 @@ public class Skill {
     public void setUser(User user){
         this.user=user;
     }
+    
 }

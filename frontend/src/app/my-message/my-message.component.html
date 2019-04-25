@@ -1,0 +1,17 @@
+<p>
+  {{messages | json}}
+  {{fromUsers | json}} 
+</p>
+
+
+  
+    <div *ngFor="let message of messages; let i = index" >
+      <div *ngIf="message.fromUser==myId()">
+        To : {{ email(message.toUser) }} {{message.message}}
+      </div>
+      <div *ngIf="message.fromUser!=myId()">
+        From : {{ email(message.fromUser) }} {{message.message}}
+      </div>
+    </div>
+
+

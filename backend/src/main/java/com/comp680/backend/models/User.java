@@ -53,12 +53,12 @@ public class User {
     private Long id;
 
  
-  
+    /*
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
     orphanRemoval = true, mappedBy = "user")
     private List<Skill> skills;
     
-    /*
+  
     @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL,mappedBy = "users")
     private Social social;
     */
@@ -189,7 +189,7 @@ public class User {
     }
 
     
-  
+  /*
 
     public List<Skill> getSkill(){
         return skills;
@@ -198,5 +198,7 @@ public class User {
     public void  setSkills(List<Skill> skills) {
         this.skills=skills;
     }
+
+    */
   
 }

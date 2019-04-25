@@ -104,15 +104,7 @@ public class MessageController {
             });
         }
 
-        public void sendMyMessage(MyMessage message) {
-
-            if(messageList==null)
-            {
-                messageList = new ArrayList<>();
-            }else{
-                messageList.add(message);
-            }
-            
+        public void sendMyMessage(MyMessage message) {            
             myMessageKafkaTemplate.send(myMessageTopicName, message);
         }
     }
@@ -165,7 +157,8 @@ public class MessageController {
         }
         return true;
     }
-
+   
+   
     @GetMapping("/kafka/fromUser/{id}")
     public List<User> fromUser(@PathVariable long [] id) {
         List<User> result = new ArrayList<>();
@@ -174,30 +167,22 @@ public class MessageController {
         }
         return result;
     }
-
-   
-   
-    @GetMapping("kafka/from/{id}")
-    public List<MyMessage> fromMessages(@PathVariable long id) {
+    
+    @GetMapping("/kafka/messages/{id}")
+    public List<MyMessage> getMessages(@PathVariable long id) {
 
         messageList.stream().forEach(System.out::println);
         List<MyMessage> result = new ArrayList<>();
         messageList.stream()
-        .filter(e -> ((e.getFromUser()==id))).forEach(x -> result.add(x) );
+        .filter(e -> ((e.getFromUser()==id)||(e.getToUser()==id))).forEach(x -> result.add(x) );
         return result;
         
     }
+
+
+
 
   
-    @GetMapping("kafka/to/{id}")
-    public List<MyMessage> toMessages(@PathVariable long id) {
-        messageList.stream().forEach(System.out::println);
-        List<MyMessage> result = new ArrayList<>();
-        messageList.stream()
-        .filter(e -> ((e.getToUser()==id))).forEach(x -> result.add(x) );
-        return result;
-        
-    }
 
 
 

@@ -69,6 +69,18 @@
          Profile
         </a>
       </ng-template>
+
+      <ng-template ngxPermissionsOnly="user">
+          <a  class="nav-link" routerLink="/mymessages">
+           <i class="fas fa-envelope"> </i>
+          </a>
+      </ng-template>
+      <ng-template ngxPermissionsOnly="admin">
+          <a  class="nav-link" routerLink="/mymessages">
+           <i class="fas fa-envelope"> </i>
+          </a>
+      </ng-template>
+    
     
 
 
@@ -91,6 +103,6 @@
 
 
 
-<main class="container">
+<main class="container-full">
   <router-outlet></router-outlet>
 </main>

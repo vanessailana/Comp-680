@@ -11,6 +11,7 @@ Search my Applicants
     <tr>
     <td> Job Title </td>
     <td> Applicant Metadata </td>
+    <td> Message Applicant </td>
     </tr>
     
     
@@ -18,39 +19,26 @@ Search my Applicants
 
         
         <tbody *ngFor="let applicant of applicants   | paginate: { itemsPerPage: 10, currentPage: p} | filter:searchText |  orderBy: order">
-            <td> {{applicant.title}} </td>
+            <td> {{applicant.job.title}} </td> 
+            
+            <td>
 
-            <div *ngFor="let widget of applicant.applicant">
+            </td>
             
-            
-            <td> {{widget.user.firstName}} </td>
-        
-            <td>  {{widget.user.lastName}} </td>
-        
-             <td>   {{widget.user.email}} </td>
-        
+            <td>
+                <div class="row">
+                    <div style="width:100%">
+                      <form [formGroup]="messageForm"  (ngSubmit)="onSubmit(applicant.user.id)">
+                          <textarea formControlName="message" class="form-control rounded-0" rows=7 id="message"  required>
+                          </textarea>
+                          
+                        <button style="width: 100%" #submitBtn type="submit" class="my-btn-primary btn-lg">Send Message</button>
+                      </form>
+                    </div>
+                </div>
                 
-             <td> {{widget.user.address}} </td>
-        
-        
-             <td>  {{widget.user.city}} </td>
-        
-        
-             <td>  {{widget.user.state}} </td>
-        
-        
-        
-            <td>  {{widget.user.zipCode}} </td>
-        
-               
-             <td>{{widget.resume}} </td>
-        
-            <td> {{widget.number}} </td>
-        
-             <td>{{widget.profileLink}} </td>
-        
-            <td>  {{widget.createdAt}} </td>
-            </div>
+            </td>
+      
             </tbody>
       </table>
 

@@ -30,16 +30,15 @@ public class Applicant {
 
 
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "user_id", nullable = false)
+  @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+  @JoinColumn(name = "user_id")
   private User user;
 
-
-
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "job_id", nullable = false)
-  @JsonBackReference
+  @OneToOne
+  @JoinColumn(name = "job_id")
   private Job job;
+
+
 
   @Column(name="profile_link", nullable=true)
   private String profile_link;
@@ -63,7 +62,7 @@ public class Applicant {
     return user;
   }
 
-  public void setUser(){
+  public void setUser(User user){
     this.user = user;
   }
 
@@ -73,7 +72,7 @@ public class Applicant {
     return job;
   }
 
-  public void setJob(){
+  public void setJob(Job job){
     this.job = job;
   }
 

@@ -21,6 +21,9 @@ export class AppComponent implements OnInit {
   isNavbarCollapsed : boolean = false;
 
   username : string;
+
+  messageNotice : boolean;
+
   constructor(
     public auth: AuthService,
     private http: HttpClient, private permissionsService: NgxPermissionsService,
@@ -29,6 +32,8 @@ export class AppComponent implements OnInit {
     auth.handleAuthentication();
     //this.perm = localStorage.getItem('roles');
     
+
+   
     localStorage.getItem('user') == null ? this.username = "" : this.username =  JSON.parse(localStorage.getItem('user')).firstName;;
     //console.log(this.perm);
 

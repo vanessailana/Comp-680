@@ -10,7 +10,9 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ApplicantsRepository extends CrudRepository<Applicant, Long> {
 
-     List<Applicant> findByUserId(long id);
+    List<Applicant> findByUserId(long id);
  
+    List<Applicant> findByJobId(long id);
+
     boolean existsById(long id);
 }

@@ -1,17 +1,19 @@
 package com.comp680.backend.messaging;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class MyMessage {
 
+    
+
+    
     public MyMessage() {
 
     }
 
-    public MyMessage(long fromUser, long toUser, String message) {
-        this.fromUser = fromUser;
+    public MyMessage(long toUser, long fromUser, String message, String date) {
         this.toUser = toUser;
+        this.fromUser = fromUser;
         this.message = message;
+        this.sentAtDate = date;
     }
 
     /**
@@ -36,6 +38,17 @@ public class MyMessage {
     @JsonProperty("message")
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    @JsonProperty("sentAtDate")
+    public void setSentAtDate(String date) {
+       this.sentAtDate = date;
+    }
+
+
+    public String getSentAtDate()
+    {
+        return sentAtDate;
     }
 
     /**
@@ -65,4 +78,6 @@ public class MyMessage {
     long toUser;
     
     String message;
+
+    String sentAtDate;
 }

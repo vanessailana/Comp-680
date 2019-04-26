@@ -39,11 +39,14 @@ export class MyMessageComponent implements OnInit {
 
     this.loadMessages();
 
+
+
   
     this.messageForm = this.fb.group({
       toUser : ["",Validators.required],
       fromUser : ["",Validators.required],
-      message : ["", Validators.required]
+      message : ["", Validators.required],
+      sentAtDate: ["",Validators.required]
     })
 
   }
@@ -58,9 +61,16 @@ export class MyMessageComponent implements OnInit {
     this.fromUsers = new Array<any>();
 
     this.messageService.getMessages(this.user.id).subscribe((res)=>{
+      //no need to update frontend
+  
+      console.log("RESOURCE"+JSON.stringify(res));
       this.messages = res;
+      this.messages.sort(function(a,b){ return b.sentAtDate - a.sentAtDate});
+
       console.log("Messages"+res);
 
+      //implement notifications at a later time review this with team
+      localStorage.setItem('messageNotice',"true");
 
       var distinct:Array<number> = []
       for (var i = 0; i < this.messages.length; i++)
@@ -76,7 +86,7 @@ export class MyMessageComponent implements OnInit {
         (err)=>{},
         ()=>{
           this.fromUsers = this.fromUsers.filter((e)=>e!=null);
-          console.log(this.fromUsers);
+          console.log("From"+JSON.stringify(this.fromUsers));
         }
       )
 
@@ -84,9 +94,11 @@ export class MyMessageComponent implements OnInit {
       {
         this.displayMessage(this.toUserId);
       }
+    
 
     })
 
+   
   }
 
 
@@ -104,14 +116,14 @@ export class MyMessageComponent implements OnInit {
 
     this.messageForm.controls['toUser'].setValue(this.toUserId);
     this.messageForm.controls['fromUser'].setValue(this.myId());
-
+    this.messageForm.controls['sentAtDate'].setValue(Date.now());
+    
     while(this.currentMessages.length > 0)
     {
       this.currentMessages.pop();
     }
 
-   
-
+  
     this.messages.forEach((e)=>{
       if((e.fromUser==this.user.id&&e.toUser==fromId)||
       (e.fromUser==fromId&&e.toUser==this.user.id))

@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +51,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 @RestController
 public class MessageController {
 
+
+    static List<MyMessage> emptyMessage;
     static List<MyMessage> messageList;
 
+    long messageCount = -1;
 
     @Autowired
     MessageProducer producer;
@@ -167,15 +173,10 @@ public class MessageController {
         }
         return result;
     }
-    
+
     @GetMapping("/kafka/messages/{id}")
     public List<MyMessage> getMessages(@PathVariable long id) {
-
-        messageList.stream().forEach(System.out::println);
-        List<MyMessage> result = new ArrayList<>();
-        messageList.stream()
-        .filter(e -> ((e.getFromUser()==id)||(e.getToUser()==id))).forEach(x -> result.add(x) );
-        return result;
+        return messageList.stream().filter(e -> ((e.getFromUser()==id)||(e.getToUser()==id))).collect(Collectors.toList());
         
     }
 

@@ -43,12 +43,24 @@
     
     </p>
    
+    
     <div *ngIf="alreadyApplied; else elseBlock" class="alert alert-success">
       You have already applied for this position.
     </div>
 
  
     <ng-template #elseBlock>
+
+        <button 
+        class="my-btn-primary btn-md" 
+        *ngIf="!auth.isAuthenticated()"
+        (click)="auth.login()">
+        Sign in to Apply 
+      </button>
+      
+  
+        
+  
     <form [formGroup]="formGroup">
         <div formArrayName="answers" >
             <div class="row" *ngFor="let quest of questions; let i=index">

@@ -11,6 +11,8 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
+import { AuthService } from '../../auth/auth.service';
+
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
@@ -28,15 +30,18 @@ export class ViewpostingComponent  implements OnInit {
   formGroup : FormGroup;
   alreadyApplied : boolean;
 
+  displayLogin : boolean;
+
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
     private appliedService: AppliedService, 
     private permissionsService: NgxPermissionsService,
     private postingService: PostingService,
     private modalService: NgbModal,private _rotuer:Router,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    private auth: AuthService ) { 
 
-
+      this.auth.handleAuthentication();
       this.alreadyApplied = false;
 
       this.formGroup = this.formBuilder.group({
@@ -89,6 +94,15 @@ export class ViewpostingComponent  implements OnInit {
     })
 
  
+    if(user==null) {  
+
+      this.alreadyApplied = false;
+      this.displayLogin = true;
+
+    }else{
+
+      this.displayLogin = false;
+      
     this.alreadyApplied = true;
 
     this.appliedService.hasApplied(i,user.id).subscribe(
@@ -116,6 +130,8 @@ export class ViewpostingComponent  implements OnInit {
         }
       }
     );
+
+  }
 
     
 

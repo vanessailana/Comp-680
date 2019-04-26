@@ -1,26 +1,26 @@
 <h1 class="my-light"> Create a Job Posting </h1>
 <mat-horizontal-stepper [linear]="true" #stepper completed=true>
     <mat-step [stepControl]="formGroup.controls.job">
-      <form class="row form-group" [formGroup]="formGroup.controls.job">
-        <div class="col-12" class="form-group">
+      <form class="form-group" [formGroup]="formGroup.controls.job">
+        <div class="form-group">
         <ng-template matStepLabel>Fill out the job information</ng-template>
-        <mat-form-field>
+        <mat-form-field class="col-12">
           <input matInput placeholder="Job Title" formControlName="title" required>
         </mat-form-field><br>
-        <mat-form-field>
+        <mat-form-field class="col-12">
             <textarea placeholder="Job Description" type="text" class="form-control" matInput row=5 formControlName="description" required></textarea>
         </mat-form-field><br>
-        <mat-form-field>
+        <mat-form-field class="col-12">
             <input type="text" placeholder="Job Location" class="form-control" matInput formControlName="location" required>
         </mat-form-field><br>
-        <mat-form-field>
+        <mat-form-field class="col-12">
             <input type="number" placeholder="Start Compensation" class="form-control" matInput formControlName="startCompensation">
         </mat-form-field><br>
-        <mat-form-field>
+        <mat-form-field class="col-12">
             <input type="number" placeholder="End Compensation" class="form-control" matInput formControlName="endCompensation">
         </mat-form-field><br>
     
-        <mat-form-field>
+        <mat-form-field class="col-12">
             <input type="text" placeholder="Employment Type" class="form-control" matInput formControlName="employmentType" required>
         </mat-form-field>
         

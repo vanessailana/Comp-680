@@ -26,6 +26,8 @@ export class MyMessageComponent implements OnInit {
 
   toUserId : number;
 
+  dontUpdate = false;
+
 
   constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef) { 
 
@@ -63,9 +65,15 @@ export class MyMessageComponent implements OnInit {
     this.messageService.getMessages(this.user.id).subscribe((res)=>{
       //no need to update frontend
   
-      console.log("RESOURCE"+JSON.stringify(res));
+      
+      if(this.messages.length != res.length)
+      {
+        console.log("RESOURCE"+JSON.stringify(res));
+
       this.messages = res;
-      this.messages.sort(function(a,b){ return b.sentAtDate - a.sentAtDate});
+      this.messages.sort(function(a,b){ return a.sentAtDate - b.sentAtDate});
+
+      
 
       console.log("Messages"+res);
 
@@ -94,7 +102,7 @@ export class MyMessageComponent implements OnInit {
       {
         this.displayMessage(this.toUserId);
       }
-    
+      }
 
     })
 
@@ -134,6 +142,7 @@ export class MyMessageComponent implements OnInit {
 
     console.log("Current"+JSON.stringify(this.currentMessages));
 
+    this.updateScroll();
   }
 
   email(fromId:number)
@@ -152,6 +161,8 @@ export class MyMessageComponent implements OnInit {
   get diagnostic() { return JSON.stringify(this.messageForm.value); }
 
 
+  date(value) { return new Date(Number(value)) }
+  
   onSubmit(content)
   {
     if(this.messageForm.valid)

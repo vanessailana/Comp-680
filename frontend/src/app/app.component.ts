@@ -33,6 +33,7 @@ export class AppComponent implements OnInit {
     //this.perm = localStorage.getItem('roles');
     
 
+    localStorage.setItem('messageNotice',0);
    
     localStorage.getItem('user') == null ? this.username = "" : this.username =  JSON.parse(localStorage.getItem('user')).firstName;;
     //console.log(this.perm);
@@ -59,9 +60,20 @@ export class AppComponent implements OnInit {
   
   }
 
+  getMessageNotice()
+  {
+    return localStorage.getItem('messageNotice');
+  }
+
+
   onSubmit(btn:HTMLButtonElement)
   {
 
+  }
+
+  onMessageClick()
+  {
+    localStorage.setItem('messageNotice',0);
   }
 }
 

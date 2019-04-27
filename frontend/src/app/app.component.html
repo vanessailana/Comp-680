@@ -70,14 +70,25 @@
       </ng-template>
 
       <ng-template ngxPermissionsOnly="user">
-          <a  class="nav-link" routerLink="/mymessages">
-           <i class="fas fa-envelope"> </i>
+          <a  (click)="onMessageClick()"class="nav-link" routerLink="/mymessages">
+            
+           <span> {{ getMessageNotice() }} </span>
+           <i class="fas fa-envelope">  </i>
+    
+
           </a>
       </ng-template>
       <ng-template ngxPermissionsOnly="admin">
-          <a  class="nav-link" routerLink="/mymessages">
-           <i class="fas fa-envelope"> </i>
-          </a>
+         <!--  <a  class="nav-link" routerLink="/mymessages">
+            <div *ngIf="localStorage.getItem('messageNotice') > 0; else #elseBlock">
+           <i class="fas fa-envelope"> {{localStorage.getItem('messageNotice')}} </i>
+            </div>
+
+            <div #elseBlock>
+                <i class="fas fa-envelope">  </i>
+            </div>
+            
+          </a> -->
       </ng-template>
     
     

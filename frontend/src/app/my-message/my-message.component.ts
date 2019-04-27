@@ -68,6 +68,9 @@ export class MyMessageComponent implements OnInit {
       
       if(this.messages.length != res.length)
       {
+        
+
+      var difference = res.length - this.messages.length; 
         console.log("RESOURCE"+JSON.stringify(res));
 
       this.messages = res;
@@ -78,7 +81,7 @@ export class MyMessageComponent implements OnInit {
       console.log("Messages"+res);
 
       //implement notifications at a later time review this with team
-      localStorage.setItem('messageNotice',"true");
+      localStorage.setItem('messageNotice',difference);
 
       var distinct:Array<number> = []
       for (var i = 0; i < this.messages.length; i++)
@@ -102,6 +105,9 @@ export class MyMessageComponent implements OnInit {
       {
         this.displayMessage(this.toUserId);
       }
+
+      }else{
+         
       }
 
     })
@@ -172,6 +178,8 @@ export class MyMessageComponent implements OnInit {
         {
           console.log("load");
           this.loadMessages();
+
+          this.updateScroll();
           
           
         }

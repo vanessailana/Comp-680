@@ -76,9 +76,10 @@
       </div>
       <div class="box3">
 
+        {{ messageForm.controls.value | json }}
 
           <div >
-              <form [formGroup]="messageForm"   (ngSubmit)="onSubmit(submitBtn)">
+              <form [formGroup]="messageForm"   (ngSubmit)="onSubmit(submitBtn)" (click)="displayMessage(toUserId)">
                   <textarea formControlName="message" class="form-control rounded-0" rows=7 id="message"  required>
                   </textarea>
                 <button style="width: 100%" #submitBtn type="submit" class="my-btn-primary btn-lg">Send Message</button>

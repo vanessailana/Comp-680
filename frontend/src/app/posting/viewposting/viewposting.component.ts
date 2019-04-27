@@ -33,6 +33,8 @@ searchText;
 
  formGroup : FormGroup;
 
+ loading = false;
+
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
     private appliedService: AppliedService, 
@@ -56,10 +58,10 @@ searchText;
  
     this.permissionsService.loadPermissions(role);
 
- 
+    this.loading = true;
    this.postingService.getAll().subscribe(data => {
       this.jobs= data;
-    
+      this.loading = false;
     });
 
   

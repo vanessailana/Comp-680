@@ -6,7 +6,6 @@
             <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a job by title, location, or keyword">
           </div>
  <table class="table table-bordered">
- 
 
 <tr>
 <td> <b>Title</b> </td>
@@ -18,8 +17,7 @@
 <td> <b>Description</b> </td>
 
 </tr>
-
-
+<tbody class="text-center" *ngIf="loading" class="text-center h3">Loading...</tbody>
 
 <tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} |filter:searchText; let i = index ">
 

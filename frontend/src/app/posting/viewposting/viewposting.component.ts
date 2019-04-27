@@ -10,28 +10,27 @@ import { AppliedService } from 'src/app/applied/applied.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { fbind } from 'q';
-import { element } from '@angular/core/src/render3';
+
+import { AuthService } from '../../auth/auth.service';
+
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
   styleUrls: ['./viewposting.component.css']
 })
 export class ViewpostingComponent  implements OnInit {
- posting:Posting[];
-   p: number = 1;
+  posting:Posting[];
+  p: number = 1;
   totalRec : number;
- jobs: Array<any>;
-searchText;
+  jobs: Array<any>;
+  searchText:any;
+  appliedJobs : any;
+  userApplied: boolean;
+  questions: any;
+  formGroup : FormGroup;
+  alreadyApplied : boolean;
 
- appliedJobs : any;
-
-
- userApplied: boolean;
-
- questions: any;
-
- formGroup : FormGroup;
+  displayLogin : boolean;
 
  loading = false;
 
@@ -41,14 +40,31 @@ searchText;
     private permissionsService: NgxPermissionsService,
     private postingService: PostingService,
     private modalService: NgbModal,private _rotuer:Router,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    private auth: AuthService ) { 
 
+      this.auth.handleAuthentication();
+      this.alreadyApplied = false;
 
       this.formGroup = this.formBuilder.group({
         answers : this.initAnswers()
       })
 
-      console.log("Yo"+JSON.stringify(this.formGroup.value));
+
+      this.postingService.getAll().subscribe((res) => {
+        this.jobs = res;
+        console.log(res);
+      
+      },
+      (err)=>(console.log(err)),
+      ()=>(console.log("GETALLJOBS")));
+
+      const role= [localStorage.getItem('roles')];
+ 
+      this.permissionsService.loadPermissions(role);
+  
+   
+
 
     }
 
@@ -64,7 +80,6 @@ searchText;
       this.loading = false;
     });
 
-  
   }
 
   initAnswers() {
@@ -82,19 +97,55 @@ searchText;
    
   open(i,content) {
     this.modalService.open(content);
-    
-    this.questionService.getQuestions(this.jobs[i].id).subscribe(
-      (res)=>
-      {
-        this.questions=res;
-        this.questions.forEach(q => {
-            this.initAnswer(); 
-        });
+    let user = JSON.parse(localStorage.getItem('user'));
 
-       
-      },
+    this.formGroup = this.formBuilder.group({
+      answers : this.initAnswers()
+    })
+
+ 
+    if(user==null) {  
+
+      this.alreadyApplied = false;
+      this.displayLogin = true;
+
+    }else{
+
+      this.displayLogin = false;
+      
+    this.alreadyApplied = true;
+
+    this.appliedService.hasApplied(i,user.id).subscribe(
+      (res)=> {console.log("hasApplied:"+res+i);if(res==null){this.alreadyApplied=false};},
       (err)=>console.log(err),
-      ()=>console.log("complete"));
+      () => {
+        if(this.alreadyApplied){
+
+      
+
+        }else{
+        this.questionService.getQuestions(i).subscribe(
+          (res)=>
+          {
+            this.questions=res;
+           
+            this.questions.forEach(q => {
+                this.initAnswer(); 
+            });
+    
+           
+          },
+          (err)=>console.log(err),
+          ()=>console.log("complete"));
+        }
+      }
+    );
+
+  }
+
+    
+
+    
     
   }
 
@@ -117,10 +168,12 @@ location.reload();
 
   onNoClick(): void {
      this.dialog.closeAll();
+
   }
 
    onCloseCancel() {
      this._rotuer.navigate(['view_jobs']);
+     
   }
 
  openDialog(): void {
@@ -128,10 +181,22 @@ location.reload();
       width: '250px'
     });
 
+   
+
+
+
+
   dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.userApplied = false;
     });
+}
+
+close():void
+{
+  this.alreadyApplied = false;
+  this.userApplied = false;
+  this.formGroup = null;
 }
 
   applyToJob(job,btn:HTMLButtonElement) {
@@ -144,6 +209,7 @@ location.reload();
 
     console.log(answers);
 
+   
     this.appliedService.apply(applicant).subscribe(
     res => {
       console.log("res: " + JSON.stringify(res));

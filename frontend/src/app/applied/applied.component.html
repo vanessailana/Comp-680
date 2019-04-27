@@ -1,3 +1,63 @@
-<p>
-  applied works!
-</p>
+<h2 class="d-flex justify-content-center">Your Applied Jobs</h2>
+ 
+<div class="container">
+    <div class="row">
+      <div class="search">
+        <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a job by title, location, or keyword">
+      </div>
+
+<div *ngIf="showButton" class="alert alert-info" role="alert">
+  You have not created any jobs.
+  <button class="btn btn-lg btn-dark" routerLink="/posting"> Create A Job </button>
+
+ </div>
+
+
+ <table class="table table-bordered">
+
+
+<tr>
+<td> Title </td>
+<td> Location </td>
+<td> Start Compensation </td>
+<td> Employment Type </td>
+<td>  Still Accepting Candidates? </td>
+<td> Description </td>
+
+</tr>
+
+
+
+<tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} | filter:searchText">
+
+<td> {{job.title}} </td>
+<td> {{job.location}} </td>
+ <td> ${{job.startCompensation}}</td>
+<td> {{job.employment_type}} </td>
+<td> {{ job.status ? "Open" : "Closed"}} </td>
+
+
+<td> <ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Job Description</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{job.description}}</p>
+  </div>
+  <div class="modal-footer">
+  
+  </div>
+</ng-template>
+
+<button class="my-btn-primary btn-lg" (click)="open(content)">View Job Description</button>
+ </td>
+
+ 
+</tbody>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+ 
+</table>

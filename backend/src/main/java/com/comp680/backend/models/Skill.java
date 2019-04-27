@@ -5,6 +5,9 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
@@ -66,4 +69,5 @@ public class Skill {
     public void setUser(User user){
         this.user=user;
     }
+    
 }

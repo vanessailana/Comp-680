@@ -1,5 +1,6 @@
 
-    <h1>Jobs Currently Posted</h1>
+    <h1 class="my-light"> Jobs Currently Posted</h1>
+    <button class="my-btn-primary btn-lg" routerLink="/applied" > View Applied Jobs </button>
     <div class="container">
         <div class="row">
           <div class="search">
@@ -25,49 +26,72 @@
 <td> {{job.location}} </td>
  <td> ${{job.startCompensation}}</td>
 <td> {{job.employment_type}} </td>
-<td> {{job.status}} </td>
+<td> {{ job.status ? "Open" : "Closed" }} </td>
 
 
 <td> <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Job Description</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="d('Corss Click')" (click)="close()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <p>{{job.description}}</p>
+    <p>{{job.description}}
+    
+    </p>
    
+    
+    <div *ngIf="alreadyApplied; else elseBlock" class="alert alert-success">
+      You have already applied for this position.
+    </div>
 
+ 
+    <ng-template #elseBlock>
+
+        <button 
+        class="my-btn-primary btn-md" 
+        *ngIf="!auth.isAuthenticated()"
+        (click)="auth.login()">
+        Sign in to Apply 
+      </button>
+      
+  
+        
+  
     <form [formGroup]="formGroup">
         <div formArrayName="answers" >
-            <div *ngFor="let quest of questions; let i=index">
-                <mat-form-field [formGroupName]="i">
-                    <p> {{ quest.question }} </p>
-                    <input type="text" matInput placeholder="answer" formControlName="answer">
+            <div class="row" *ngFor="let quest of questions; let i=index">
+
+              
+                <mat-form-field class="col-12" [formGroupName]="i">
+                    
+                    <input type="text" matInput placeholder="{{quest.question}}" formControlName="answer">
                 </mat-form-field>
                 
             </div>
         </div>
 
     </form>
-
+  
     
-  </div>
+  
  
   <ng-template ngxPermissionsOnly="user">
   <div class="modal-footer">
 
-    <button #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
+    <button class="my-btn-primary btn-lg" #applyBtn (click)="applyToJob(job,applyBtn)">Apply</button>
   </div>
   </ng-template>
 
   <div *ngIf="userApplied" class="alert alert-success">
     Thank you for applying 
   </div>
+  </ng-template>
+</div>
 </ng-template>
 
-<button class="btn btn-outline-dark" (click)="open(i,content)">View Job Description</button>
+<button class="my-btn-primary" (click)="open(job.id,content)">View Job Description</button>
 
  </td>
 
@@ -94,7 +118,6 @@
 </ng-template> <button mat-raised-button (click)="delete(contentd)">Delete</button> </td>
  -->
 
-<td></td>
 
  
 </tbody>

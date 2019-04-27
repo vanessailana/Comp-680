@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.GeneratedValue;
@@ -13,13 +14,13 @@ import javax.persistence.JoinColumn;
 import java.util.List;
 import java.util.Date;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="applicants")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Applicant {
 
   @Id
@@ -29,23 +30,24 @@ public class Applicant {
 
 
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "user_id", nullable = false)
+  @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+  @JoinColumn(name = "user_id")
   private User user;
 
-
-
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "job_id", nullable = false)
+  @OneToOne
+  @JoinColumn(name = "job_id")
   private Job job;
+
+
 
   @Column(name="profile_link", nullable=true)
   private String profile_link;
 
-  @CreationTimestamp
+  
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name="created_at", nullable=true)
   private Date created_at;
+
 
   @PrePersist
   protected void onCreated() {
@@ -60,15 +62,17 @@ public class Applicant {
     return user;
   }
 
-  public void setUser(){
+  public void setUser(User user){
     this.user = user;
   }
 
+
+  
   public Job getJob(){
     return job;
   }
 
-  public void setJob(){
+  public void setJob(Job job){
     this.job = job;
   }
 

@@ -28,8 +28,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { MyJobsComponent } from './my-jobs/my-jobs.component'; 
 import { AppliedComponent } from './applied/applied.component'; 
 import { AppliedService } from './applied/applied.service';
-import {BrowserModule} from '@angular/platform-browser'; 
+import {BrowserModule} from '@angular/platform-browser';
+ 
+import { ViewApplicantsComponent } from './view-applicants/view-applicants.component';
+import { ApplicantsService} from './view-applicants/applicants.service';
 
+import { OrderModule } from 'ngx-order-pipe';
+import { MyMessageComponent } from './my-message/my-message.component';
 
 @NgModule({
   declarations: [
@@ -42,10 +47,12 @@ import {BrowserModule} from '@angular/platform-browser';
     ViewpostingComponent,
     JobDescriptionComponent,
     MyJobsComponent,
-    AppliedComponent
+    AppliedComponent,
+    ViewApplicantsComponent,
+    MyMessageComponent
 
   ],
-  imports: [
+  imports: [OrderModule,
 NgbModule, MatDialogModule, NgxPaginationModule,
     BrowserModule,Ng2SearchPipeModule,
     HttpClientModule,
@@ -62,8 +69,9 @@ NgbModule, MatDialogModule, NgxPaginationModule,
   entryComponents:[ViewpostingComponent,
     JobDescriptionComponent],
   providers: [ 
-
-    AuthService, PostingService, AppliedService,
+    ApplicantsService,
+    PostingService,
+    AuthService, AppliedService,
     HttpErrorHandler, JobDescriptionComponent,
     MessageService, 
     NgbModal, 

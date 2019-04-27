@@ -1,7 +1,7 @@
 package com.comp680.backend.models;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+
+
 import javax.annotation.Generated;
 import javax.persistence.ManyToOne;
 import javax.persistence.*;
@@ -11,11 +11,15 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
+import java.util.Set;
 import java.util.Date;
+import java.io.Serializable;
 import java.sql.Timestamp;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.web.multipart.MultipartFile;
 
-import net.bytebuddy.implementation.bytecode.constant.LongConstant;
 
 import java.time.LocalDateTime;
 import javax.persistence.JoinTable;
@@ -23,27 +27,48 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
-import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 
 @Entity
 @Table(name="jobs")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Job {
+public class Job implements Serializable  {
 
+
+  public Job()
+  {
+
+  }
+
+  public Job(User user, boolean status, 
+  String title, String description, double start, String location)
+  {
+    this.user = user;
+
+    this.status = status;
+    this.title = title;
+    this.description = description;
+    this.start_compensation =start;
+    this.location = location;
+
+  }
   @Id
   @Column(name="job_id",unique=true, nullable=false)
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
 
-  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @OneToOne(fetch = FetchType.LAZY, optional = false)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
 
-  
+
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true;
 
@@ -139,5 +164,9 @@ public class Job {
   {
     this.user = user;
   }
+
+
+
+
 
 }

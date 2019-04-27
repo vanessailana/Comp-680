@@ -77,11 +77,5 @@ public class Answer {
         this.question=question;
     }
 
-    public Applicant getApplicant(){
-        return applicant;
-    }
 
-    public void setApplicant(Applicant applicant){
-        this.applicant=applicant;
-    }
 }

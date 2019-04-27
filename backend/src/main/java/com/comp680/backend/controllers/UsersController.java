@@ -223,28 +223,26 @@ public class UsersController {
     @GetMapping("/profile/skill/{id}")
     List<Skill> getSkill(@PathVariable("id") long id)
     {
-        System.out.println("Get");
         return skillRepository.findByUserId(id);
     }
 
 
     @PostMapping("/profile/skill/post")
-    List<Skill> postSkill(@RequestBody Skill skill)
+    boolean postSkill(@RequestBody Skill skill)
     {
         skillRepository.save(skill);
-
-        return skillRepository.findByUserId(skill.getUser().getId());
+        return true;
     }
 
     @RequestMapping(value = "/profile/skill/patch")
-    List<Skill> patchSkill(@RequestBody Skill skill)
+    boolean patchSkill(@RequestBody Skill skill)
     {
         Skill find = skillRepository.findById(skill.getId());
 
         find.setSkill(skill.getSkill());
         find.setLevel(skill.getLevel());
 
-        return skillRepository.findByUserId(skill.getUser().getId());
+        return true;
     }
 
     @DeleteMapping("/profile/skill/delete/{users_id}/{skill_id}")

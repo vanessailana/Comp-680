@@ -35,24 +35,24 @@ public class JobsController {
 
     @PostMapping("/createJob")
     public Job create(@RequestBody Job job) {
-
         return jobRepo.save(job);
     }
 
     @DeleteMapping("recruiter/my_jobs/{id}/{user_id}")
-    public List<Job> delete(@PathVariable("id") Long id, @PathVariable("user_id") Long user_id)
-
-    {
+    public List<Job> delete(@PathVariable("id") Long id, @PathVariable("user_id") Long user_id) {
         jobRepo.deleteById(id);
         return null;
     }
 
+    @PutMapping("recruiter/my_jobs/{user_id}")
+    public Job editMyJob(@PathVariable("user_id") Long user_id, @RequestBody Job job) {
+        // Job temp = jobRepo.getOne(job.id);
+        return job;
+    }
+
     @GetMapping("/recruiter/my_jobs/{user_id}")
     public List<Job> getMyJobs(@PathVariable("user_id") Long user_id) {
-        
          return jobRepo.findByUserId(user_id);
-
-
      }
 
  }

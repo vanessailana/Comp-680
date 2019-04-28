@@ -32,7 +32,7 @@ export class ViewpostingComponent  implements OnInit {
 
   displayLogin : boolean;
 
- loading = false;
+ loading: boolean;
 
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,

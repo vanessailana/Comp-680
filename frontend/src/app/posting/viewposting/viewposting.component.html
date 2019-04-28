@@ -18,7 +18,7 @@
 <td> <b>Description</b> </td>
 
 </tr>
-<tbody class="text-center" *ngIf="loading" class="text-center h3">Loading...</tbody>
+<tbody *ngIf="loading" class="text-center h3">Loading...</tbody>
 
 <tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} |filter:searchText; let i = index ">
 

@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ExperiencesRepository extends CrudRepository<Experience, Long> {
 
-    List<Experience> findByUserId(long id);
+
     Experience findById(long id);
 }
 

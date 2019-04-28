@@ -30,7 +30,7 @@ public class Applicant {
 
 
 
-  @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+  @OneToOne
   @JoinColumn(name = "user_id")
   private User user;
 

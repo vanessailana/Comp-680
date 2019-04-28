@@ -24,11 +24,6 @@ public class Project {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @Column(name="project_name" ,nullable=false)
     private String project_name;
 
@@ -100,11 +95,5 @@ public class Project {
         this.end_date=end_date;
     }
 
-    public User getUser(){
-        return user;
-    }
 
-    public void setUser(User user){
-        this.user=user;
-    }
 }

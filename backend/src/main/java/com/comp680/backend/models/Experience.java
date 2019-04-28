@@ -24,9 +24,7 @@ public class Experience {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+
 
     @Column(name="title",nullable=false)
     private String title;
@@ -45,6 +43,7 @@ public class Experience {
 
     @Column(name="current",nullable=false)
     private boolean current=true;
+
 
     public long getId()
     {
@@ -99,11 +98,5 @@ public class Experience {
         this.current = current;
     }
 
-    public User getUser(){
-        return user;
-    }
 
-    public void setUser(User user){
-        this.user = user;
-    }
 }

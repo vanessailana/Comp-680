@@ -13,6 +13,7 @@ public interface ApplicantsRepository extends CrudRepository<Applicant, Long> {
     List<Applicant> findByUserId(long id);
  
     List<Applicant> findByJobId(long id);
+    Applicant findByJobIdAndUserId(long job_id,long user_id);
 
     boolean existsById(long id);
 }

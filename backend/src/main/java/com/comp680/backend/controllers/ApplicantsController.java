@@ -43,26 +43,22 @@ public class ApplicantsController {
     JobsRepository jobsRepository;
 
     @PostMapping("/apply")
-    public ResponseEntity<?> apply(@RequestBody Applicant applicant) {
+    public boolean apply(@RequestBody Applicant applicant) {
         JSONObject obj = new JSONObject();
-        boolean exists_job = jobsRepository.existsById(applicant.getJob().getId());
-        boolean exists_user = usersRepository.existsById(applicant.getUser().getId());
-        if (exists_job && exists_user) {
-            Applicant new_applicant = applicantsRepository.save(applicant);
-            obj.put("applicant", new_applicant);
-            return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        }
-        obj.put("message", "Job or user does not exists");
-        return new ResponseEntity<>(obj, HttpStatus.NOT_FOUND);
+        Job job = jobsRepository.findById(applicant.getJob().getId()).get();
+        User user = usersRepository.findById(applicant.getUser().getId()).get();
+        Applicant store = new Applicant();
+        store.setUser(user);
+        store.setJob(job);
+        applicantsRepository.save(store);
+        return true;
     }
 
     @PostMapping("/answers")
-    public List<Answer> answers(@RequestBody List<Answer> answers) {
-        List<Answer> res = new ArrayList<>();
-        for (Answer var : answers) {
-            res.add(this.answerRepository.save(var));
-        }
-        return res;
+    public boolean answers(@RequestBody List<Answer> answers) {
+         
+        for(Answer a : answers){answerRepository.save(a);};
+         return true;
     }
 
     @GetMapping("/answers/{job_id}/{user_id}")

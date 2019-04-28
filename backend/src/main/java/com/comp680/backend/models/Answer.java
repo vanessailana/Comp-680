@@ -78,4 +78,15 @@ public class Answer {
     }
 
 
+    public Applicant getApplicant()
+    {
+        return this.applicant;
+    }
+    public void setApplicant(Applicant applicant)
+    {
+        this.applicant = applicant;
+    }
+
+
+
 }

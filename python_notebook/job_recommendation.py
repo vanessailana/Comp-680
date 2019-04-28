@@ -11,85 +11,70 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel, cosine_similarity
 
 
-mydb = mysql.connector.connect(
-    host="35.238.104.188",
-    user="root",
-    passwd="root",
-    port=3306, db='680'
-    )
 
-mycursor = mydb.cursor()
+def jobRec(userid):
 
-mycursor.execute("SELECT * FROM user_history")
+    mydb = mysql.connector.connect(
+        host="35.238.104.188",
+        user="root",
+        passwd="root",
+        port=3306, db='680'
+        )
 
-myresult = pd.DataFrame(mycursor.fetchall());
+    mycursor = mydb.cursor()
 
-myresult.columns=mycursor.column_names;
+    # get jobs 
 
-
-apps=myresult;
-
-# get jobs 
-
-mycursor.execute("SELECT * FROM jobs")
-
-jobs = pd.DataFrame(mycursor.fetchall());
-
-jobs.columns=mycursor.column_names;
-
-job_listing=jobs;
-
-print(job_listing);
+    mycursor.execute("SELECT * FROM jobs")
 
 
-#get users 
-
-mycursor.execute("SELECT * FROM users_ml")
-
-users= pd.DataFrame(mycursor.fetchall());
-
-users.columns=mycursor.column_names;
-
-user_metadata=users;
-
-print(user_metadata);
+    #jobs users can get recommendatiosn
+    jobs = pd.DataFrame(mycursor.fetchall());
 
 
-user_metadata = user_metadata.reset_index()
-userid = user_metadata['UserID']
-indices = pd.Series(user_metadata.index, index=user_metadata['UserID'])
+    mycursor.execute("SELECT *from  users ");
 
-user_metadata['DegreeType'] = user_metadata['DegreeType'].fillna('')
-user_metadata['Major'] = user_metadata['Major'].fillna('')
-user_metadata['TotalYearsExperience'] = str(user_metadata['TotalYearsExperience'].fillna(''))
-user_metadata['DegreeType'] = user_metadata['DegreeType'] + user_metadata['Major']+  user_metadata['Major'] + user_metadata['TotalYearsExperience'];
+    user_based_approach = pd.DataFrame(mycursor.fetchall());
 
-tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
-tfidf_matrix = tf.fit_transform(user_metadata['DegreeType'])
+    mycursor.execute("SELECT * from  applicants");
+    apps = pd.DataFrame(mycursor.fetchall());
 
-cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+    user_based_approach[12] = user_based_approach[12].fillna('') 
+    user_based_approach[13] = user_based_approach[13].fillna('')
+    user_based_approach[16] = str(user_based_approach[16].fillna(''))
+    user_based_approach[7] = user_based_approach[12] + user_based_approach[13] + user_based_approach[16]
 
-user_metadata= user_metadata.reset_index()
-userid = user_metadata['UserID']
-indices = pd.Series(user_metadata.index, index=user_metadata['UserID'])
+    tf = TfidfVectorizer(analyzer='word',ngram_range=(1, 2),min_df=0, stop_words='english')
+    tfidf_matrix = tf.fit_transform(user_based_approach[7])
+
+    cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
 
-#cosine similarity 
-def get_recommendations_userwise(userid):
-    idx = indices[userid]
-    #print (idx)
+    userid = user_based_approach[0]
+
+    user_based_approach = user_based_approach.reset_index()
+    userid = user_based_approach[0]
+
+    indices = pd.Series(user_based_approach.index, index=user_based_approach[0])
+
+    idx = indices[2]
+
     sim_scores = list(enumerate(cosine_sim[idx]))
-    #print (sim_scores)
+        #print (sim_scores)
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     user_indices = [i[0] for i in sim_scores]
-    #print (user_indices)
-    return user_indices;
+
+    jobs_userwise = apps[4].isin(user_indices) #
+    df1 = pd.DataFrame(data = apps[jobs_userwise])
+    joblist = df1[3].tolist()
+    Job_list = jobs[0].isin(joblist)
 
 
-userSim=get_recommendations_userwise(2);
+    df_temp = pd.DataFrame(data = jobs[Job_list])
+    print (df_temp.to_json(orient='records'))
 
 
-jobs_userwise = apps['UserID'].isin([0, 2, 5, 6, 4, 7, 1, 3]) #
 
-#association
-df1 = pd.DataFrame(data = apps[jobs_userwise], columns=['JobID'])
+
+print(jobRec(2));
+

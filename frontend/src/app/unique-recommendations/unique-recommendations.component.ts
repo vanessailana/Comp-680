@@ -10,6 +10,7 @@ import{Router}  from '@angular/router';
 })
 export class UniqueRecommendationsComponent implements OnInit {
 jobs:any;
+p: number = 1;
 recommendedJobs:any;
  user = JSON.parse(localStorage.getItem('user'));
 

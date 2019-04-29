@@ -7,61 +7,63 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import javax.mail.Message;
-import javax.xml.bind.annotation.XmlRootElement;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.config.TopicConfig;
-import org.apache.kafka.common.serialization.LongDeserializer;
-import org.apache.kafka.common.serialization.Serializer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.slf4j.LoggerFactory;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.comp680.backend.messaging.MyMessage;
+import com.comp680.backend.models.User;
+import com.comp680.backend.repositories.UsersRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 
-
+@CrossOrigin(maxAge = 3600 )
 @RestController
 public class MessageController {
 
+
+    static List<MyMessage> emptyMessage;
     static List<MyMessage> messageList;
 
+    long messageCount = -1;
 
     @Autowired
     MessageProducer producer;
     @Autowired
     MessageListener listener;
+
+    @Autowired
+    UsersRepository userRepo;
 
     @Bean
     public MessageProducer messageProducer() {
@@ -108,15 +110,7 @@ public class MessageController {
             });
         }
 
-        public void sendMyMessage(MyMessage message) {
-
-            if(messageList==null)
-            {
-                messageList = new ArrayList<>();
-            }else{
-                messageList.add(message);
-            }
-            
+        public void sendMyMessage(MyMessage message) {            
             myMessageKafkaTemplate.send(myMessageTopicName, message);
         }
     }
@@ -169,29 +163,29 @@ public class MessageController {
         }
         return true;
     }
-    @GetMapping("/kafka/subscribe/from/{fromUser}")
-    public List<MyMessage> fromMessages(
-        @PathVariable("fromUser") long fromUser) {
-
-        messageList.stream().forEach(System.out::println);
-        List<MyMessage> result = new ArrayList<>();
-        messageList.stream()
-        .filter(e -> ((e.getFromUser()==fromUser))).forEach(x -> result.add(x) );
+   
+   
+    @GetMapping("/kafka/fromUser/{id}")
+    public List<User> fromUser(@PathVariable long [] id) {
+        List<User> result = new ArrayList<>();
+        for (long var : id) {
+            result.add(userRepo.findById(var));
+        }
         return result;
+    }
+
+    @GetMapping("/kafka/messages/{id}")
+    public List<MyMessage> getMessages(@PathVariable long id) {
+        return messageList.stream().filter(e -> ((e.getFromUser()==id)||(e.getToUser()==id))).collect(Collectors.toList());
         
     }
 
-    @GetMapping("/kafka/subscribe/to/{toUser}")
-    public List<MyMessage> toMessages(
-        @PathVariable("toUser") long toUser) {
 
-        messageList.stream().forEach(System.out::println);
-        List<MyMessage> result = new ArrayList<>();
-        messageList.stream()
-        .filter(e -> ((e.getToUser()==toUser))).forEach(x -> result.add(x) );
-        return result;
-        
-    }
+
+
+  
+
+
 
 
 }

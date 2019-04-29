@@ -27,11 +27,6 @@ public class Skill {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-
-    private User user;
-
     @Column(name="skill",nullable=true)
     private String skill;
 
@@ -63,11 +58,6 @@ public class Skill {
         this.level = level;
     }
 
-    public User getUser(){
-        return user;
-    }
-
-    public void setUser(User user){
-        this.user=user;
-    }
+ 
+    
 }

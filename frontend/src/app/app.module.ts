@@ -35,6 +35,7 @@ import { ApplicantsService} from './view-applicants/applicants.service';
 
 import { OrderModule } from 'ngx-order-pipe';
 import { UniqueRecommendationsComponent } from './unique-recommendations/unique-recommendations.component';
+import { MyMessageComponent } from './my-message/my-message.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { UniqueRecommendationsComponent } from './unique-recommendations/unique-
     MyJobsComponent,
     AppliedComponent,
     ViewApplicantsComponent,
-    UniqueRecommendationsComponent
+    UniqueRecommendationsComponent,
+    MyMessageComponent
 
   ],
   imports: [OrderModule,
@@ -70,7 +72,8 @@ NgbModule, MatDialogModule, NgxPaginationModule,
     JobDescriptionComponent],
   providers: [ 
     ApplicantsService,
-    AuthService, PostingService, AppliedService,
+    PostingService,
+    AuthService, AppliedService,
     HttpErrorHandler, JobDescriptionComponent,
     MessageService, 
     NgbModal, 
@@ -82,6 +85,7 @@ NgbModule, MatDialogModule, NgxPaginationModule,
   ],
   exports:[
     NgxPermissionsModule,
+    ReactiveFormsModule
 
   ],
   bootstrap: [AppComponent]

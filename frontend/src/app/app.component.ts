@@ -16,30 +16,38 @@ export class AppComponent implements OnInit {
   check= localStorage.getItem('roles');
   searchForm : FormGroup;
 
-  perm : string;
-
   isNavbarCollapsed : boolean = false;
 
   username : string;
+
+  messageNotice : boolean;
+
   constructor(
     public auth: AuthService,
     private http: HttpClient, private permissionsService: NgxPermissionsService,
     private formBuilder: FormBuilder
   ) {
-    auth.handleAuthentication();
-    //this.perm = localStorage.getItem('roles');
-    
-    localStorage.getItem('user') == null ? this.username = "" : this.username =  JSON.parse(localStorage.getItem('user')).firstName;;
-    //console.log(this.perm);
 
-    var check= localStorage.getItem('roles');
-    const role= [localStorage.getItem('roles')];
-    console.log(role);
-    this.permissionsService.loadPermissions(role);
- 
-    console.log(this.permissionsService.getPermissions());
+    try{
+    this.auth.getProfile((err, profile) => {
+      this.profile = profile;
+      this.auth.userProfile = this.profile;
+      localStorage.setItem("user", JSON.stringify(this.profile));
+
+
+      var check = localStorage.getItem('roles');
+      const role= [check];
+      console.log(role);
+      this.permissionsService.loadPermissions(role);
+      console.log(this.permissionsService.getPermissions());
     
 
+
+    });
+
+    }catch{
+      console.log("caught");
+    }
     this.searchForm = this.formBuilder.group({
       keyword: ["",Validators.required],
       location: [""]
@@ -54,9 +62,13 @@ export class AppComponent implements OnInit {
   
   }
 
+ 
+
   onSubmit(btn:HTMLButtonElement)
   {
 
   }
+
+  
 }
 

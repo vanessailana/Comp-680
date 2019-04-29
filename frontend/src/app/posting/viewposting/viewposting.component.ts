@@ -10,30 +10,32 @@ import { AppliedService } from 'src/app/applied/applied.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { fbind } from 'q';
-import { element } from '@angular/core/src/render3';
+
+import { AuthService } from '../../auth/auth.service';
+import { ProfileService } from 'src/app/profile/profile.service';
+
 @Component({
   selector: 'app-viewposting',
   templateUrl: './viewposting.component.html',
   styleUrls: ['./viewposting.component.css']
 })
 export class ViewpostingComponent  implements OnInit {
- posting:Posting[];
-   p: number = 1;
+  posting:Posting[];
+  p: number = 1;
   totalRec : number;
- jobs: Array<any>;
-searchText;
+  jobs: Array<any>;
+  searchText:any;
+  appliedJobs : any;
+  userApplied: boolean;
+  questions: any;
+  formGroup : FormGroup;
+  alreadyApplied : boolean;
 
- appliedJobs : any;
+  displayLogin : boolean;
 
+  user: any;
 
- userApplied: boolean;
-
- questions: any;
-
- formGroup : FormGroup;
-
- alreadyApplied : boolean;
+  profile : any;
 
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
@@ -41,8 +43,26 @@ searchText;
     private permissionsService: NgxPermissionsService,
     private postingService: PostingService,
     private modalService: NgbModal,private _rotuer:Router,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder,
+    private auth: AuthService, private profileService:ProfileService) { 
 
+      
+      try{
+      this.auth.getProfile((err, profile)=>{
+        this.profile = profile;
+
+        this.profileService.getUser(this.profile.email)
+        .subscribe((res)=>this.user=res);
+        
+        })
+
+      }catch{
+
+
+      }
+      console.log(this.profile);
+
+      
 
       this.alreadyApplied = false;
 
@@ -50,22 +70,28 @@ searchText;
         answers : this.initAnswers()
       })
 
-      console.log("Yo"+JSON.stringify(this.formGroup.value));
+
+      this.postingService.getAll().subscribe((res) => {
+        this.jobs = res;
+        console.log(res);
+      
+      },
+      (err)=>(console.log(err)),
+      ()=>(console.log("GETALLJOBS")));
+
+
+      const role= [localStorage.getItem('roles')];
+ 
+      this.permissionsService.loadPermissions(role);
+  
+   
+
 
     }
 
   ngOnInit() {
 
-   const role= [localStorage.getItem('roles')];
  
-    this.permissionsService.loadPermissions(role);
-
- 
-   this.postingService.getAll().subscribe(data => {
-      this.jobs= data;
-    
-    });
-
   
   }
 
@@ -84,17 +110,24 @@ searchText;
    
   open(i,content) {
     this.modalService.open(content);
-    let user = JSON.parse(localStorage.getItem('user'));
-
     this.formGroup = this.formBuilder.group({
       answers : this.initAnswers()
     })
 
  
-    this.alreadyApplied = true;
+    if(this.user==null) {  
 
-    this.appliedService.hasApplied(i,user.id).subscribe(
-      (res)=> {console.log("hasApplied:"+res+i);if(res==null){this.alreadyApplied=false};},
+      this.alreadyApplied = false;
+      this.displayLogin = true;
+
+    }else{
+
+      this.displayLogin = false;
+      
+   
+
+    this.appliedService.hasApplied(i,this.user.id).subscribe(
+      (res)=> {console.log("hasApplied:"+res+i); res==null? this.alreadyApplied=false : this.alreadyApplied=false;},
       (err)=>console.log(err),
       () => {
         if(this.alreadyApplied){
@@ -118,6 +151,8 @@ searchText;
         }
       }
     );
+
+  }
 
     
 
@@ -176,10 +211,10 @@ close():void
 }
 
   applyToJob(job,btn:HTMLButtonElement) {
-    let user = JSON.parse(localStorage.getItem('user'));
     console.log(job);
-    console.log(user);
-    let applicant = {'job': job, 'user': user};
+    console.log(this.user);
+    if(this.user){
+    let applicant = {'job': job, 'user': this.user};
 
     var answers = this.formGroup.controls['answers'].value;
 
@@ -201,17 +236,20 @@ close():void
         i+=1;
       })
      
+      if(answers.length > 0){
        this.questionService.sumbitAnswers(answers).subscribe(
         (res)=>console.log(res),
         (err)=>console.log(err),
         ()=>console.log("complete")
       )
+       }
       
       
     },
     err => {
       console.log("err: " + JSON.stringify(err));
     });
+  }
   }
 
 }

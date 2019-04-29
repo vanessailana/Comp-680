@@ -56,9 +56,8 @@ public class ApplicantsController {
 
     @PostMapping("/answers")
     public boolean answers(@RequestBody List<Answer> answers) {
-         
-        for(Answer a : answers){answerRepository.save(a);};
-         return true;
+        answerRepository.saveAll(answers);
+        return true;
     }
 
     @GetMapping("/answers/{job_id}/{user_id}")

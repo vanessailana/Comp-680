@@ -41,6 +41,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Job implements Serializable  {
 
 
+  private static final long serialVersionUID = 1L;
+
   public Job()
   {
 
@@ -164,9 +166,4 @@ public class Job implements Serializable  {
   {
     this.user = user;
   }
-
-
-
-
-
 }

@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 //https://mysterious-harbor-56923.herokuapp.com
 @RestController
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin
 public class JobsController {
 
     @Autowired
@@ -30,7 +32,9 @@ public class JobsController {
 
     @GetMapping("jobs/all")
     public List<Job> findAll() {
-        return jobRepo.findAll();
+        List<Job> result = new ArrayList<Job>();
+        jobRepo.findAll().forEach(result::add);
+        return result;
     }
 
     @PostMapping("/createJob")
@@ -46,6 +50,14 @@ public class JobsController {
         jobRepo.deleteById(id);
         return null;
     }
+
+
+    @PutMapping("recruiter/my_jobs/{user_id}")
+    public Job editMyJob(@PathVariable("user_id") Long user_id, @RequestBody Job job) {
+        // Job temp = jobRepo.getOne(job.id);
+        return jobRepo.findByIdAndUserId(job.getId(), user_id);
+    }
+
 
     @GetMapping("/recruiter/my_jobs/{user_id}")
     public List<Job> getMyJobs(@PathVariable("user_id") Long user_id) {

@@ -18,3 +18,6 @@ npm install
 # start server
 ng serve
 ```
+
+## Repo for Personalized Recommendations api 
+https://github.com/vanessailana/Seminar2

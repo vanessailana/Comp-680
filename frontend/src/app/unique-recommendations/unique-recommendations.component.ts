@@ -24,7 +24,7 @@ recommendedJobs:any;
     var role= localStorage.getItem('roles');
    
     
-    if(role=='user') {
+    if(role!=='user') {
 
     
   

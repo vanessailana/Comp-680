@@ -13,6 +13,11 @@
           <td>{{applicant.desc}} </td>
           </tbody>
 
-  
+          <tbody *ngFor="let applicant of recommendedJobs ">
+
+              <td>{{applicant.title}} </td>
+              <td>{{applicant.description}} </td>
+              </tbody>
+    
   
       </table>

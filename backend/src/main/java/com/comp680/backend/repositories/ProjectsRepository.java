@@ -9,6 +9,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ProjectsRepository extends CrudRepository<Project, Long> {
 
-    List<Project> findByUserId(long id);
     Project findById(long id);
 }

@@ -9,17 +9,17 @@
        
 
        
-      <li class="nav-item dropdown" ngbDropdown>
+      <li class="nav-item dropdown rounded-0" ngbDropdown>
         <a class="nav-link dropdown-toggle" id="id01"  ngbDropdownToggle>Support</a>
-        <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+        <div class="dropdown-menu rounded-0" aria-labelledby="id01" ngbDropdownMenu>
           <a class="dropdown-item" routerLink="/support">Email us!</a>
           <a class="dropdown-item" routerLink="/chat">Chat with us!</a>
         </div>
       </li>
 
       <li class="nav-item dropdown" ngbDropdown>
-        <a class="nav-link dropdown-toggle" id="id01"  ngbDropdownToggle>Jobs</a>
-        <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+        <a class="nav-link dropdown-toggle rounded-0" id="id01"  ngbDropdownToggle>Jobs</a>
+        <div class="dropdown-menu rounded-0" aria-labelledby="id01" ngbDropdownMenu>
        
       <div>
          
@@ -60,32 +60,30 @@
       class="nav-link"
       *ngIf="!auth.isAuthenticated()"
       (click)="auth.login()">
-        Login
+        <i class="fas fa-sign-in-alt">  </i> Sign in
       </a>
 
-      <ng-template ngxPermissionsOnly="user">
-        <a  class="nav-link" routerLink="/profile">
-         Profile
-        </a>
-      </ng-template>
 
-      <ng-template ngxPermissionsOnly="user">
+
+  
+      <div *ngIf="auth.isAuthenticated()">
           <a  class="nav-link" routerLink="/mymessages">
-           <i class="fas fa-envelope"> </i>
-          </a>
-      </ng-template>
-      <ng-template ngxPermissionsOnly="admin">
-          <a  class="nav-link" routerLink="/mymessages">
-           <i class="fas fa-envelope"> </i>
-          </a>
-      </ng-template>
+            <i class="fas fa-envelope">  </i> Messages
+           </a>
+      </div>
+
+      <div ngxPermissionOnly="user">
+          <a  class="nav-link" routerLink="/profile">
+            <i class="fas fa-user">  </i> Profile
+           </a>
+      </div>
     
     
 
 
 
       <a class="nav-link" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
-          <i class="fas fa-user"> </i> Log Out: {{username}}
+          <i class="fas fa-sign-out-alt">  </i> Sign out: {{profile?.email}}
 
       </a>
     </ul>

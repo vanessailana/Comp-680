@@ -83,6 +83,7 @@ NgbModule, MatDialogModule, NgxPaginationModule,
   ],
   exports:[
     NgxPermissionsModule,
+    ReactiveFormsModule
 
   ],
   bootstrap: [AppComponent]

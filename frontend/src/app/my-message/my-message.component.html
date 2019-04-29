@@ -4,42 +4,41 @@
 </p> -->
 <style>
 
-.wrapper { 
-    display: grid;
-    grid-template-columns: 50% 50%;
-    background-color: #09345b;
-  } 
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  flex-direction: column;
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex-item {
+  background: #ffffff;
+  padding: 10px;
+  border: 5px solid #586F7C;
   
-  .box1 { 
-    grid-column-start: 1; 
-    grid-column-end: 2; 
-    grid-row-start: 1; 
-    grid-row-end: 3; 
-    background : #09345b;
-  }
-  
-  .box2 { 
-    grid-column-start: 2; 
-    grid-column-end: 3; 
-    grid-row-start: 1; 
-    grid-row-end: 2; 
-    background : #ffffff;
-  }
-  
-  .box3 { 
-    grid-column-start: 2; 
-    grid-column-end: 3; 
-    grid-row-start: 2; 
-    grid-row-end: 3; 
-    background : #ffffff;
-  }
+  color: #586F7C;
+  font-weight: bold;
+  font-size: 1em;
+  text-align: center;
+}
+
+.flex1 { flex: 1 1 20em; }
+.flex2 { flex: 2 2 20em; } 
 
 
 </style>
 
     
-    <div class="wrapper">
-      <div class="box1">
+    <div *ngIf="user" class="flex-container">
+      <div class="flex-item flex1">
           <div class=" my-primary" style="overflow-y: scroll; height:400px;">  
               <div *ngFor="let fromUser of fromUsers; let i = index">
                 <div  class="row border" *ngIf="fromUser.id!=user.id" class="my-primary" (click)="displayMessage(fromUser.id)">
@@ -55,7 +54,7 @@
               </div>
             </div>
       </div>
-      <div class="box2">
+      <div class="flex-item flex2">
 
           <div id="messageDIV"  style="overflow-y: scroll; height:400px;">
               <div *ngFor="let message of currentMessages; let i = index" >
@@ -70,29 +69,32 @@
                 </div>
               </div>
             </div>
+
+            <div >
+
+                {{ messageForm.controls.value | json }}
+        
+                  <div >
+                      <form [formGroup]="messageForm"   (ngSubmit)="onSubmit(submitBtn)" (click)="displayMessage(toUserId)">
+                          <textarea formControlName="message" class="form-control rounded-0" rows=7 id="message"  required>
+                          </textarea>
+                        <button style="width: 100%" #submitBtn type="submit" class="my-btn-primary btn-lg">Send Message</button>
+                      </form>
+                    </div>
+                  
+                  
+                  </div>
+        
+        
+        
+        
+              </div>
+         
           
 
 
       </div>
-      <div class="box3">
-
-
-          <div >
-              <form [formGroup]="messageForm"   (ngSubmit)="onSubmit(submitBtn)">
-                  <textarea formControlName="message" class="form-control rounded-0" rows=7 id="message"  required>
-                  </textarea>
-                <button style="width: 100%" #submitBtn type="submit" class="my-btn-primary btn-lg">Send Message</button>
-              </form>
-            </div>
-          
-          
-          </div>
-
-
-
-
-      </div>
- 
+     
 
 
 

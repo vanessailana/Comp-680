@@ -12,6 +12,7 @@ import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import { AuthService } from '../../auth/auth.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 
 @Component({
   selector: 'app-viewposting',
@@ -32,6 +33,10 @@ export class ViewpostingComponent  implements OnInit {
 
   displayLogin : boolean;
 
+  user: any;
+
+  profile : any;
+
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
     private appliedService: AppliedService, 
@@ -39,9 +44,26 @@ export class ViewpostingComponent  implements OnInit {
     private postingService: PostingService,
     private modalService: NgbModal,private _rotuer:Router,
     private formBuilder: FormBuilder,
-    private auth: AuthService ) { 
+    private auth: AuthService, private profileService:ProfileService) { 
 
-      this.auth.handleAuthentication();
+      
+      try{
+      this.auth.getProfile((err, profile)=>{
+        this.profile = profile;
+
+        this.profileService.getUser(this.profile.email)
+        .subscribe((res)=>this.user=res);
+        
+        })
+
+      }catch{
+
+
+      }
+      console.log(this.profile);
+
+      
+
       this.alreadyApplied = false;
 
       this.formGroup = this.formBuilder.group({
@@ -56,6 +78,7 @@ export class ViewpostingComponent  implements OnInit {
       },
       (err)=>(console.log(err)),
       ()=>(console.log("GETALLJOBS")));
+
 
       const role= [localStorage.getItem('roles')];
  
@@ -87,14 +110,12 @@ export class ViewpostingComponent  implements OnInit {
    
   open(i,content) {
     this.modalService.open(content);
-    let user = JSON.parse(localStorage.getItem('user'));
-
     this.formGroup = this.formBuilder.group({
       answers : this.initAnswers()
     })
 
  
-    if(user==null) {  
+    if(this.user==null) {  
 
       this.alreadyApplied = false;
       this.displayLogin = true;
@@ -103,10 +124,10 @@ export class ViewpostingComponent  implements OnInit {
 
       this.displayLogin = false;
       
-    this.alreadyApplied = true;
+   
 
-    this.appliedService.hasApplied(i,user.id).subscribe(
-      (res)=> {console.log("hasApplied:"+res+i);if(res==null){this.alreadyApplied=false};},
+    this.appliedService.hasApplied(i,this.user.id).subscribe(
+      (res)=> {console.log("hasApplied:"+res+i); res==null? this.alreadyApplied=false : this.alreadyApplied=false;},
       (err)=>console.log(err),
       () => {
         if(this.alreadyApplied){
@@ -190,10 +211,10 @@ close():void
 }
 
   applyToJob(job,btn:HTMLButtonElement) {
-    let user = JSON.parse(localStorage.getItem('user'));
     console.log(job);
-    console.log(user);
-    let applicant = {'job': job, 'user': user};
+    console.log(this.user);
+    if(this.user){
+    let applicant = {'job': job, 'user': this.user};
 
     var answers = this.formGroup.controls['answers'].value;
 
@@ -215,17 +236,20 @@ close():void
         i+=1;
       })
      
+      if(answers.length > 0){
        this.questionService.sumbitAnswers(answers).subscribe(
         (res)=>console.log(res),
         (err)=>console.log(err),
         ()=>console.log("complete")
       )
+       }
       
       
     },
     err => {
       console.log("err: " + JSON.stringify(err));
     });
+  }
   }
 
 }

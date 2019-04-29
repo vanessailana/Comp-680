@@ -25,11 +25,10 @@ import javax.persistence.JoinTable;
 public class Social {
     public Social(){}
 
-    public Social(long id, User users, String linkedin, String twitter, 
+    public Social(long id, String linkedin, String twitter, 
         String facebook, String github, String website
     ){
         this.id = id;
-        this.user=users;
         this.linkedin=linkedin;
         this.twitter=twitter;
         this.facebook=facebook;
@@ -43,9 +42,6 @@ public class Social {
     private Long id;
 
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     @Column(name="linkedin",nullable=true)
     private String linkedin;
@@ -102,11 +98,5 @@ public class Social {
         this.website=website;
     }
 
-    public User getUser() {
-        return user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-    }
+ 
 }

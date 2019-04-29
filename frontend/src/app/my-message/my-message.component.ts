@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MyMessageService } from './my-message.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
+import { ProfileService } from '../profile/profile.service';
 
 
 @Component({
@@ -28,31 +30,65 @@ export class MyMessageComponent implements OnInit {
 
   dontUpdate = false;
 
-
-  constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef) { 
-
-
-    this.toUserId = -1;
-    this.user = JSON.parse(localStorage.getItem('user'));
-
-    this.currentMessages = new Array<any>();
-    this.fromMessages = new Array<any>();
-    this.toMessages = new Array<any>();
-
-    this.loadMessages();
+  profile : any;
 
 
+  constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef,
+    private auth: AuthService,
+    private profileService: ProfileService) { 
 
-  
-    this.messageForm = this.fb.group({
-      toUser : ["",Validators.required],
-      fromUser : ["",Validators.required],
-      message : ["", Validators.required],
-      sentAtDate: ["",Validators.required]
-    })
+
+    if(this.profile)
+    {
+
+      this.getUser();
+    
+
+    }else{
+
+
+      this.auth.getProfile((err, profile) => {
+
+        this.profile = profile;
+
+        this.getUser();
+
+      });
+       
+      
+
+
+
+    }
+
+    
+   
 
   }
 
+  private getUser()
+  {
+    if(this.profile.email)
+    {
+    this.profileService.getUser(this.profile.email).subscribe(
+      (res)=>{
+        this.user = res;
+        this.toUserId = -1;
+        this.currentMessages = new Array<any>();
+        this.fromMessages = new Array<any>();
+        this.toMessages = new Array<any>();
+        this.loadMessages();
+    
+        this.messageForm = this.fb.group({
+          toUser : ["",Validators.required],
+          fromUser : ["",Validators.required],
+          message : ["", Validators.required],
+          sentAtDate: ["",Validators.required]
+        })
+      }
+    )
+   }
+  }
   loadMessages(){ 
 
 
@@ -68,6 +104,9 @@ export class MyMessageComponent implements OnInit {
       
       if(this.messages.length != res.length)
       {
+        
+
+      var difference = res.length - this.messages.length; 
         console.log("RESOURCE"+JSON.stringify(res));
 
       this.messages = res;
@@ -77,8 +116,6 @@ export class MyMessageComponent implements OnInit {
 
       console.log("Messages"+res);
 
-      //implement notifications at a later time review this with team
-      localStorage.setItem('messageNotice',"true");
 
       var distinct:Array<number> = []
       for (var i = 0; i < this.messages.length; i++)
@@ -95,15 +132,16 @@ export class MyMessageComponent implements OnInit {
         ()=>{
           this.fromUsers = this.fromUsers.filter((e)=>e!=null);
           console.log("From"+JSON.stringify(this.fromUsers));
+          if(this.toUserId > -1)
+          {
+            this.displayMessage(this.toUserId);
+          }
+          
         }
       )
 
-      if(this.toUserId > -1)
-      {
-        this.displayMessage(this.toUserId);
-      }
-      }
 
+      }
     })
 
    
@@ -172,10 +210,14 @@ export class MyMessageComponent implements OnInit {
         {
           console.log("load");
           this.loadMessages();
+
+          
           
           
         }
-      }
+      },
+      (err)=>console.log(err),
+      ()=>{this.updateScroll();}
     )
     }
   }

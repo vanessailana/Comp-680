@@ -23,7 +23,7 @@ export class MyMessageService {
   }
 
   getMessages(userId:number): Observable<any> {
-  	return interval(5000).flatMap(()=>{
+  	return interval(300).flatMap(()=>{
       return this.http.get<any>(this.myMessageUrl+"/kafka/messages/"+userId,httpOptions)
     });
   }

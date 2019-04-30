@@ -28,47 +28,41 @@ export class AppComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
 
-    try{
-    this.auth.getProfile((err, profile) => {
-      this.profile = profile;
-      this.auth.userProfile = this.profile;
-      localStorage.setItem("user", JSON.stringify(this.profile));
-
-
-      var check = localStorage.getItem('roles');
-      const role= [check];
-      console.log(role);
-      this.permissionsService.loadPermissions(role);
-      console.log(this.permissionsService.getPermissions());
     
+      this.auth.handleAuthentication();
+      
 
-
-    });
-
-    }catch{
-      console.log("caught");
-    }
-    this.searchForm = this.formBuilder.group({
-      keyword: ["",Validators.required],
-      location: [""]
-    });
-
-    if(localStorage.getItem('isLoggedIn')) {
-      this.auth.renewTokens();
-    }
   }
+        
 
   ngOnInit(){
+
+    
+    if (this.auth.isAuthenticated()) {
+      console.log("is authenticated");
+      //this.auth.renewTokens();
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+      let role =  this.profile['https://example.com/roles'];
+      console.log("role"+ role);
+      this.permissionsService.addPermission([role]);
+      this.permissionsService.loadPermissions([role]);
   
-  }
+    }else{
+      this.permissionsService.addPermission(["guest"]);
+      this.permissionsService.loadPermissions(["guest"]);
+    }
+
+
+    }
 
  
 
-  onSubmit(btn:HTMLButtonElement)
-  {
 
+   
   }
 
+
+
+
   
-}
 

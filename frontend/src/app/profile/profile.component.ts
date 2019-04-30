@@ -33,36 +33,38 @@ export class ProfileComponent implements OnInit {
 
   
    
-      this.auth.getProfile((err, profile) => {
-        this.profile = profile;
+     
+      this.profile = JSON.parse(localStorage.getItem('profile'));
 
-        this.auth.userProfile = profile;
  
-        console.log("GetUser");
+        if(this.profile)
+        {
 
-      this.userForm = this.fb.group({
-        firstName:[""],
-        lastName:[""],
-        email:[""],
-        address:[""],
-        city:[""],
-        zipCode:[""],
-        phoneNumber:[""],
-        objective:[""],
-        resume:[""],
-        image:[""],
-        skills: this.initSkill(),
+          this.profileService.getUser(this.profile.email).subscribe(
+            (res) => {this.user = res},
+            (err)=> console.log(err)
+          )
 
-      });
+          this.userForm = this.fb.group({
+          firstName:[""],
+          lastName:[""],
+          email:[""],
+          address:[""],
+          city:[""],
+          zipCode:[""],
+          phoneNumber:[""],
+          objective:[""],
+          resume:[""],
+          image:[""],
+          skills: this.initSkill(),
+          });
        
-      this.profileService.getUser(this.profile.email).subscribe(
-        (res) => {this.user = res},
-        (err)=> console.log(err)
-      )
+      }else{
 
-        console.log(this.profile);
-      });
-
+          this.router.navigate(['/view_jobs']);
+  
+      }
+     
     
 
    }

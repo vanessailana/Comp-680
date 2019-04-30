@@ -6,6 +6,7 @@ import {ApplicantsService} from './applicants.service';
 import{Router}  from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MyMessageService } from '../my-message/my-message.service';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-view-applicants',
@@ -24,9 +25,15 @@ export class ViewApplicantsComponent implements OnInit {
   messageForm : FormGroup;
 
   myId : number;
-
+  profile : any;
+  user : any;
+  toUserId : number;
   constructor(private applicantService: ApplicantsService,private router: Router,
-              private fb: FormBuilder, private messageService:MyMessageService) {
+              private fb: FormBuilder, private messageService:MyMessageService,
+              private profileService: ProfileService) {
+
+
+    
               
                 
     this.messageForm = this.fb.group({
@@ -36,36 +43,51 @@ export class ViewApplicantsComponent implements OnInit {
       sentAtDate: ["",Validators.required]
     })
 
-    let parse = JSON.parse(localStorage.getItem('user'));
+    this.profile = JSON.parse(localStorage.getItem('profile'));
 
-    parse==null ? this.myId = -1 : this.myId = parse.id;
+    if(this.profile)
+    {
+      this.getUser();
+    }
+ 
+    
+   
 
    }
 
  
+ private getUser()
+ {
+   if(this.profile.email)
+   {
+   this.profileService.getUser(this.profile.email).subscribe(
+     (res)=>{
+       this.user = res;
+       this.toUserId = -1;
+       this.myId = this.user.id;
+       this.messageForm = this.fb.group({
+         toUser : ["",Validators.required],
+         fromUser : ["",Validators.required],
+         message : ["", Validators.required],
+         sentAtDate: ["",Validators.required]
+       })
+       this.applicantService.getAll(this.myId).subscribe(data => {
+
+        console.log(data);
+        this.applicants=data;
+  
+     
+     
+      });
+     }
+   )
+  }
+ }
 
   ngOnInit() {
 
-    var role= localStorage.getItem('roles');
-   
-    
-    if(role!=='admin') {
-
-    
-
-    
-
-      this.router.navigateByUrl('/view_jobs');
-    }
-
-      this.applicantService.getAll(this.myId).subscribe(data => {
-
-      console.log(data);
-      this.applicants=data;
 
    
-   
-    });
  
   }
 

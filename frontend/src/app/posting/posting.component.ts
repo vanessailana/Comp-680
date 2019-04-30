@@ -5,6 +5,7 @@ import {question} from './question.model';
 import {PostingService} from './posting.service';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import{Router}  from '@angular/router';
+import { ProfileService } from '../profile/profile.service';
 
 const INIT:number = 0;
 const SUCCESS:number = 1;
@@ -21,11 +22,15 @@ export class PostingComponent implements OnInit {
   formGroup: FormGroup;
   submitted : number;
 
+  profile : any;
+  user : any;
+
   constructor(
     private postingService:PostingService,
     private fb: FormBuilder,
     private modalService: NgbModal,
-    private router: Router
+    private router: Router,
+    private profileService: ProfileService
     ) {
     
     this.submitted = INIT;
@@ -44,6 +49,18 @@ export class PostingComponent implements OnInit {
     questions: this.initQuestion()
 
     })
+
+
+    this.profile = JSON.parse(localStorage.getItem('profile'));
+
+    if(this.profile)
+    {
+
+      this.profileService.getUser(this.profile.email).subscribe(
+        (res)=>this.user=res
+      );
+      
+    }
 
   }
 
@@ -79,6 +96,10 @@ done() {
     this.getQuestions.removeAt(i);
   }
 
+  get diagnostic()
+  {
+    return JSON.stringify(this.formGroup.value);
+  }
 
   onSubmit(submitBtn: HTMLButtonElement){
 
@@ -89,7 +110,7 @@ done() {
     {
     
       this.jobMetadata = this.formGroup.controls.job.value;
-      this.jobMetadata['user'] = JSON.parse(localStorage.getItem('user'));
+      this.jobMetadata['user'] = this.user;
       var sub = this.postingService.sumbitPost(this.jobMetadata);
       sub.subscribe(
         (res) => 
@@ -128,12 +149,7 @@ done() {
 
   ngOnInit() {
   
-   var role= localStorage.getItem('roles');
-       
-    if(role!=='admin') {
-
-      this.router.navigateByUrl('/view_jobs');
-    }
+   
 
   }
 

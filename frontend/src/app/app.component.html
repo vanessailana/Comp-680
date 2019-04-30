@@ -24,27 +24,20 @@
       <div>
          
               <ng-template ngxPermissionsOnly="admin">
-              <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
-            </ng-template>
-       
-          <ng-template ngxPermissionsOnly="admin">
-          <a class="dropdown-item" routerLink="/posting">Create a Job</a>
-          </ng-template>
-
-          <ng-template ngxPermissionsOnly="admin">
-              <a class="dropdown-item" routerLink="/applicants">View My Applicants</a>
+                <a class="dropdown-item" routerLink="/my_jobs">My Jobs</a>
+                <a class="dropdown-item" routerLink="/posting">Create a Job</a>
+                <a class="dropdown-item" routerLink="/applicants">View My Applicants</a>
               </ng-template>
 
             
+              <ng-template ngxPermissionsOnly="guest">
+                  <a class="dropdown-item"  routerLink="/view_jobs">View Jobs</a>
+              </ng-template>
 
-                  <a class="dropdown-item" routerLink="/view_jobs">View Jobs</a>
-       
-
-                <ng-template ngxPermissionsOnly="user">
-
-                    <a class="dropdown-item" routerLink="/applied"> Applied </a>
-              
-                  </ng-template>
+              <ng-template ngxPermissionsOnly="user">
+                  <a class="dropdown-item"  routerLink="/view_jobs">View Jobs</a>
+                  <a class="dropdown-item" routerLink="/applied"> Applied </a>
+              </ng-template>
           
       </div>
 
@@ -72,11 +65,11 @@
            </a>
       </div>
 
-      <div ngxPermissionOnly="user">
+      <ng-template ngPermissionsOnly="user" >
           <a  class="nav-link" routerLink="/profile">
             <i class="fas fa-user">  </i> Profile
            </a>
-      </div>
+      </ng-template>
     
     
 
@@ -90,10 +83,8 @@
   </div>
 </nav>
 
-<div class="container border" style="margin-top: 5%">
- 
-   
-    
+<div style="padding-top: 65px">
+<h1> Welcome to frontend! </h1>
 </div>
 
 

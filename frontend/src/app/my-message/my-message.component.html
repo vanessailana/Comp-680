@@ -57,8 +57,9 @@
       <div class="flex-item flex2">
 
           <div id="messageDIV"  style="overflow-y: scroll; height:400px;">
+              
               <div *ngFor="let message of currentMessages; let i = index" >
-               
+                
                 <div *ngIf="message.fromUser==myId()">
                     <span > {{ date(message.sentAtDate)   }} </span>
                     <div class="alert alert-primary"> {{message.message}} </div>
@@ -67,8 +68,12 @@
                     <span >{{ date(message.sentAtDate) }}  </span>
                     <div class="alert alert-success"> {{message.message}} </div>
                 </div>
+                
               </div>
+
+             
             </div>
+            {{ updateScrollModified() }}
 
             <div >
 

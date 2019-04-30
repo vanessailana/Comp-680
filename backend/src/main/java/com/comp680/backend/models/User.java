@@ -53,15 +53,7 @@ public class User {
     private Long id;
 
  
-    /*
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
-    orphanRemoval = true, mappedBy = "user")
-    private List<Skill> skills;
-    
-  
-    @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL,mappedBy = "users")
-    private Social social;
-    */
+
 
     @Column(name="first_name", nullable=true)
     private String first_name;

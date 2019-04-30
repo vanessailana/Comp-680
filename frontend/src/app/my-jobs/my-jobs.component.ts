@@ -17,12 +17,13 @@ export class MyJobsComponent implements OnInit {
 
   userApplied: boolean;
   posting:Posting[];
-  jobs:any;
+  jobs: any;
   p: number = 1;
   showButton: boolean;
-
   user : any;
   profile : any;
+  edit_job: any; // job user edits
+
   constructor(private postingService: PostingService,private _rotuer:Router,
     private modalService: NgbModal,private router: Router,public dialog: MatDialog,
     private auth: AuthService, private profileService: ProfileService) { 
@@ -64,25 +65,28 @@ export class MyJobsComponent implements OnInit {
     this.modalService.open(content);
   }
 
-  edit(contente) {
+  edit(contente, job) {
     this.modalService.open(contente);
-    console.log(contente);
+    console.log(job);
+    this.edit_job = job;
+  }
+
+  saveJob(job) {
+    console.log(job);
+    console.log(this.edit_job);
   }
 
   delete(contentd) {
     this.modalService.open(contentd);
   }
 
-    deleteJob(job: Posting){
+  deleteJob(job: Posting){
     this.postingService.deletePosting(job)
       .subscribe( data => {
         this.jobs = this.jobs.filter(u => u !== job);
-location.reload();
-        
-  
-      })
- location.reload();
-
+        location.reload();
+      });
+    location.reload();
   };
 
   onNoClick(): void {

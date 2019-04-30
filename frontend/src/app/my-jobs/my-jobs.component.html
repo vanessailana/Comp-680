@@ -25,7 +25,6 @@
 <td> Description </td>
 <td> Edit </td>
 <td> Delete </td>
-<td> Delete </td>
 </tr>
 
 
@@ -54,7 +53,7 @@
   </div>
 </ng-template>
 
-<button class="btn my-primary" (click)="open(content)">View Job Description</button>
+<button (click)="open(content)">View</button>
  </td>
 
 
@@ -66,14 +65,31 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="alert alert-primary" role="alert">
-      Warning, you are about to delete a job. If you want to delete a job continue and press the delete button. Or just exit out of this modal. 
-    </div>
-    <div class="modal-footer">  
-      <button type="button" class="btn btn-outline-dark" (click)="editJob(job)">Edit</button>
+    <div class="text-center">
+      <form [formGroup]="edit_job" (ngSubmit)="saveJob(job)">
+        <div>
+          Title: 
+          <input type="text" formControlName="title" required/>
+        </div>
+        <div>
+          Description: 
+          <textarea formControlName="description" required></textarea>
+        </div>
+        <div>
+          Employment Type:
+          <input type="text" formControlName="employment_type" required/>
+        </div>
+        <div>
+          Location: 
+          <input type="text" formControlName="location" required/>
+        </div>
+        <div class="modal-footer">  
+          <button #submitBtn type="submit">Save</button>
+        </div>    
+      </form>
     </div>
   </ng-template>
-  <button mat-raised-button (click)="edit(contente)">Edit</button>
+  <button mat-raised-button (click)="edit(contente, job)">Edit</button>
 </td>
 
 <td> <ng-template #contentd let-c="close" let-d="dismiss">
@@ -97,7 +113,6 @@
 </ng-template> <button mat-raised-button (click)="delete(contentd)">Delete</button> </td>
 
 
-<td></td>
 
  
 </tbody>

@@ -64,6 +64,10 @@ export class MyJobsComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  edit(contente) {
+    this.modalService.open(contente);
+    console.log(contente);
+  }
 
   delete(contentd) {
     this.modalService.open(contentd);

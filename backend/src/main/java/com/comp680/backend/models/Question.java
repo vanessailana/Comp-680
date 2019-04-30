@@ -14,12 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.JoinTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
 @Table(name="questions")
-
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Question  {
 
 
@@ -29,9 +30,21 @@ public class Question  {
   private Long id;
 
 
+
   @ManyToOne(fetch = FetchType.LAZY,optional = false)
   @JoinColumn(name="job_id",nullable=false)
   private Job job;
+
+  private Question()
+  {
+
+  }
+  public Question(Long id,String question, Job job)
+  {
+    this.id = id;
+    this.question = question;
+    this.job = job;
+  }
   
   @Column(name="question",nullable=true)
   public String question;

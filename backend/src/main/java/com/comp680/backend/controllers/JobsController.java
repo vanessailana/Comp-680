@@ -30,10 +30,29 @@ public class JobsController {
     @Autowired
     JobsRepository jobRepo;
 
+    @Autowired
+    QuestionsRepository questRepo;
+
     @GetMapping("jobs/all")
     public List<Job> findAll() {
         List<Job> result = new ArrayList<Job>();
         jobRepo.findAll().forEach(result::add);
+        return result;
+    }
+
+
+    @PostMapping("job/questions")
+    public List<Question> submitQuestions(@RequestBody List<Question> questions)
+    {
+        questRepo.saveAll(questions);
+        return questions;
+    }
+
+
+    @GetMapping("job/questions/{job_id}")
+    public List<Question> getQuestions(@PathVariable long job_id)
+    {
+        List<Question> result = questRepo.findByJobId(job_id);
         return result;
     }
 

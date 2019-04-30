@@ -12,6 +12,7 @@ import { QuestionsService } from '../questions.service';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 
 import { AuthService } from '../../auth/auth.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 
 @Component({
   selector: 'app-viewposting',
@@ -27,12 +28,19 @@ export class ViewpostingComponent  implements OnInit {
   appliedJobs : any;
   userApplied: boolean;
   questions: any;
+  question : any;
   formGroup : FormGroup;
   alreadyApplied : boolean;
 
   displayLogin : boolean;
 
  loading: boolean;
+  user: any;
+  profile : any;
+
+  applied : Array<any>;
+
+
 
   constructor(public dialog: MatDialog,
     private questionService: QuestionsService,
@@ -41,34 +49,62 @@ export class ViewpostingComponent  implements OnInit {
     private postingService: PostingService,
     private modalService: NgbModal,private _rotuer:Router,
     private formBuilder: FormBuilder,
-    private auth: AuthService ) { 
+    private auth: AuthService, private profileService:ProfileService,
+    private permissionService: NgxPermissionsService) { 
 
-      this.auth.handleAuthentication();
-      this.alreadyApplied = false;
+   
+      var permuser = permissionService.getPermission('user');
+      var permadmin = permissionService.getPermission('admin');
+
+
+      if(permuser){
+        permissionService.loadPermissions([permuser.name])
+      }
+      if(permadmin)
+      {
+        permissionService.loadPermissions([permadmin.name])
+      }
+  
+    }
+
+ 
+
+  ngOnInit() {
+
+    this.alreadyApplied = false;
 
       this.formGroup = this.formBuilder.group({
         answers : this.initAnswers()
-      })
-
+      });
 
       this.postingService.getAll().subscribe((res) => {
         this.jobs = res;
         console.log(res);
-      
-      },
-      (err)=>(console.log(err)),
-      ()=>(console.log("GETALLJOBS")));
-
-      const role= [localStorage.getItem('roles')];
- 
-      this.permissionsService.loadPermissions(role);
-  
-   
+        },
+        (err)=>(console.log(err)),
+        ()=>{
+         
+        }
+      );
 
 
-    }
+      this.profile = localStorage.getItem('profile');
 
-  ngOnInit() {
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+      if(this.profile)
+      {
+        this.profileService.getUser(this.profile.email).subscribe((res)=>{
+          this.user=res
+          this.appliedService.getAppliedJobs(this.user.id).subscribe((res)=>{
+            this.applied = res;
+          })
+        });
+      }
+        
+       
+
+
+
 
    const role= [localStorage.getItem('roles')];
  
@@ -96,58 +132,35 @@ export class ViewpostingComponent  implements OnInit {
   }
    
   open(i,content) {
-    this.modalService.open(content);
-    let user = JSON.parse(localStorage.getItem('user'));
 
+    this.modalService.open(content);
     this.formGroup = this.formBuilder.group({
       answers : this.initAnswers()
     })
 
- 
-    if(user==null) {  
+    this.questionService.getQuestions(i).subscribe((res)=>{
+      this.question = res
+      this.question.forEach((e) => this.initAnswer())
+    });
 
-      this.alreadyApplied = false;
+
+
+
+    if(this.user==null) {  
       this.displayLogin = true;
-
     }else{
-
       this.displayLogin = false;
-      
-    this.alreadyApplied = true;
-
-    this.appliedService.hasApplied(i,user.id).subscribe(
-      (res)=> {console.log("hasApplied:"+res+i);if(res==null){this.alreadyApplied=false};},
-      (err)=>console.log(err),
-      () => {
-        if(this.alreadyApplied){
-
-      
-
-        }else{
-        this.questionService.getQuestions(i).subscribe(
-          (res)=>
-          {
-            this.questions=res;
-           
-            this.questions.forEach(q => {
-                this.initAnswer(); 
-            });
-    
-           
-          },
-          (err)=>console.log(err),
-          ()=>console.log("complete"));
-        }
+      if(this.applied.find((e)=>e.id==i))
+      {
+        this.alreadyApplied = true;
+      }else{
+        this.alreadyApplied = false;
       }
-    );
+      
+    }
 
   }
 
-    
-
-    
-    
-  }
 
 
   delete(contentd) {
@@ -197,18 +210,20 @@ close():void
   this.alreadyApplied = false;
   this.userApplied = false;
   this.formGroup = null;
+  this.question = [];
 }
 
   applyToJob(job,btn:HTMLButtonElement) {
-    let user = JSON.parse(localStorage.getItem('user'));
     console.log(job);
-    console.log(user);
-    let applicant = {'job': job, 'user': user};
+    console.log(this.user);
+
+    if(this.user){
+    let applicant = {'job': job, 'user': this.user};
 
     var answers = this.formGroup.controls['answers'].value;
 
     console.log(answers);
-
+    this.question = [];
    
     this.appliedService.apply(applicant).subscribe(
     res => {
@@ -225,17 +240,27 @@ close():void
         i+=1;
       })
      
+      if(answers.length > 0){
        this.questionService.sumbitAnswers(answers).subscribe(
         (res)=>console.log(res),
         (err)=>console.log(err),
         ()=>console.log("complete")
       )
+       }
       
       
     },
     err => {
       console.log("err: " + JSON.stringify(err));
+    },
+    ()=>{
+      this.appliedService.getAppliedJobs(this.user.id).subscribe((res)=>{
+        this.applied = res;
+      })
     });
+  }
+
+
   }
 
 }

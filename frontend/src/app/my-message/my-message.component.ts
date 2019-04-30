@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MyMessageService } from './my-message.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
+import { ProfileService } from '../profile/profile.service';
 
 
 @Component({
@@ -28,31 +30,50 @@ export class MyMessageComponent implements OnInit {
 
   dontUpdate = false;
 
+  profile : any;
 
-  constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef) { 
+  messageCount : number;
 
-
-    this.toUserId = -1;
-    this.user = JSON.parse(localStorage.getItem('user'));
-
-    this.currentMessages = new Array<any>();
-    this.fromMessages = new Array<any>();
-    this.toMessages = new Array<any>();
-
-    this.loadMessages();
+  constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef,
+    private auth: AuthService,
+    private profileService: ProfileService) { 
 
 
+      this.profile = JSON.parse(localStorage.getItem('profile'));
 
-  
-    this.messageForm = this.fb.group({
-      toUser : ["",Validators.required],
-      fromUser : ["",Validators.required],
-      message : ["", Validators.required],
-      sentAtDate: ["",Validators.required]
-    })
+    if(this.profile)
+    {
+      this.getUser();
+    }
+
+    
+   
 
   }
 
+  private getUser()
+  {
+    if(this.profile.email)
+    {
+    this.profileService.getUser(this.profile.email).subscribe(
+      (res)=>{
+        this.user = res;
+        this.toUserId = -1;
+        this.currentMessages = new Array<any>();
+        this.fromMessages = new Array<any>();
+        this.toMessages = new Array<any>();
+        this.loadMessages();
+    
+        this.messageForm = this.fb.group({
+          toUser : ["",Validators.required],
+          fromUser : ["",Validators.required],
+          message : ["", Validators.required],
+          sentAtDate: ["",Validators.required]
+        })
+      }
+    )
+   }
+  }
   loadMessages(){ 
 
 
@@ -68,6 +89,9 @@ export class MyMessageComponent implements OnInit {
       
       if(this.messages.length != res.length)
       {
+        
+
+      var difference = res.length - this.messages.length; 
         console.log("RESOURCE"+JSON.stringify(res));
 
       this.messages = res;
@@ -77,8 +101,6 @@ export class MyMessageComponent implements OnInit {
 
       console.log("Messages"+res);
 
-      //implement notifications at a later time review this with team
-      localStorage.setItem('messageNotice',"true");
 
       var distinct:Array<number> = []
       for (var i = 0; i < this.messages.length; i++)
@@ -95,15 +117,20 @@ export class MyMessageComponent implements OnInit {
         ()=>{
           this.fromUsers = this.fromUsers.filter((e)=>e!=null);
           console.log("From"+JSON.stringify(this.fromUsers));
+          if(this.toUserId > -1)
+          {
+            this.displayMessage(this.toUserId);
+          }
+         
+        
         }
       )
 
-      if(this.toUserId > -1)
-      {
-        this.displayMessage(this.toUserId);
-      }
-      }
 
+      }
+    },
+    (err)=>{},
+    ()=>{
     })
 
    
@@ -139,10 +166,7 @@ export class MyMessageComponent implements OnInit {
         this.currentMessages.push(e);
       }
     })
-
     console.log("Current"+JSON.stringify(this.currentMessages));
-
-    this.updateScroll();
   }
 
   email(fromId:number)
@@ -156,6 +180,16 @@ export class MyMessageComponent implements OnInit {
   {
     var element = document.getElementById("messageDIV");
     element.scrollTop = element.scrollHeight;
+  }
+
+  updateScrollModified()
+  {
+    if(this.currentMessages.length> this.messageCount)
+    {
+      this.messageCount = this.currentMessages.length;
+      setTimeout(function(){   this.updateScroll() }, 500) 
+     
+    }
   }
 
   get diagnostic() { return JSON.stringify(this.messageForm.value); }
@@ -172,10 +206,14 @@ export class MyMessageComponent implements OnInit {
         {
           console.log("load");
           this.loadMessages();
+
+          
           
           
         }
-      }
+      },
+      (err)=>console.log(err),
+      ()=>{}
     )
     }
   }

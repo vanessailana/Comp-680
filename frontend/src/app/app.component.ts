@@ -16,8 +16,6 @@ export class AppComponent implements OnInit {
   check= localStorage.getItem('roles');
   searchForm : FormGroup;
 
-  perm : string;
-
   isNavbarCollapsed : boolean = false;
 
   username : string;
@@ -29,39 +27,42 @@ export class AppComponent implements OnInit {
     private http: HttpClient, private permissionsService: NgxPermissionsService,
     private formBuilder: FormBuilder
   ) {
-    auth.handleAuthentication();
-    //this.perm = localStorage.getItem('roles');
+
     
+      this.auth.handleAuthentication();
+      
 
-   
-    localStorage.getItem('user') == null ? this.username = "" : this.username =  JSON.parse(localStorage.getItem('user')).firstName;;
-    //console.log(this.perm);
-
-    var check= localStorage.getItem('roles');
-    const role= [localStorage.getItem('roles')];
-    console.log(role);
-    this.permissionsService.loadPermissions(role);
- 
-    console.log(this.permissionsService.getPermissions());
-    
-
-    this.searchForm = this.formBuilder.group({
-      keyword: ["",Validators.required],
-      location: [""]
-    });
-
-    if(localStorage.getItem('isLoggedIn')) {
-      this.auth.renewTokens();
-    }
   }
+        
 
   ngOnInit(){
+
+    
+    if (this.auth.isAuthenticated()) {
+      console.log("is authenticated");
+      //this.auth.renewTokens();
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+      let role =  this.profile['https://example.com/roles'];
+      console.log("role"+ role);
+      this.permissionsService.addPermission([role]);
+      this.permissionsService.loadPermissions([role]);
   
+    }else{
+      this.permissionsService.addPermission(["guest"]);
+      this.permissionsService.loadPermissions(["guest"]);
+    }
+
+
+    }
+
+ 
+
+
+   
   }
 
-  onSubmit(btn:HTMLButtonElement)
-  {
 
-  }
-}
+
+
+  
 

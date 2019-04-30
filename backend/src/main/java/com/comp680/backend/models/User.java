@@ -53,15 +53,7 @@ public class User {
     private Long id;
 
  
-    /*
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
-    orphanRemoval = true, mappedBy = "user")
-    private List<Skill> skills;
-    
-  
-    @OneToOne(fetch = FetchType.LAZY,cascade =  CascadeType.ALL,mappedBy = "users")
-    private Social social;
-    */
+
 
     @Column(name="first_name", nullable=true)
     private String first_name;
@@ -95,6 +87,28 @@ public class User {
 
     @Column(name="profile_image", nullable=true)
     private String profile_image;
+
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "skill_id")
+    private List<Skill> skills;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "education_id")
+    private List<Education> educations;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "experience_id")
+    private List<Experience> experiences;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id")
+    private List<Project> projects;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "social_id")
+    private List<Social> socials;
+
 
     public Long getId(){
         return id;
@@ -188,17 +202,56 @@ public class User {
         this.profile_image=profile_image;
     }
 
-    
-  /*
 
-    public List<Skill> getSkill(){
-        return skills;
+    public List<Skill> getSkills()
+    {
+        return this.skills;
     }
 
     public void  setSkills(List<Skill> skills) {
         this.skills=skills;
     }
 
-    */
+    public List<Experience> getExperiences()
+    {
+        return this.experiences;
+    }
+
+    public void  setExperiences(List<Experience> experiences) {
+        this.experiences=experiences;
+    }
+
+    public List<Education> getEducations()
+    {
+        return this.educations;
+    }
+
+    public void  setEducations(List<Education> educations) {
+        this.educations=educations;
+    }
+
+    public List<Project> getProjects()
+    {
+        return this.projects;
+    }
+
+    public void  setProjects(List<Project> projects) {
+        this.projects=projects;
+    }
+
+
+    public List<Social> getSocials()
+    {
+        return this.socials;
+    }
+
+    public void  setSocials(List<Social> socials) {
+        this.socials=socials;
+    }
+	
+
+
+    
+
   
 }

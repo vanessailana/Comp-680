@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule, Router, Routes } from '@angular/router';
 import { AppliedService } from './applied.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../auth/auth.service';
+import { ProfileService } from '../profile/profile.service';
 @Component({
   selector: 'app-applied',
   templateUrl: './applied.component.html',
@@ -12,16 +14,25 @@ export class AppliedComponent implements OnInit {
 
   jobs : any;
   closeResult : any;
+  profile : any;
+  user : any;
+
   constructor(private router: Router, private appliedService:AppliedService,
-    private modalService:NgbModal) { 
+    private modalService:NgbModal, private auth:AuthService,
+    private profileService:ProfileService) { 
 
 
-    var user = JSON.parse(localStorage.getItem('user'));
-    this.appliedService.getAppliedJobs(user.id).subscribe(
-      (res)=>this.jobs = res,
-    );
-
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+      if(this.profile){
+        this.profileService.getUser(this.profile.email).subscribe((res)=>
+        {
+          this.user=res
+          this.appliedService.getAppliedJobs(this.user.id).subscribe((res)=>this.jobs=res);
+        });
+      }
   }
+
+
 
   ngOnInit() {
     

@@ -27,11 +27,6 @@ public class Education {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @Column(name="school_name")
     private String school_name;
 
@@ -60,13 +55,6 @@ public class Education {
     public long getId()
     {
         return this.id;
-    }
-    public User getUser(){
-        return user;
-    }
-
-    public void setUser(User user){
-        this.user = user;
     }
 
     public String getSchoolName() {

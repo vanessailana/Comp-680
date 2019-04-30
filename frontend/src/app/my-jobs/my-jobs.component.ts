@@ -6,6 +6,8 @@ import {MatDialog, MAT_DIALOG_DATA,MatDialogRef} from '@angular/material';
 import { RouterModule, Router, Routes } from '@angular/router';
 import { NgxPermissionsService } from 'ngx-permissions';
 import {JobDescriptionComponent} from '../posting/job-description/job-description.component';
+import { AuthService } from '../auth/auth.service';
+import { ProfileService } from '../profile/profile.service';
 @Component({
   selector: 'app-my-jobs',
   templateUrl: './my-jobs.component.html',
@@ -20,19 +22,44 @@ export class MyJobsComponent implements OnInit {
   showButton: boolean;
 
   user : any;
+  profile : any;
   constructor(private postingService: PostingService,private _rotuer:Router,
-    private modalService: NgbModal,private router: Router,public dialog: MatDialog) { 
+    private modalService: NgbModal,private router: Router,public dialog: MatDialog,
+    private auth: AuthService, private profileService: ProfileService) { 
 
     this.showButton = false;
  
-    let user = JSON.parse(localStorage.getItem('user'));
 
-    console.log(user);
+    this.profile = JSON.parse(localStorage.getItem('profile'));
 
-
+    if(this.profile)
+    {
+      this.getUser();
+    }
+ 
+    
    
 
-  }
+   }
+
+ 
+ private getUser()
+ {
+   if(this.profile.email)
+   {
+   this.profileService.getUser(this.profile.email).subscribe(
+     (res)=>{this.user = res;},
+     (err)=>console.log(err),
+     ()=>{
+      this.postingService.getMyJobs(this.user.id).subscribe(
+        (res)=> {this.jobs = res; 
+        
+          console.log("this works");
+        })
+     });
+    }
+   
+}
   open(content) {
     this.modalService.open(content);
   }
@@ -76,33 +103,7 @@ location.reload();
 
   ngOnInit() {
     
-   var role= localStorage.getItem('roles');
-
- 
-   
-
-   
   
-   if(role=='admin') {
-
-     if(this.jobs!==null && role=='admin') {
-
-     
-     
-    
-    this.postingService.getMyJobs().subscribe(
-      (res)=> {this.jobs = res; 
-      
-        console.log("this works");
-      })
-    }else {
-      this.showButton=true;
-    }
-    
-    
-    } else {
-      this.router.navigateByUrl('/view_jobs');
-    }
   }
     
 }

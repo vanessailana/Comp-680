@@ -8,9 +8,11 @@ import { ViewpostingComponent } from './posting/viewposting/viewposting.componen
 import { MyJobsComponent } from './my-jobs/my-jobs.component';
 import { AppliedComponent } from './applied/applied.component';
 import { ViewApplicantsComponent } from './view-applicants/view-applicants.component';
+import { UniqueRecommendationsComponent } from './unique-recommendations/unique-recommendations.component';
 
 import { NgxPermissionsGuard } from 'ngx-permissions';
 import { MyMessageComponent } from './my-message/my-message.component';
+import { AppComponent } from './app.component';
 export const ROUTES: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'chat', component: ChatbotComponent },
@@ -21,6 +23,7 @@ export const ROUTES: Routes = [
   { path: 'applied', component: AppliedComponent},
   { path: 'applicants', component:ViewApplicantsComponent},
   { path: 'my_jobs', component: MyJobsComponent},
+  {path: 'unique_recommendations', component: UniqueRecommendationsComponent},
   { path: 'mymessages', component: MyMessageComponent},
-  { path: '**', component: ViewpostingComponent}
+  { path: 'home', component: AppComponent}
 ];

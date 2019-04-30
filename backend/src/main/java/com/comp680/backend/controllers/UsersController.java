@@ -34,54 +34,26 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @RestController
 public class UsersController {
 
-    private final UsersRepository usersRepository;
-
-    private final SocialsRepository socialsRepository;
-
-    private final EducationsRepository educationsRepository;
-
-    private final ExperiencesRepository experiencesRepository;
-
-    private final SkillRepository skillRepository;
-
-    private final ProjectsRepository projectRepository;
-
-    UsersController(
-        UsersRepository usersRepository,
-        SocialsRepository socialsRepository, 
-        EducationsRepository educationsRepository,
-        ExperiencesRepository experiencesRepository,
-        SkillRepository skillRepository,
-        ProjectsRepository projectRepository
-    ){
-        this.usersRepository = usersRepository;
-        this.socialsRepository = socialsRepository;
-        this.educationsRepository = educationsRepository;
-        this.experiencesRepository = experiencesRepository;
-        this.skillRepository = skillRepository;
-        this.projectRepository = projectRepository;
-    }
-
-
+    @Autowired
+    private UsersRepository usersRepository;
+    
     @RequestMapping(value = "/profile/user", method = {RequestMethod.GET,RequestMethod.POST})
-    User createOrGetUser(@RequestBody String email) 
+    User getUser(@RequestBody String email) 
     {
-        User users = usersRepository.findByEmail(email);
-        if(users==null)
+        User user = usersRepository.findByEmail(email);
+        if(user==null)
         {
-            User newUser = new User();
-
-            newUser.setEmail(email);
-            usersRepository.save(newUser);
-
-            System.out.println("Email: "+email);
-            return newUser;
+            User result = new User();
+            result.setEmail(email);
+            usersRepository.save(result);
+            return result;
+        }else{
+            return user;
         }
-        return users;
     }
 
 
-    @PostMapping("/profile/create")
+    @PatchMapping("/profile/user/info")
     User patchUser(@RequestBody User users) 
     {
         User find = usersRepository.findByEmail(users.getEmail());
@@ -100,203 +72,49 @@ public class UsersController {
         
     }
 
-    @RequestMapping(value = "/profile/social", method = {RequestMethod.GET,RequestMethod.POST})
-    Social createOrSocialInfo(@RequestBody long id){
-
-
-        Social social = socialsRepository.findByUserId(id);
-        
-        if(social == null)
-        {
-            Social newSocial = new Social();
-
-            newSocial.setUser(usersRepository.findById(id));
-
-            socialsRepository.save(newSocial);
-
-            return newSocial;
-        }
-        return social;
-        
-    }
-
-    @PostMapping("/profile/social/patch")
-    Social patchSocial(@RequestBody Social social)
+    @PatchMapping("/profile/user/skills")
+    User patchSkill(@RequestBody User user)
     {
-        System.out.println("ID: "+social.getUser().getId());
-        Social find = socialsRepository.findByUserId(social.getUser().getId());
-        find.setFacebook(social.getFacebook());
-        find.setTwitter(social.getTwitter());
-        find.setGithub(social.getGithub());
-        find.setWebsite(social.getWebsite());
-        find.setLinkedin(social.getLinkedin());
-        socialsRepository.save(find);
+        User find = usersRepository.findByEmail(user.getEmail());
+        find.setSkills(user.getSkills());
+        usersRepository.save(find);
         return find;
     }
 
-    @GetMapping("/profile/edu/{id}")
-    List<Education> getEducation(@PathVariable("id") long id)
+    @PatchMapping("/profile/user/experiences")
+    User patchExperience(@RequestBody User user)
     {
-        System.out.println("Get");
-        return educationsRepository.findByUserId(id);
+        User find = usersRepository.findByEmail(user.getEmail());
+        find.setExperiences(user.getExperiences());
+        usersRepository.save(find);
+        return find;
     }
 
-    @PostMapping("/profile/edu/post")
-    List<Education> postEducation(@RequestBody Education edu)
+    @PatchMapping("/profile/user/educations")
+    User patchEducation(@RequestBody User user)
     {
-        educationsRepository.save(edu);
-
-        return educationsRepository.findByUserId(edu.getUser().getId());
+        User find = usersRepository.findByEmail(user.getEmail());
+        find.setEducations(user.getEducations());
+        usersRepository.save(find);
+        return find;
     }
 
-    @RequestMapping(value = "/profile/patchEdu")
-    List<Education> patchEducation(@RequestBody Education edu)
+    @PatchMapping("/profile/user/projects")
+    User patchProjects(@RequestBody User user)
     {
-
-        Education find = educationsRepository.findById(edu.getId());
-        find.setMajor(edu.getMajor());
-        find.setSchoolName(edu.getSchoolName());
-        find.setDegree(edu.getDegree());
-        find.setDescription(edu.getDescription());
-        find.setEndDate(edu.getEndDate());
-        find.setStartDate(edu.getStartDate());
-        find.setInProgress(edu.getInProgress());
-        educationsRepository.save(find);
-        return educationsRepository.findByUserId(edu.getUser().getId());
+        User find = usersRepository.findByEmail(user.getEmail());
+        find.setProjects(user.getProjects());
+        usersRepository.save(find);
+        return find;
     }
 
-    @DeleteMapping("/profile/edu/delete/{users_id}/{edu_id}")
-    List<Education> deleteEducation(@PathVariable long users_id, @PathVariable long edu_id)
+    @PatchMapping("/profile/user/socials")
+    User patchSocials(@RequestBody User user)
     {
-        Education find = educationsRepository.findById(edu_id);
-
-        educationsRepository.delete(find);
-
-        return educationsRepository.findByUserId(users_id);
-        
-    }
-
-    @GetMapping("/profile/experience/{id}")
-    List<Experience> getExperience(@PathVariable("id") long id)
-    {
-        System.out.println("Get");
-        return experiencesRepository.findByUserId(id);
-    }
-
-
-    @PostMapping("/profile/experience/post")
-    List<Experience> postExperience(@RequestBody Experience exp)
-    {
-        experiencesRepository.save(exp);
-
-        return experiencesRepository.findByUserId(exp.getUser().getId());
-    }
-
-    @RequestMapping(value = "/profile/patchExp")
-    List<Experience> patchExperience(@RequestBody Experience exp)
-    {
-
-        Experience find = experiencesRepository.findById(exp.getId());
-    
-        find.setCompany(exp.getCompany());
-        find.setTitle(exp.getTitle());
-        find.setCurrent(exp.getCurrent());
-        find.setEndDate(exp.getEndDate());
-        find.setStartDate(exp.getStartDate());
-        find.setDescription(exp.getDescription());
-        experiencesRepository.save(find);
-        return experiencesRepository.findByUserId(exp.getUser().getId());
-    }
-
-    @DeleteMapping("/profile/experience/delete/{users_id}/{exp_id}")
-    List<Experience> deleteExperience(@PathVariable long users_id, @PathVariable long exp_id)
-    {
-        Experience find = experiencesRepository.findById(exp_id);
-
-        experiencesRepository.delete(find);
-
-        return experiencesRepository.findByUserId(users_id);
-        
-    }
-
-
-    @GetMapping("/profile/skill/{id}")
-    List<Skill> getSkill(@PathVariable("id") long id)
-    {
-        return skillRepository.findByUserId(id);
-    }
-
-
-    @PostMapping("/profile/skill/post")
-    boolean postSkill(@RequestBody Skill skill)
-    {
-        skillRepository.save(skill);
-        return true;
-    }
-
-    @RequestMapping(value = "/profile/skill/patch")
-    boolean patchSkill(@RequestBody Skill skill)
-    {
-        Skill find = skillRepository.findById(skill.getId());
-
-        find.setSkill(skill.getSkill());
-        find.setLevel(skill.getLevel());
-
-        return true;
-    }
-
-    @DeleteMapping("/profile/skill/delete/{users_id}/{skill_id}")
-    List<Skill> deleteSkill(@PathVariable long users_id, @PathVariable long skill_id)
-    {
-        Skill find = skillRepository.findById(skill_id);
-
-        skillRepository.delete(find);
-
-        return skillRepository.findByUserId(users_id);
-        
-    }
-
-
-    @GetMapping("/profile/project/{id}")
-    List<Project> getProject(@PathVariable("id") long id)
-    {
-        System.out.println("Get");
-        return projectRepository.findByUserId(id);
-    }
-
-
-    @RequestMapping(value = "/profile/project/post", method = {RequestMethod.POST,RequestMethod.OPTIONS})
-    List<Project> postProject(@RequestBody Project project)
-    {
-        projectRepository.save(project);
-
-        return projectRepository.findByUserId(project.getUser().getId());
-    }
-
-    @RequestMapping(value = "/profile/project/patch")
-    List<Project> patchProject(@RequestBody Project project)
-    {
-        Project find = projectRepository.findById(project.getId());
-
-        find.setProjectName(project.getProjectName());
-        find.setDescription(project.getDescription());
-        find.setTechnologies(project.getTechnologies());
-        find.setLinks(project.getLink());
-        find.setStartDate(project.getStartDate());
-        find.setEndDate(project.getEndDate());
-        
-        return projectRepository.findByUserId(project.getUser().getId());
-    }
-
-    @DeleteMapping("/profile/project/delete/{users_id}/{project_id}")
-    List<Project> deleteProject(@PathVariable long users_id, @PathVariable long project_id)
-    {
-        Project find = projectRepository.findById(project_id);
-
-        projectRepository.delete(find);
-
-        return projectRepository.findByUserId(users_id);
-        
+        User find = usersRepository.findByEmail(user.getEmail());
+        find.setSocials(user.getSocials());
+        usersRepository.save(find);
+        return find;
     }
 
 }

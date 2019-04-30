@@ -1,12 +1,33 @@
+<style>
+.td{
+  word-break:break-all;
+}
+</style>
 
+<div class="container-fluid">
+    {{user | json}}
     <h1 class="my-light"> Jobs Currently Posted</h1>
+    <ng-template ngxPermissionsOnly="user">
     <button class="my-btn-primary btn-lg" routerLink="/applied" > View Applied Jobs </button>
+    </ng-template>
+    <ng-template ngxPermissionsOnly="admin">
+    <button  class="my-btn-primary btn-lg" routerLink="/my_jobs" > View Created Jobs </button>
+    </ng-template>
+    <button
+    class="my-btn-primary btn-lg" 
+    *ngIf="!auth.isAuthenticated()"
+    (click)="auth.login()">
+    Sign in to Apply </button>
+  
     <div class="container">
         <div class="row">
           <div class="search">
             <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a job by title, location, or keyword">
           </div>
- <table class="table table-bordered">
+ <table class="table table-responsive">
+
+  {{answers | json }}
+ 
 
 <tr>
 <td> <b>Title</b> </td>
@@ -61,11 +82,8 @@
   
     <form [formGroup]="formGroup">
         <div formArrayName="answers" >
-            <div class="row" *ngFor="let quest of questions; let i=index">
-
-              
+            <div class="row" *ngFor="let quest of question; let i=index">
                 <mat-form-field class="col-12" [formGroupName]="i">
-                    
                     <input type="text" matInput placeholder="{{quest.question}}" formControlName="answer">
                 </mat-form-field>
                 
@@ -91,7 +109,7 @@
 </div>
 </ng-template>
 
-<button class="my-btn-primary" (click)="open(job.id,content)">View Job Description</button>
+<button class="my-btn-primary btn-lg" (click)="open(job.id,content)">View Job Description</button>
 
  </td>
 
@@ -124,4 +142,6 @@
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
 </table>
+
+</div>
 

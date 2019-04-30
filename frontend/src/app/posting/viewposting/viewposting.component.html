@@ -3,11 +3,17 @@
   word-break:break-all;
 }
 </style>
-   
+
 <div class="container-fluid">
+    {{user | json}}
     <h1 class="my-light"> Jobs Currently Posted</h1>
-    <button *ngIf="auth.isAuthenticated()" class="my-btn-primary btn-lg" routerLink="/applied" > View Applied Jobs </button>
-    <button 
+    <ng-template ngxPermissionsOnly="user">
+    <button class="my-btn-primary btn-lg" routerLink="/applied" > View Applied Jobs </button>
+    </ng-template>
+    <ng-template ngxPermissionsOnly="admin">
+    <button  class="my-btn-primary btn-lg" routerLink="/my_jobs" > View Created Jobs </button>
+    </ng-template>
+    <button
     class="my-btn-primary btn-lg" 
     *ngIf="!auth.isAuthenticated()"
     (click)="auth.login()">
@@ -19,6 +25,8 @@
             <input class="form-control"  size="200" type="search" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Start searching for a job by title, location, or keyword">
           </div>
  <table class="table table-responsive">
+
+  {{answers | json }}
  
 
 <tr>
@@ -75,7 +83,7 @@
   
     <form [formGroup]="formGroup">
         <div formArrayName="answers" >
-            <div class="row" *ngFor="let quest of questions; let i=index">
+            <div class="row" *ngFor="let quest of question; let i=index">
                 <mat-form-field class="col-12" [formGroupName]="i">
                     <input type="text" matInput placeholder="{{quest.question}}" formControlName="answer">
                 </mat-form-field>

@@ -1,4 +1,5 @@
 <h1 class="my-light"> Create a Job Posting </h1>
+{{ diagnostic }}
 <mat-horizontal-stepper [linear]="true" #stepper completed=true>
     <mat-step [stepControl]="formGroup.controls.job">
       <form class="form-group" [formGroup]="formGroup.controls.job">
@@ -59,7 +60,7 @@
       <div>
 
         <button class="btn-lg my-btn-primary" mat-button matStepperPrevious type="button">Back</button>
-        <button #submitBtn class="btn btn-success" (click)="onSubmit(submitBtn)"> Submit </button>
+        <button #submitBtn class="btn-lg my-btn-primary" (click)="onSubmit(submitBtn)"> Submit </button>
 
         <div *ngIf="submitted==1" class="alert alert-success">
             Job Post Sucessfully Created!

@@ -32,14 +32,13 @@ export class PostingService {
     return this.http.get(this.postingUrl+"/jobs/all");
   }
 
-  getMyJobs(): Observable<any>
+  getMyJobs(id : number): Observable<any>
   {
-    let user = JSON.parse(localStorage.getItem('user'));
-    return this.http.get(this.postingUrl+"/recruiter/my_jobs/"+user.id);
+    return this.http.get(this.postingUrl+"/recruiter/my_jobs/"+id);
   }
 
   createQuestion(question: any) :Observable<any> {
-    return this.http.post<any>(this.postingUrl+"/createQuestion",question,httpOptions);
+    return this.http.post<any>(this.postingUrl+"/job/questions",question,httpOptions);
   }
 
   updatePosting(posting: any){

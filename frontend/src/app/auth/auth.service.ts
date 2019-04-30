@@ -1,3 +1,5 @@
+
+    
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
@@ -48,11 +50,12 @@ constructor(public router: Router) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken ) {
         this.setSession(authResult);
+        localStorage.setItem('profile', JSON.stringify(authResult.idTokenPayload));
         console.log(authResult);
         console.log("teste");
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/view_jobs']);
       } else if (err) {
-        this.router.navigate(['']);
+        this.router.navigate(['/home']);
        
 
       }
@@ -119,7 +122,8 @@ public getProfile(cb): void {
     localStorage.removeItem('expires_at');
     localStorage.removeItem('user');
     localStorage.removeItem('scopes');
-       localStorage.removeItem('roles');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('profile');
     // Go back to the home route
     this.router.navigate(['/']);
     location.reload();
@@ -179,4 +183,3 @@ public getProfile(cb): void {
   }
 
 }
-

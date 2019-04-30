@@ -16,35 +16,20 @@ export class AppliedComponent implements OnInit {
   closeResult : any;
   profile : any;
   user : any;
+
   constructor(private router: Router, private appliedService:AppliedService,
     private modalService:NgbModal, private auth:AuthService,
     private profileService:ProfileService) { 
 
 
-      this.auth.getProfile((err, profile) => {
-        this.profile = profile;
-        console.log(this.profile);
-
-        this.profileService.getUser(this.profile.email).subscribe(
-          (res) => {
-            
-            this.user = res
-            
-           
-          
-          },
-          (err)=> console.log(err)
-          ,
-          ()=>{
-            this.appliedService.getAppliedJobs(this.user.id).subscribe(
-              (res)=> {this.jobs = res},
-            );
-          
-          }
-        )
-        
-
-    });
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+      if(this.profile){
+        this.profileService.getUser(this.profile.email).subscribe((res)=>
+        {
+          this.user=res
+          this.appliedService.getAppliedJobs(this.user.id).subscribe((res)=>this.jobs=res);
+        });
+      }
   }
 
 

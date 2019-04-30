@@ -32,33 +32,18 @@ export class MyMessageComponent implements OnInit {
 
   profile : any;
 
+  messageCount : number;
 
   constructor( private messageService : MyMessageService,  private fb : FormBuilder, private ref: ChangeDetectorRef,
     private auth: AuthService,
     private profileService: ProfileService) { 
 
 
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+
     if(this.profile)
     {
-
       this.getUser();
-    
-
-    }else{
-
-
-      this.auth.getProfile((err, profile) => {
-
-        this.profile = profile;
-
-        this.getUser();
-
-      });
-       
-      
-
-
-
     }
 
     
@@ -136,12 +121,16 @@ export class MyMessageComponent implements OnInit {
           {
             this.displayMessage(this.toUserId);
           }
-          
+         
+        
         }
       )
 
 
       }
+    },
+    (err)=>{},
+    ()=>{
     })
 
    
@@ -177,10 +166,7 @@ export class MyMessageComponent implements OnInit {
         this.currentMessages.push(e);
       }
     })
-
     console.log("Current"+JSON.stringify(this.currentMessages));
-
-    this.updateScroll();
   }
 
   email(fromId:number)
@@ -194,6 +180,16 @@ export class MyMessageComponent implements OnInit {
   {
     var element = document.getElementById("messageDIV");
     element.scrollTop = element.scrollHeight;
+  }
+
+  updateScrollModified()
+  {
+    if(this.currentMessages.length> this.messageCount)
+    {
+      this.messageCount = this.currentMessages.length;
+      setTimeout(function(){   this.updateScroll() }, 500) 
+     
+    }
   }
 
   get diagnostic() { return JSON.stringify(this.messageForm.value); }
@@ -217,7 +213,7 @@ export class MyMessageComponent implements OnInit {
         }
       },
       (err)=>console.log(err),
-      ()=>{this.updateScroll();}
+      ()=>{}
     )
     }
   }

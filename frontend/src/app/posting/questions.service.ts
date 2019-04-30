@@ -22,10 +22,10 @@ questionUrl = 'http://localhost:8080';
 
   getQuestions(job_id: number)
   {
-    return this.http.get<any>(this.questionUrl+"/questions/"+job_id);
+    return this.http.get<any>(this.questionUrl+"/job/questions/"+job_id);
   }
   sumbitAnswers(quest: any): Observable<any> {
-  	return this.http.post<any>(this.questionUrl+"/answers",quest);
+  	return this.http.post<any>(this.questionUrl+"/job/questions",quest);
   }
   
 }

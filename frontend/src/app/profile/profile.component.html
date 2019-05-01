@@ -287,11 +287,11 @@
 
 
                                   <li class="list-group-item"> <label for="name"> Project Name </label>
-                                  <input readonly="{{editMode}}" type="text" class="form-control" formControlName="name" id="name" required >
+                                  <input readonly="{{editMode}}" type="text" class="form-control" formControlName="projectName" id="name" required >
                                   </li>
                                   <li class="list-group-item"> 
                                   <label for="description"> Description </label>
-                                  <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
+                                  <textarea readonly="{{editMode}}"  formControlName="description" class="form-control" rows=5 id="description"  required>
                                   </textarea>
                                   </li>
                                   <li class="list-group-item"> 

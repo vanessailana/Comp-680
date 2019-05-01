@@ -30,17 +30,17 @@ export class ProfileComponent implements OnInit {
 
   success : boolean = false;
 
+  socialForm : FormGroup;
+
   constructor(public auth: AuthService, 
     private modalService: NgbModal,
     private profileService:ProfileService, 
     private fb: FormBuilder,
     private router: Router) {
 
-
-
-     
       try{
-      this.profile = JSON.parse(localStorage.getItem('profile'));
+        
+          this.profile = JSON.parse(localStorage.getItem('profile'));
 
       }catch{
 
@@ -50,9 +50,12 @@ export class ProfileComponent implements OnInit {
         {
 
           this.profileService.getUser(this.profile.email).subscribe(
-            (res) => {this.user = res; console.log("user"+ JSON.stringify(this.user))
+            (res) => {
+              
+              
+              this.user = res; console.log("user"+ JSON.stringify(this.user))
           
-            this.userForm = this.fb.group({
+              this.userForm = this.fb.group({
               user: this.fb.group({id:[this.user.id],
               firstName:[this.user.firstName],
               lastName:[this.user.lastName],
@@ -70,31 +73,18 @@ export class ProfileComponent implements OnInit {
               experiences: this.initExperience(),
               projects:this.initProjects(),
               educations:this.initEducation(),
-              social: this.initSocial()
-              });
+              social : this.initSocial()
+              })
+              
+              this.display = true; 
 
-          },
-            (err)=> console.log(err),
-            ()=>{
-             
-
-                this.display = true; 
+               
 
                 //this.userForm.controls.skill.setValue(this.initSkill());
                 //this.userForm.controls.educations.setValue(this.initEducation());
-            }
-          )
-
-         
-       
-      }else{
-
-          this.router.navigate(['/view_jobs']);
+            })
+        }
   
-      }
-     
-
-    
 
    }
 
@@ -110,6 +100,7 @@ export class ProfileComponent implements OnInit {
           this.projects.forEach((e)=>{
             formArray.push(this.fb.group({
               id: [e.id],
+              projectName:[e.projectName],
               description:[e.schoolName],
               endDate:[e.endDate],
               startDate:[e.startDate],
@@ -135,45 +126,30 @@ export class ProfileComponent implements OnInit {
    }
 
    initSocial(){
-     var control = null;
-
-     this.profileService.getSocial(this.user.id).subscribe(
-       (res)=>{
-         if(res){
-           this.social = res;
-           control = this.fb.group({
-            id : [this.social.id],
-            facebook:[this.social.facebook],
-            github:[this.social.github],
-            linkedin:[this.social.linkedin],
-            twitter:[this.social.twitter],
-            website:[this.social.website]
-            })
     
-           
-    
+     var control;
+     this.profileService.getSocial(this.user.id).then(data => {
 
-         }else{
-          control = this.fb.group({
-            facebook:[''],
-            github:[''],
-            linkedin:[''],
-            twitter:[''],
-            website:['']
-            })
-      
-            
-         }
-       },
-       (err)=>console.log(err),
-       ()=>{
-         return control
-       }
+       this.social = data;
+       
+       console.log("Social"+ JSON.stringify(this.social));
+        this.socialForm = this.fb.group({
+          linkedin : [this.social.linkedin],
+          twitter : [this.social.twitter],
+          github : [this.social.github],
+          facebook : [this.social.facebook],
+          website : [this.social.website]
+
+        })
+
+        this.userForm.controls.social = this.socialForm;
+       
+     }
      )
 
+    }
+       
 
-     
-   }
 
 
    initSkill() {
@@ -320,27 +296,6 @@ export class ProfileComponent implements OnInit {
     this.option = str;
     console.log(str);
     this.success = false;
-     this.userForm = this.fb.group({
-              user: this.fb.group({id:[this.user.id],
-              firstName:[this.user.firstName],
-              lastName:[this.user.lastName],
-              email:[this.profile.email],
-              address:[this.user.address],
-              city:[this.user.city],
-              state:[this.user.state],
-              zipCode:[this.user.zipCode],
-              phoneNumber:[this.user.phoneNumber],
-              objective:[this.user.objective],
-              resume:[this.user.resume],
-              image:[this.user.image]
-              }),
-              skills: this.initSkill(),
-              experiences: this.initExperience(),
-              projects:this.initProjects(),
-              educations:this.initEducation(),
-              social: this.initSocial()
-              });
-    
   }
 
 
@@ -353,7 +308,8 @@ export class ProfileComponent implements OnInit {
       endDate:[''],
       startDate:[''],
       link: [''],
-      techonologies:['']
+      techonologies:[''],
+      projectName:['']
       ,
       user:[this.user]
     }))
@@ -441,10 +397,12 @@ export class ProfileComponent implements OnInit {
     else if(this.option=='Social')
     {
       
-      var value = this.userForm.controls.social.value;
-      this.profileService.patchSocial(value,this.user.id).subscribe(
+      
+      this.profileService.patchSocial(this.userForm.controls.social,this.user.id).subscribe(
         (res)=> this.social = res
       )
+
+
     }else if(this.option=='Education')
     {
       this.profileService.patchEdu(this.userForm.controls.educations.value,this.user.id).subscribe(
@@ -465,24 +423,13 @@ export class ProfileComponent implements OnInit {
   }
   ngOnInit() {
 
-   
-    var role= localStorage.getItem('roles');
+      //this.initSocial();
+
+
+  }
 
    
-    
-    if(role="user") 
-    {
-        this.router.navigateByUrl("/profile");
-    }
-    else if(role="admin") 
-    {
-        this.router.navigateByUrl("/posting");
-    }else
-    {
-        this.router.navigateByUrl("/view_jobs");
-    }
-     
-  }
-    
+
+ 
 
 }

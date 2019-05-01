@@ -167,11 +167,20 @@ public class UsersController {
 
     @PostMapping("/profile/social/{id}")
     Social postSocial(@RequestBody Social social,@PathVariable long id){
-        User user = usersRepository.findById(id);
-        
-        social.setUser(user);
+        Social s = socialRepository.findByUserId(id);
 
-        socialRepository.save(social);
+        if(s == null){
+            social.setUser(usersRepository.findById(id));
+            socialRepository.save(social);
+        }else{
+            s.setWebsite(social.getWebsite());
+            s.setLinkedin(social.getLinkedin());
+            s.setTwitter(social.getTwitter());
+            s.setFacebook(social.getFacebook());
+            s.setGithub(social.getGithub());
+            socialRepository.save(s);
+        }
+    
         return social;
     }
 

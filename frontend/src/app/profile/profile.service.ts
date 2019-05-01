@@ -47,6 +47,19 @@ export class ProfileService {
     return this.http.get(this.profileUrl+"/profile/pro/"+user_id,httpOptions);
   }
 
+
+
+  getSkill(user_id: number)
+  {
+    return this.http.get(this.profileUrl+"/profile/skill/"+user_id,httpOptions);
+  }
+
+  getSocial(user_id: number)
+  {
+      return this.http.get(this.profileUrl+"/profile/social/"+user_id).toPromise();
+  }
+
+
   patchPro(list:any , user_id : number)
   {
     return this.http.post(this.profileUrl+"/profile/pro/"+user_id,list,httpOptions);
@@ -70,17 +83,6 @@ export class ProfileService {
   {
     return this.http.post(this.profileUrl+"/profile/social/"+user_id,social,httpOptions);
   }
-
-  getSkill(user_id: number)
-  {
-    return this.http.get(this.profileUrl+"/profile/skill/"+user_id,httpOptions);
-  }
-
-  getSocial(user_id: number)
-  {
-      return this.http.get(this.profileUrl+"/profile/social/"+user_id,httpOptions);
-  }
-
 
 
 

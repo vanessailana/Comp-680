@@ -39,7 +39,31 @@ describe('workspace-project App', () => {
   });
 
 
+  it('view my jobs', () => {
+    page.viewMyJobs();
+    expect(page.myJobs()), 100000;
+  });
 
+
+
+
+  it('view my applied jobs', () => {
+    page.getAppliedJobs();
+    expect(page.myAppliedJobs()), 100000;
+  });
+
+  
+  it('apply to a job', () => {
+    page.applyLink();
+    expect(page.apply());
+  });
+
+
+
+  it('view my applicants', () => {
+    page.applicants();
+    expect(page.myApplicants()), 100000;
+  });
 
 
   it('Retrieving unique recommendations', () => {

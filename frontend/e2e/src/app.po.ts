@@ -13,7 +13,7 @@ export class AppPage {
     return element.all(by.name('recommendations'));
   }
   getJobs() {
-    return element.all(by.name('container-fluid'));
+    return element.all(by.className('container-fluid'));
   }
 
   viewJobs() {
@@ -22,6 +22,48 @@ export class AppPage {
 
   getUniqueRecTitle() {
     return element.all(by.css('title'));
+  }
+
+  getAppliedJobs() {
+     return browser.get('/applied');
+  }
+  myAppliedJobs() {
+    return element.all(by.className('table table-bordered'));
+  }
+
+
+  viewMyJobs() {
+    return browser.get('/my_jobs');
+  }
+
+  myJobs(){
+    return element.all(by.className('table table-bordered'));
+  }
+
+  viewApplicants() {
+    return browser.get('/applicants');
+  }
+
+  myApplicants(){
+    return element.all(by.className('table table-bordered'));
+  }
+
+  applicants(){
+    return browser.get('/applicants');
+  }
+
+  applyJob() {
+    return browser.get('/applied');
+  }
+
+ 
+
+  apply(){
+    return element.all(by.className('my-btn-primary btn-lg'));
+  }
+
+  applyLink(){
+    return browser.get('/view_jobs');
   }
 
 

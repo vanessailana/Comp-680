@@ -3,6 +3,8 @@
 # Comp-680
 ### The goal is to establish a platform that would give society the opportunity to have a platform to apply to jobs. This platform would support four different types of users. It would support a guest, a registered user, and recruiter.
 
+## Technologies
+Spring Boot, Angular 7, Protractor, Python 3.7, Flask, Heroku
 ## To run back-end:
 ``` bash
 cd backend

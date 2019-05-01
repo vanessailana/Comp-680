@@ -23,7 +23,7 @@ export class MyJobsComponent implements OnInit {
   showButton: boolean;
   user : any;
   profile : any;
-  formGroup: FormGroup; // job user edits
+  edit_job: any; // job user edits
 
   constructor(private postingService: PostingService,private _rotuer:Router,
     private modalService: NgbModal,private router: Router,public dialog: MatDialog,

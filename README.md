@@ -25,4 +25,4 @@ https://github.com/vanessailana/Seminar2
 
 ## Overall Architecture
 
-![picture](Overall_Architecture.png)
+![alt text](Overall_Architecture.png "360 Search Architecture")

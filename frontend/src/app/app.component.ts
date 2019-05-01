@@ -4,6 +4,7 @@ import { AuthService } from './auth/auth.service';
 import { NgxPermissionsService } from 'ngx-permissions';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms' 
 import { HttpClient } from '@angular/common/http';
+import { MyMessageService } from './my-message/my-message.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,12 +21,14 @@ export class AppComponent implements OnInit {
 
   username : string;
 
-  messageNotice : boolean;
+  messageNotice : number;
+
 
   constructor(
     public auth: AuthService,
     private http: HttpClient, private permissionsService: NgxPermissionsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService : MyMessageService
   ) {
 
     
@@ -34,6 +37,7 @@ export class AppComponent implements OnInit {
 
   }
         
+
 
   ngOnInit(){
 

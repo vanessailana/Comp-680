@@ -31,6 +31,7 @@
     "auth0-lock": "^11.15.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
+    "circular-json": "^0.5.9",
     "core-js": "^2.6.5",
     "cors": "^2.8.5",
     "es6-promise": "^4.2.6",

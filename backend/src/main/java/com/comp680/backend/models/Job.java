@@ -66,10 +66,9 @@ public class Job implements Serializable  {
   private Long id;
 
 
-  @OneToOne(fetch = FetchType.LAZY, optional = false)
+  @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
-
 
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true;

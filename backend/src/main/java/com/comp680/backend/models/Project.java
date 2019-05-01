@@ -5,6 +5,10 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
 import java.util.List;
@@ -17,6 +21,7 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="projects")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project {
 
     @Id
@@ -24,7 +29,7 @@ public class Project {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="project_name" ,nullable=false)
+    @Column(name="project_name" ,nullable=true)
     private String project_name;
 
     @Column(name="description" ,nullable=true, length=1000)
@@ -41,6 +46,25 @@ public class Project {
 
     @Column(name="technologies" ,nullable=true)
     private String technologies;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * @return the user
+     */
+    @JsonIgnore
+    public User getUser() {
+        return user;
+    }
 
     public long getId()
     {

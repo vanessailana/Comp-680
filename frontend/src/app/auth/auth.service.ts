@@ -53,7 +53,7 @@ constructor(public router: Router) {
         localStorage.setItem('profile', JSON.stringify(authResult.idTokenPayload));
         console.log(authResult);
         console.log("teste");
-        this.router.navigate(['/view_jobs']);
+        this.router.navigate(['/home']);
       } else if (err) {
         this.router.navigate(['/home']);
        
@@ -125,7 +125,7 @@ public getProfile(cb): void {
     localStorage.removeItem('roles');
     localStorage.removeItem('profile');
     // Go back to the home route
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
     location.reload();
   }
 

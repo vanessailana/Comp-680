@@ -36,18 +36,7 @@ export class AppliedComponent implements OnInit {
 
   ngOnInit() {
     
-   var role= localStorage.getItem('roles');
 
-   if(role=="admin") {
-     this.router.navigateByUrl('/posting');
-   } 
-   if(role=="user") {
-    this.router.navigateByUrl('/applied');
-  } 
-
-  if(role!="user" && role!="admin") {
-    this.router.navigateByUrl('/view_jobs');
-  } 
  
   }
 

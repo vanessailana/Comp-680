@@ -176,7 +176,17 @@ public class MessageController {
 
     @GetMapping("/kafka/messages/{id}")
     public List<MyMessage> getMessages(@PathVariable long id) {
-        return messageList.stream().filter(e -> ((e.getFromUser()==id)||(e.getToUser()==id))).collect(Collectors.toList());
+        if(messageList != null)
+        {
+        List<MyMessage> m = messageList.stream().filter(e -> ((e.getFromUser()==id)||(e.getToUser()==id))).collect(Collectors.toList());
+        if(m==null)
+        {
+            return new ArrayList<MyMessage>();
+        }
+            return m;
+        }else{
+            return new ArrayList<MyMessage>();
+        }
         
     }
 

@@ -25,14 +25,14 @@ ng serve
 https://github.com/vanessailana/Seminar2
 
 
-## Overall Architecture
-
-![alt text](Overall_Architecture.png "360 Search Architecture")
-
-
-
 ## Application hosted on:
 https://serene-mountain-68375.herokuapp.com/
 
 ## Backend API 
 https://agile-scrubland-47616.herokuapp.com/
+
+
+## Overall Architecture
+
+![alt text](Overall_Architecture.png "360 Search Architecture")
+

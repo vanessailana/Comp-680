@@ -21,3 +21,8 @@ ng serve
 
 ## Repo for Personalized Recommendations api 
 https://github.com/vanessailana/Seminar2
+
+
+## Overall Architecture
+
+![picture](Overall_Architecture.png)

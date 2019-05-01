@@ -8,6 +8,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
 import {JobDescriptionComponent} from '../posting/job-description/job-description.component';
 import { AuthService } from '../auth/auth.service';
 import { ProfileService } from '../profile/profile.service';
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-my-jobs',
   templateUrl: './my-jobs.component.html',
@@ -22,7 +23,7 @@ export class MyJobsComponent implements OnInit {
   showButton: boolean;
   user : any;
   profile : any;
-  edit_job: any; // job user edits
+  formGroup: FormGroup; // job user edits
 
   constructor(private postingService: PostingService,private _rotuer:Router,
     private modalService: NgbModal,private router: Router,public dialog: MatDialog,

@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { UniqueRecommendationsComponent } from './unique-recommendations.component';
 
 describe('UniqueRecommendationsComponent', () => {
@@ -19,7 +18,5 @@ describe('UniqueRecommendationsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });

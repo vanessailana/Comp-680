@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import{Router}  from '@angular/router';
 
-
 @Component({
   selector: 'app-unique-recommendations',
   templateUrl: './unique-recommendations.component.html',
@@ -41,13 +40,26 @@ recommendedJobs:any;
     subscribe(data => {
 
       this.recommendedJobs=data;
-      console.log(this.recommendedJobs);
-    })
+      console.log(this.recommendedJobs)
+    }); (error)=> {
+      this.http.get('https://agile-scrubland-47616.herokuapp.com/stackrec').
+      subscribe(data => {
+  
+        this.jobs=data;
+        console.log(this.jobs);
+      })
+    
+    }
+    
+    
 
   } else {
     this.router.navigateByUrl('/view_jobs');
   }
 }
+
+
+
 }
 
 

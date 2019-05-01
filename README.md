@@ -25,11 +25,12 @@ ng serve
 https://github.com/vanessailana/Seminar2
 
 
-## Application hosted on:
-https://serene-mountain-68375.herokuapp.com/
+## Front End 
+https://quiet-waters-20201.herokuapp.com/
 
-## Backend API 
-https://agile-scrubland-47616.herokuapp.com/
+## Backend 
+
+https://serene-mountain-68375.herokuapp.com/
 
 
 ## Overall Architecture

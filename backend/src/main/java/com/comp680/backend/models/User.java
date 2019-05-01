@@ -17,6 +17,8 @@ import java.util.Date;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.web.multipart.MultipartFile;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import javax.persistence.JoinTable;
 
@@ -54,9 +56,6 @@ public class User {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
- 
-
-
     @Column(name="first_name", nullable=true)
     private String first_name;
 
@@ -89,6 +88,22 @@ public class User {
 
     @Column(name="profile_image", nullable=true)
     private String profile_image;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Job> jobs;
+
+
+    public void setJobs(List<Job> jobs)
+    {
+        this.jobs = jobs;
+    }
+
+    @JsonIgnore
+    public List<Job> getJobs()
+    {
+        return this.jobs;
+    }
 
 
     public Long getId(){

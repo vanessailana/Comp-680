@@ -65,10 +65,11 @@ public class Job implements Serializable  {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private Long id;
 
-
-  @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
-  @JoinColumn(name = "user_id", nullable = false)
+  @ManyToOne
+  @JoinColumn(name="user_id")
   private User user;
+
+
 
   @Column(name="status",nullable=false,columnDefinition = "boolean default 1")
   private boolean status = true;
@@ -86,7 +87,7 @@ public class Job implements Serializable  {
   @Column(name="employment_type",nullable=true)
   public String employment_type;
 
-  @Column(name="location",nullable=false)
+  @Column(name="location",nullable=true)
   private String location;
 
   @CreationTimestamp

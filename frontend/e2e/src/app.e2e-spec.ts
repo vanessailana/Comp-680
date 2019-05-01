@@ -19,15 +19,55 @@ describe('workspace-project App', () => {
     
   });
 
+  it("should accept and save input values", () => {
+    
+    page.clickCreateButton();
+      
+    const emptyInputValues = ["","",""];
+    expect(page.getInputPasteValues()).toEqual(emptyInputValues);
+     
+    const newInputValues = page.addNewJob();
+    expect(page.getInputPasteValues()).toEqual(newInputValues);
+ 
+    page.clickSaveButton();
+  
+    expect(page.isCreatePasteModalPresent()).toBeFalsy("The modal window should be gone");
+  
+ 
+  });
+  
+ 
+  
+  it("close button should work", () => {
+     
+    page.clickCreateButton();
+    page.clickCloseButton();
+     
+    expect(page.isCreatePasteModalPresent()).toBeFalsy("The modal window should be gone");
+      
+  });
+
+  it("should accept and save input values", () => {
+    
+    page.clickCreateButton();
+      
+    const emptyInputValues = ["","",""];
+    expect(page.getInputPasteValues()).toEqual(emptyInputValues);
+     
+    const newInputValues = page.addNewJob();
+    expect(page.getInputPasteValues()).toEqual(newInputValues);
+ 
+    page.clickSaveButton();
+
+ 
+  });
+
   it('should display welcome message', () => {
     page.navigateTo();
     expect(page.getTitleText()).toEqual('Welcome to frontend!');
   });
 
-  it('should display welcome message', () => {
-    page.navigateTo();
-    expect(page.getUniqueRecTitle().toEqual('Personalized Recommendations!'));
-  });
+ 
 
 
   //if we want to send a message to support we should get the chat bot
@@ -53,6 +93,7 @@ describe('workspace-project App', () => {
   });
 
   
+  //apply to aa job 
   it('apply to a job', () => {
     page.applyLink();
     expect(page.apply());
@@ -60,6 +101,7 @@ describe('workspace-project App', () => {
 
 
 
+  //view my applicants 
   it('view my applicants', () => {
     page.applicants();
     expect(page.myApplicants()), 100000;
@@ -88,7 +130,9 @@ describe('workspace-project App', () => {
     return element(by.css('[routerLink="/support"]'));
     
    });
-   
+
+
+ 
 
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
@@ -96,5 +140,14 @@ describe('workspace-project App', () => {
     expect(logs).not.toContain(jasmine.objectContaining({
       level: logging.Level.ALL
     }));
-  });
+  
+
+
+    
+
+   
+      /* Mock data for creating a new Paste and editing existing paste */
+ 
+ 
+  
 

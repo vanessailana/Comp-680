@@ -5,7 +5,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ProfileService } from './profile.service';
 
-JSON = require('circular-json')
+let  JSON = require('circular-json')
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',

@@ -14,32 +14,74 @@ const httpOptions = {
 })
 export class ProfileService {
 
-  profileUrl = 'http://localhost:8080/profile';  // URL to web api
+  profileUrl = 'http://localhost:8080';  // URL to web api
   constructor(private http: HttpClient) { 
 
-  }
-
-  getSocial(socialt: any): Observable<any> {
-    //return this.http.post<any>(this.profileUrl+"/socials/?id="+,support,httpOptions);
-    //Remove this and implement post
-    return null;
   }
 
 
   getUser(email: any):Observable<any>
   {
-    return this.http.post<any>(this.profileUrl+"/user",email,httpOptions);
+    return this.http.post<any>(this.profileUrl+"/profile/user",email,httpOptions);
   }
 
-  patchSkills(user: any):Observable<any>
+
+
+  patchUser(user : any)
   {
-    return this.http.post<any>(this.profileUrl+"/user/skills",user,httpOptions);
+    return this.http.post(this.profileUrl+"/profile/patch",user,httpOptions);
   }
 
-  deleteSkill(id:number)
+  getEdu(user_id: number)
   {
-    return this.http.delete<any>(this.profileUrl+"/user/skills/delete/"+id,httpOptions);
+    return this.http.get(this.profileUrl+"/profile/edu/"+user_id,httpOptions);
   }
+
+  getExp(user_id: number)
+  {
+    return this.http.get(this.profileUrl+"/profile/exp/"+user_id,httpOptions);
+  }
+
+  getPro(user_id: number)
+  {
+    return this.http.get(this.profileUrl+"/profile/pro/"+user_id,httpOptions);
+  }
+
+  patchPro(list:any , user_id : number)
+  {
+    return this.http.post(this.profileUrl+"/profile/pro/"+user_id,list,httpOptions);
+  }
+  patchExp(list, user_id: number)
+  {
+    return this.http.post(this.profileUrl+"/profile/exp/"+user_id,list,httpOptions);
+  }
+
+  patchSkill(list, user_id: number)
+  {
+    return this.http.post(this.profileUrl+"/profile/skill/"+user_id , list ,httpOptions);
+  }
+
+  patchEdu(list, user_id: number)
+  {
+    return this.http.post(this.profileUrl+"/profile/edu/"+user_id,list,httpOptions);
+  }
+
+  patchSocial(social: any, user_id: number)
+  {
+    return this.http.post(this.profileUrl+"/profile/social/"+user_id,social,httpOptions);
+  }
+
+  getSkill(user_id: number)
+  {
+    return this.http.get(this.profileUrl+"/profile/skill/"+user_id,httpOptions);
+  }
+
+  getSocial(user_id: number)
+  {
+      return this.http.get(this.profileUrl+"/profile/social/"+user_id,httpOptions);
+  }
+
+
 
 
 

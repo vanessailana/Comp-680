@@ -9,5 +9,6 @@ public interface ExperiencesRepository extends CrudRepository<Experience, Long> 
 
 
     Experience findById(long id);
+    List<Experience> findByUserId(long id);
 }
 

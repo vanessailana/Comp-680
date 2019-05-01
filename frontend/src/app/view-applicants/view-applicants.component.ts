@@ -100,7 +100,9 @@ export class ViewApplicantsComponent implements OnInit {
     this.messageService.postMessage(this.messageForm.value).subscribe(
       (res)=>{ console.log(res) },
       (err)=>{},
-      ()=>{},
+      ()=>{
+        this.messageForm.controls.message.setValue(null);
+      },
     )
   }
 

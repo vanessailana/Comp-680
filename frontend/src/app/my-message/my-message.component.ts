@@ -39,6 +39,7 @@ export class MyMessageComponent implements OnInit {
     private profileService: ProfileService) { 
 
 
+
       this.profile = JSON.parse(localStorage.getItem('profile'));
 
     if(this.profile)
@@ -86,13 +87,14 @@ export class MyMessageComponent implements OnInit {
     this.messageService.getMessages(this.user.id).subscribe((res)=>{
       //no need to update frontend
   
-      
+    
+
+      console.log("Testing Messaging");
       if(this.messages.length != res.length)
       {
         
 
-      var difference = res.length - this.messages.length; 
-        console.log("RESOURCE"+JSON.stringify(res));
+
 
       this.messages = res;
       this.messages.sort(function(a,b){ return a.sentAtDate - b.sentAtDate});
@@ -108,8 +110,12 @@ export class MyMessageComponent implements OnInit {
         if (!distinct.find((e)=> e == this.messages[i].fromUser))
         {
             distinct.push(this.messages[i].fromUser);
+        }else{
+          
         }
       }
+
+      
 
       this.messageService.getFromUser(distinct).subscribe(
         (res)=>{this.fromUsers = res },
@@ -213,7 +219,9 @@ export class MyMessageComponent implements OnInit {
         }
       },
       (err)=>console.log(err),
-      ()=>{}
+      ()=>{
+        this.messageForm.controls.message.setValue(null);
+      }
     )
     }
   }

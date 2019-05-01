@@ -17,6 +17,7 @@ export class MyMessageService {
 
   myMessageUrl = 'http://localhost:8080';  // URL to web api
   
+  notification : number = 0;
 
   constructor(private http: HttpClient) { 
 
@@ -40,4 +41,13 @@ export class MyMessageService {
   }
 
 
+  setNotificationCount(count : number)
+  {
+    this.notification = count;
+  }
+
+  getNotificationCount()
+  {
+    return this.notification;
+  }
 }

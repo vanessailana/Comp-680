@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.GeneratedValue;
@@ -40,6 +42,25 @@ public class Social {
     @Column(name="social_id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * @return the user
+     */
+    @JsonBackReference
+    public User getUser() {
+        return user;
+    }
 
 
 

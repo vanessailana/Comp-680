@@ -1,7 +1,11 @@
 package com.comp680.backend.controllers;
 
-import com.comp680.backend.repositories.*;
-
+import com.comp680.backend.repositories.EducationsRepository;
+import com.comp680.backend.repositories.ExperiencesRepository;
+import com.comp680.backend.repositories.ProjectsRepository;
+import com.comp680.backend.repositories.SkillRepository;
+import com.comp680.backend.repositories.SocialsRepository;
+import com.comp680.backend.repositories.UsersRepository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,14 +33,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 //https://mysterious-harbor-56923.herokuapp.com
-@CrossOrigin(origins = "http://localhost:4200" , maxAge = 3600 )
+@CrossOrigin
 @RestController
 public class UsersController {
 
     @Autowired
     private UsersRepository usersRepository;
-    
+
+    @Autowired
+    private EducationsRepository eduRepository;
+
+    @Autowired
+    private ExperiencesRepository expRepository;
+
+    @Autowired
+    private ProjectsRepository proRepository;
+
+    @Autowired
+    private SocialsRepository socialRepository;
+
+    @Autowired
+    private SkillRepository skillsRepository;
+
+
     @RequestMapping(value = "/profile/user", method = {RequestMethod.GET,RequestMethod.POST})
     User getUser(@RequestBody String email) 
     {
@@ -52,69 +73,107 @@ public class UsersController {
         }
     }
 
-
-    @PatchMapping("/profile/user/info")
-    User patchUser(@RequestBody User users) 
+ 
+    @PostMapping("/profile/patch")
+    User patchUser(@RequestBody User user)
     {
-        User find = usersRepository.findByEmail(users.getEmail());
-        find.setAddress(users.getAddress());
-        find.setCity(users.getCity());
-        //find.setEmail(users.getEmail());
-        find.setFirstName(users.getFirstName());
-        find.setLastName(users.getLastName());
-        find.setNumber(users.getNumber());
-        find.setObjective(users.getObjective());
-        find.setResume(users.getResume());
-        find.setState(users.getState());
-        find.setZipCode(users.getZipCode());
-        usersRepository.save(find);
-        return find;
+        usersRepository.save(user);
+        return usersRepository.findById(user.getId()).get();
+    }
+
+    @GetMapping("/profile/edu/{id}")
+    List<Education> getEducation(@PathVariable long id)
+    {
+        return eduRepository.findByUserId(id);
+    }
+
+    @GetMapping("/profile/exp/{id}")
+    List<Education> getExp(@PathVariable long id)
+    {
+        return eduRepository.findByUserId(id);
+    }
+
+
+    @GetMapping("/profile/pro/{id}")
+    List<Project> getPro(@PathVariable long id)
+    {
+        return proRepository.findByUserId(id);
+    }
+
+    @GetMapping("/profile/skill/{id}")
+    List<Skill> getSkills(@PathVariable long id)
+    {
+        return skillsRepository.findByUserId(id);
+    }
+
+    @GetMapping("/profile/social/{id}")
+    Social getSocial(@PathVariable long id)
+    {
+        return socialRepository.findByUserId(id);
+    }
+
+    @PostMapping("/profile/edu/{id}")
+    List<Education> postEducation(@RequestBody List<Education> educations,@PathVariable long id){
         
+        User user = usersRepository.findById(id);
+        educations.stream().forEach(
+            elm->{
+                elm.setUser(user);
+            }
+        );
+
+        eduRepository.saveAll(educations);
+        return educations;
     }
 
-    @PatchMapping("/profile/user/skills")
-    User patchSkill(@RequestBody User user)
-    {
-        User find = usersRepository.findByEmail(user.getEmail());
-        find.setSkills(user.getSkills());
-        usersRepository.save(find);
-        return find;
+    @PostMapping("/profile/pro/{id}")
+    List<Project> postProjects(@RequestBody List<Project> projects,@PathVariable long id){
+        User user = usersRepository.findById(id);
+        projects.stream().forEach(
+            elm->{
+                elm.setUser(user);
+            }
+        );
+
+        proRepository.saveAll(projects);
+        return projects;
     }
 
-    @PatchMapping("/profile/user/experiences")
-    User patchExperience(@RequestBody User user)
-    {
-        User find = usersRepository.findByEmail(user.getEmail());
-        find.setExperiences(user.getExperiences());
-        usersRepository.save(find);
-        return find;
+    @PostMapping("/profile/exp/{id}")
+    List<Experience> postExp(@RequestBody List<Experience> exp,@PathVariable long id){
+        User user = usersRepository.findById(id);
+        exp.stream().forEach(
+            elm->{
+                elm.setUser(user);
+            }
+        );
+
+        expRepository.saveAll(exp);
+        return exp;
     }
 
-    @PatchMapping("/profile/user/educations")
-    User patchEducation(@RequestBody User user)
-    {
-        User find = usersRepository.findByEmail(user.getEmail());
-        find.setEducations(user.getEducations());
-        usersRepository.save(find);
-        return find;
+    @PostMapping("/profile/skills/{id}")
+    List<Skill> postSkills(@RequestBody List<Skill> skills,@PathVariable long id){
+        User user = usersRepository.findById(id);
+        skills.stream().forEach(
+            elm->{
+                elm.setUser(user);
+            }
+        );
+
+        skillsRepository.saveAll(skills);
+        return skills;
     }
 
-    @PatchMapping("/profile/user/projects")
-    User patchProjects(@RequestBody User user)
-    {
-        User find = usersRepository.findByEmail(user.getEmail());
-        find.setProjects(user.getProjects());
-        usersRepository.save(find);
-        return find;
+    @PostMapping("/profile/social/{id}")
+    Social postSocial(@RequestBody Social social,@PathVariable long id){
+        User user = usersRepository.findById(id);
+        
+        social.setUser(user);
+
+        socialRepository.save(social);
+        return social;
     }
 
-    @PatchMapping("/profile/user/socials")
-    User patchSocials(@RequestBody User user)
-    {
-        User find = usersRepository.findByEmail(user.getEmail());
-        find.setSocials(user.getSocials());
-        usersRepository.save(find);
-        return find;
-    }
 
 }

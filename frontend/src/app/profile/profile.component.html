@@ -31,11 +31,15 @@
 
 
 </style>
-<div *ngIf="user" class="flex-container">
+
+<div *ngIf="display" class="flex-container">
+
+
  <h2> {{ user.firstName }}'s Profile </h2>
+ {{diagnostic}}
 <div class="flex-item flex1">
     <div>
-        <div (click)="menuOption('Personal')" class="border my-btn-primary">
+        <div (click)="menuOption('Profile')" class="border my-btn-primary">
           <h2> Personal Information </h2>
         </div>
         <div (click)="menuOption('Education')" class="border my-btn-primary">
@@ -54,33 +58,74 @@
             <h2> Projects </h2>
         </div>
        
+        <div *ngIf="success" class="alert alert-sucess"> You successfully updated your profile </div>
              
-          </div>
+      </div>
          
     </div>
 
+    
     <div class="flex-item flex2">
     
         <div *ngIf="userForm" [ngSwitch]="option">
   
-            <div  *ngSwitchCase="'Personal'">
+            <div  *ngSwitchCase="'Profile'">
               <div *ngIf="user" class="border border-light my-btn-primary">
                   <h2> Personal Information </h2>
-                  <form [formGroup]="userForm">
+                  <form [formGroup]="userForm.controls.user">
                   <ul   class="my-primary list-group">
                       Profile: 
-                        <li class="list-group-item rounded-0"> <img src="{{profile?.picture}}" class="avatar profile-image" alt="avatar"></li>
-                        <li class="list-group-item"> 
-                          <label for="firstName"> First Name: </label>
-                          <input type="text" readonly="{{editMode}}" value="{{user.firstName}}" class="form-control" formControlName="firstName" id="firstName">
-                        </li>
-                        <li class="list-group-item"> Email: {{ userInfo?.email }} </li>
-                        <li class="list-group-item"> Address: {{ userInfo?.address +"\n"+ userInfo?.city  +", "+ userInfo?.state +", "+ userInfo?.zipCode }}  </li>
-                        <li class="list-group-item"> Phone: {{userInfo?.number}} </li>
-                        <li class="list-group-item"> Objective: {{userInfo?.objective}} </li>
-                        <li class="list-group-item"> <i class="fas fa-file"></i> Resume: </li>
-                        <li class="list-group-item"> <i class="fas fa-camera"></i> Photo: </li>
-                        <li class="list-group-item rounded-0">  <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button> </li>
+                      <div class="form-group">
+                        <ul class="my-primary list-group">
+                          <li class="list-group-item">  <label for="firstName"> First Name: </label>
+                          <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="firstName" id="firstName">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label for="lastName">  Last Name: </label>
+                          <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="lastName" id="lastName">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label  for="email"> <i class="fas fa-envelope"></i> Email: </label>
+                          <input readonly="readonly" type="email" readonly class="form-control" formControlName="email" id="email">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label for="address">  Street Adress: </label>
+                          <input readonly="{{editMode}}" type="text" class="form-control" formControlName="address" id="address">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label for="city">  City: </label>
+                          <input readonly="{{editMode}}" type="text" class="form-control" formControlName="city" id="city">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label for="state"> State: </label>
+                          <input readonly="{{editMode}}" type="text" class="form-control" formControlName="state" id="state">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label for="zipCode">  Zip Code: </label>
+                          <input readonly="{{editMode}}" type="numeric" class="form-control" formControlName="zipCode" id="zipCode">
+                          </li>
+                          <li class="list-group-item"> 
+                          <label for="phoneNumber">  Phone: </label>
+                          <input readonly="{{editMode}}" type="tel" class="form-control" formControlName="phoneNumber" id="phoneNumber">
+                          </li>
+                          <li class="list-group-item">
+                          <label for="objective">  Objective: </label>
+                          <textarea readonly="{{editMode}}" class="form-control" formControlName="objective" rows=5  id="objective"></textarea>
+                          </li>
+                          <li class="list-group-item">
+                          <label for="resume">  Resume: </label>
+                          <input readonly="{{editMode}}" type="file" class="form-control" formControlName="resume" id="resume">
+                          </li>
+                          <li class="list-group-item">
+                          <label for="profileImage"> Profile Photo: </label>
+                          <input readonly="{{editMode}}" type="file" class="form-control" formControlName="image" id="profileImage">
+                          </li>
+                        </ul>
+                    </div>
+                  
+                        <li class="list-group-item rounded-0">  <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button> 
+                        <button #save_info name="save_info" class="my-btn-primary btn-lg" (click)="saveEdit()"> <i class="fas fa-save"></i> Save </button>
+                      </li>
                  </ul>
                 </form>
               </div>
@@ -88,34 +133,206 @@
             <div *ngSwitchCase="'Education'">
                 <div class="border border-light my-btn-primary">
                     <h2> Education </h2>
+                    <div [formGroup]="userForm">
+                    <div formArrayName="educations"
+                          *ngFor="let user of userForm.get('educations').controls; let i = index">
+                            <div [formGroupName]="i">
+                            <div  class="form-group">
+                                <ul class="my-primary list-group">
+                                <li class="list-group-item"> 
+                                  <label for="schoolName"> School Name </label>
+                                  <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="schoolName" id="schoolName" required>
+                                </li>
+                                <li class="list-group-item"><label for="degree"> Degree  </label>
+                                <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="degree" id="degree" required>
+                                </li>
+                                <li   class="list-group-item"><label for="major"> Major </label>
+                                <input readonly="{{editMode}}" type="text" class="form-control" formControlName="major" id="major" required>
+                                </li>
+                                <li  class="list-group-item"><label for="startDate"> Start Date </label>
+                                <input readonly="{{editMode}}"  type="date" class="form-control" formControlName="startDate" id="startDate" required >
+                                </li>
+                                <li   class="list-group-item"><label for="endDate"> End Date </label>
+                                <input readonly="{{editMode}}" type="date" class="form-control" formControlName="endDate" id="endDate" required >
+                                </li>
+                                <li   class="list-group-item"> <label for="description"> Description </label>
+                              <textarea readonly="{{editMode}}" formControlName="description" class="form-control" rows=5 id="description"  required>
+                              </textarea>
+                              </li>
+                              <li class="list-group-item">
+                              <label for="inProgress"> In Progress </label>
+                              <input readonly="{{editMode}}"  type="checkbox" class="form-control" formControlName="inProgress" id="inProgress" required >
+                              </li>
+                              
+                              </ul>
+                          </div>
+                          <button #edit_info name="add_edu" class="btn-danger btn-lg" (click)="removeEducation(i)"> <i class="fas fa-plus"></i> Remove </button>
+                        </div>
+                    </div>
+                    <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button>
+                    <button #edit_info name="add_edu" class="my-btn-primary btn-lg" (click)="addEducation()"> <i class="fas fa-plus"></i> Add </button>
+                    <button #save_info name="save_info" class="my-btn-primary btn-lg" (click)="saveEdit()"> <i class="fas fa-save"></i> Save </button>
+                  </div>
                 </div>
             </div>
             <div *ngSwitchCase="'Experience'">
                 <div class="border border-light my-btn-primary">
                     <h2> Work History </h2>
+                    <div [formGroup]="userForm">
+                        <div formArrayName="experiences" *ngFor="let user of userForm.get('experiences').controls; let i = index">
+                          <div [formGroupName]="i">
+                            <div  class="form-group">
+                              <ul class="my-primary list-group">
+                                  <li class="list-group-item"> 
+                    <label for="title"> Job Title </label>
+                    <input readonly="{{editMode}}" type="text" class="form-control" formControlName="title" id="title" required >
+                    </li>
+                    <li class="list-group-item"> 
+                    <label for="company"> Company Name </label>
+                    <input  readonly="{{editMode}}" type="text" class="form-control" formControlName="company" id="company" required >
+                      </li>
+                      <li class="list-group-item"> 
+                    <label for="startDate"> Start Date </label>
+                    <input readonly="{{editMode}}" type="date" class="form-control" formControlName="startDate" id="startDate" required >
+                    </li>
+                    <li class="list-group-item"> 
+                    <label for="endDate"> End Date </label>
+                    <input readonly="{{editMode}}" type="date" class="form-control" formControlName="endDate" id="endDate" required >
+                      </li>
+                      <li class="list-group-item"> 
+                    <label for="description"> Description </label>
+                    <textarea readonly="{{editMode}}" formControlName="description" class="form-control" rows=5 id="description"  required>
+                      </textarea>
+                      </li>
+                      <li class="list-group-item"> 
+                    <label for="current"> Current </label>
+                    <input readonly="{{editMode}}" type="checkbox" class="form-control" formControlName="current" id="current" required >
+                        </li>
+                      </ul>
+                    </div>
+                    </div>
+                    <button #edit_info name="add_edu" class="my-btn-primary btn-lg" (click)="removeExperience()"> <i class="fas fa-plus"></i> Remove </button>
+                    </div>
+                <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button>
+                <button #edit_info name="add_edu" class="my-btn-primary btn-lg" (click)="addExperience()"> <i class="fas fa-plus"></i> Add </button>
+                
+                <button #save_info name="save_info" class="my-btn-primary btn-lg" (click)="saveEdit()"> <i class="fas fa-save"></i> Save </button>
                 </div>
+            </div>
             </div>
             <div *ngSwitchCase="'Social'">
                 <div  class="border border-light my-btn-primary">
-                    <h2> Social Media </h2>
+                  
+                    <div [formGroup]="userForm.controls.social">
+                        <div  class="form-group">
+                        <ul class="my-primary list-group">
+                          <li class="list-group-item"> <label for="linkedin"> <i class="fab fa-linkedin-in"></i> </label>
+                        <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="linkedin" id="linkedin"></li>
+                        <li class="list-group-item"> <label for="twitter"> <i class="fab fa-twitter"></i> </label>
+                        <input  readonly="{{editMode}}" type="text" class="form-control" formControlName="twitter" id="twitter"></li>
+                        <li class="list-group-item"> <label for="facebook"> <i class="fab fa-facebook"></i> </label>
+                        <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="facebook" id="facebook"></li>
+                        <li class="list-group-item"> <label for="github"> <i class="fab fa-github"></i> </label>
+                        <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="github" id="github"></li>
+                        <li class="list-group-item"> <label for="website"> <i class="fas fa-globe"></i> </label>
+                        <input readonly="{{editMode}}"  type="text" class="form-control" formControlName="website" id="website"></li>
+    
+                        </ul>
+                        </div>
+                        </div>
+                        <button #save_info name="save_info" class="my-btn-primary btn-lg" (click)="saveEdit()"> <i class="fas fa-save"></i> Save </button>
+                        <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button>
+                    
                 </div>
             </div>
             <div *ngSwitchCase="'Skill'">
                 <div class="border border-light my-btn-primary">
                     <h2> Skills </h2>
+
+                    <div [formGroup]="userForm">
+                        <div formArrayName="skills" *ngFor="let user of userForm.get('skills').controls; let i = index">
+                          <div [formGroupName]="i">
+                            <div  class="form-group">
+                                <ul class="my-primary list-group">
+                    <li class="list-group-item">
+                    <label for="skill">Skill Name </label>
+                    <input type="text" class="form-control" formControlName="skill" id="skill" required >
+                      </li>
+                      <li class="list-group-item">
+                      <label for="level"> Level </label>
+                      <select class="form-control" formControlName="level">
+                          <option *ngFor="let level of levels" [value]="level">{{level}}</option>
+                      </select>
+                      </li>
+                      </ul>
+                      </div>
+                      </div>
+                      <button #edit_info name="add_edu" class="btn-danger btn-lg" (click)="removeSkill(i)"> <i class="fas fa-plus"></i> Remove </button>
+                      </div>
+                      </div>
+                      <button #save_info name="save_info" class="my-btn-primary btn-lg" (click)="saveEdit()"> <i class="fas fa-save"></i> Save </button>
+                      <button #edit_info name="add_edu" class="my-btn-primary btn-lg" (click)="addSkill()"> <i class="fas fa-plus"></i> Add </button>
+                      <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button>
                 </div>
             </div>
       
             <div *ngSwitchCase="'Project'">
                 <div class="border border-light my-btn-primary">
                     <h2> Projects </h2>
+                    <div [formGroup]="userForm">
+                        <div formArrayName="projects" *ngFor="let user of userForm.get('projects').controls; let i = index">
+                          <div [formGroupName]="i">
+                            <div  class="form-group">
+                              <ul class="my-primary list-group">
+
+
+                                  <li class="list-group-item"> <label for="name"> Project Name </label>
+                                  <input readonly="{{editMode}}" type="text" class="form-control" formControlName="name" id="name" required >
+                                  </li>
+                                  <li class="list-group-item"> 
+                                  <label for="description"> Description </label>
+                                  <textarea formControlName="description" class="form-control" rows=5 id="description"  required>
+                                  </textarea>
+                                  </li>
+                                  <li class="list-group-item"> 
+                                  <label for="technologies"> Technologies </label>
+                                  <textarea readonly="{{editMode}}" formControlName="technologies" class="form-control" rows=5 id="technologies"  required>
+                                  </textarea>
+                                  </li>
+                                  <li class="list-group-item"> 
+                                  <label for="link"> Link </label>
+                                  <input readonly="{{editMode}}" type="text" class="form-control" formControlName="link" id="link" required >
+                                  </li>
+                                  <li class="list-group-item"> 
+                                  <label for="start_date"> Start Date </label>
+                                  <input readonly="{{editMode}}" type="date" class="form-control" formControlName="start_date" id="start_date" required >
+                                  </li>
+                                  <li class="list-group-item"> 
+                                  <label for="end_date"> End Date </label>
+                                  <input readonly="{{editMode}}" type="date" class="form-control" formControlName="end_date" id="end_date" required >
+                                  </li>
+                              
+                              </ul>
+                            </div>
+                            <button #edit_info name="add_edu" class="my-btn-primary btn-lg" (click)="removeProject(i)"> <i class="fas fa-plus"></i> Remove </button>
+                          </div>
+                        </div>
+
                 </div>
+
+                <button #edit_info name="edit_info" class="my-btn-primary btn-lg" (click)="enableEdit()"> <i class="fas fa-pencil-alt"></i> Edit </button>
+                <button #edit_info name="add_edu" class="my-btn-primary btn-lg" (click)="addProject()"> <i class="fas fa-plus"></i> Add </button>
+                <button #save_info name="save_info" class="my-btn-primary btn-lg" (click)="saveEdit()"> <i class="fas fa-save"></i> Save </button>
+
             </div>
           
         </div>
 
+   
   </div>
   </div>
+</div>
+
 
 
 

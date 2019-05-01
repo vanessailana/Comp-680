@@ -7,6 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.JoinColumn;
@@ -20,6 +24,7 @@ import javax.persistence.JoinTable;
 
 @Entity
 @Table(name="skills")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Skill {
 
     @Id
@@ -33,6 +38,10 @@ public class Skill {
     @Column(name="level",nullable=true)
     private String level;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="user_id")
+    private User user;
 
     public long getId()
     {
@@ -56,6 +65,21 @@ public class Skill {
     public void setLevel(String level)
     {
         this.level = level;
+    }
+
+     /**
+     * @param user the user to set
+     */
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    /**
+     * @return the user
+     */
+    @JsonIgnore
+    public User getUser() {
+        return user;
     }
 
  

@@ -59,13 +59,13 @@
 
 
   
-      <div *ngIf="auth.isAuthenticated()">
-          <a  class="nav-link" routerLink="/mymessages">
-            <i class="fas fa-envelope">  </i> Messages
+      <ng-template ngxPermissionsExcept="guest" >
+          <a  class="nav-link" routerLink="/mymessages" (click)="clearMessageNotice()">
+            <i class="fas fa-envelope">  </i>  Messages
            </a>
-      </div>
+      </ng-template>
 
-      <ng-template ngPermissionsOnly="user" >
+      <ng-template ngxPermissionsOnly="user" >
           <a  class="nav-link" routerLink="/profile">
             <i class="fas fa-user">  </i> Profile
            </a>
@@ -89,7 +89,7 @@
 
 
 
-
+ 
 
 <main class="container-full">
   <router-outlet></router-outlet>

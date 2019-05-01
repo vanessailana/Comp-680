@@ -10,4 +10,5 @@ public interface SkillRepository extends CrudRepository<Skill, Long> {
 
  
     Skill findById(long id);
+    List<Skill> findByUserId(long id);
 }

@@ -1,3 +1,5 @@
+## This repository is for Computer Science 680 at California State University Northridge. 
+
 # Comp-680
 ### The goal is to establish a platform that would give society the opportunity to have a platform to apply to jobs. This platform would support four different types of users. It would support a guest, a registered user, and recruiter.
 
@@ -26,3 +28,11 @@ https://github.com/vanessailana/Seminar2
 ## Overall Architecture
 
 ![alt text](Overall_Architecture.png "360 Search Architecture")
+
+
+
+## Application hosted on:
+https://serene-mountain-68375.herokuapp.com/
+
+## Backend API 
+https://agile-scrubland-47616.herokuapp.com/

@@ -141,7 +141,7 @@ getInputPasteValues(): Promise<string[]> {
 }
 
 getAddPaste():ElementFinder {
-  return element(by.tagName('app-add-paste'));
+  return element(by.name('submitted'));
 }
 getCreatePasteModal(): ElementFinder {
   return this.getAddPaste().element(by.className("alert alert-success"));
@@ -168,7 +168,7 @@ addNewJob(): any {
         this.getStartComp().sendKeys(newPaste.startCompensation);
         this.getInputDescription().sendKeys(newPaste.description);
         this.getEmploymentType().sendKeys(newPaste.employmentType);
-      
+        this.getAddPaste().sendKeys(newPaste.paste);
         //Convert the paste object into an array
         return Object.keys(newPaste).map(key => newPaste[key]);
 }

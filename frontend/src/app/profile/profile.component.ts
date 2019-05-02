@@ -4,7 +4,7 @@ import { AuthService } from './../auth/auth.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ProfileService } from './profile.service';
-
+declare var require: any;
 let  JSON = require('circular-json')
 @Component({
   selector: 'app-profile',

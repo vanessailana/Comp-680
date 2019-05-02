@@ -26,7 +26,7 @@ describe('workspace-project App', () => {
     const emptyInputValues = ["","",""];
     expect(page.getInputPasteValues()).toEqual(emptyInputValues);
      
-    const newInputValues = page.addNewJob();
+    const newInputValues = { location:"new mx",title: "Something  here", job: "Ruby", startCompensation:0, employment_type:"full time" ,status:1};
     expect(page.getInputPasteValues()).toEqual(newInputValues);
  
     page.clickSaveButton();
@@ -54,7 +54,8 @@ describe('workspace-project App', () => {
     const emptyInputValues = ["","",""];
     expect(page.getInputPasteValues()).toEqual(emptyInputValues);
      
-    const newInputValues = page.addNewJob();
+ const newInputValues = { location:"new mx",title: "Something  here", job: "Ruby", startCompensation:0, employment_type:"full time" ,status:1};
+   
     expect(page.getInputPasteValues()).toEqual(newInputValues);
  
     page.clickSaveButton();
@@ -150,4 +151,9 @@ describe('workspace-project App', () => {
  
  
   
+  });
+
+
+
+
 

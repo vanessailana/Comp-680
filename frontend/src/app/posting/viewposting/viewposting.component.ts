@@ -34,6 +34,7 @@ export class ViewpostingComponent  implements OnInit {
 
   displayLogin : boolean;
 
+ loading: boolean;
   user: any;
   profile : any;
 
@@ -105,9 +106,16 @@ export class ViewpostingComponent  implements OnInit {
 
 
 
+   const role= [localStorage.getItem('roles')];
  
+    this.permissionsService.loadPermissions(role);
 
-  
+    this.loading = true;
+   this.postingService.getAll().subscribe(data => {
+      this.jobs= data;
+      this.loading = false;
+    });
+
   }
 
   initAnswers() {

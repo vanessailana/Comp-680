@@ -30,17 +30,16 @@
  
 
 <tr>
-<td> Title </td>
-<td> Location </td>
-<td> Start Compensation </td>
+<td> <b>Title</b> </td>
+<td> <b>Location</b> </td>
+<td> <b>Start Compensation</b> </td>
 
-<td> Employment Type </td>
-<td> Still Accepting Candidates? </td>
-<td> Description </td>
+<td> <b>Employment Type</b> </td>
+<td> <b>Still Accepting Candidates?</b> </td>
+<td> <b>Description</b> </td>
 
 </tr>
-
-
+<tbody *ngIf="loading" class="text-center h3">Loading...</tbody>
 
 <tbody *ngFor="let job of jobs | paginate: { itemsPerPage: 10, currentPage: p} |filter:searchText; let i = index ">
 

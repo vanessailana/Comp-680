@@ -1,5 +1,3 @@
-
-    
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as auth0 from 'auth0-js';
@@ -21,8 +19,7 @@ export class AuthService {
     clientID: 'Rn9gH_Xwv3LL6GkmAs6R9vm7hMEL8DsB',
     domain: 'comp586proj.auth0.com',
     responseType: 'token id_token',
-    //redirectUri: 'http://localhost:4200/callback',
-    redirectUri: 'http://localhost:4200',
+    redirectUri: 'http://localhost:4200/callback',
     scope: 'openid profile email'
   });
 
@@ -50,12 +47,11 @@ constructor(public router: Router) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken ) {
         this.setSession(authResult);
-        localStorage.setItem('profile', JSON.stringify(authResult.idTokenPayload));
         console.log(authResult);
         console.log("teste");
-        this.router.navigate(['/home']);
+        this.router.navigate(['/profile']);
       } else if (err) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['']);
        
 
       }
@@ -66,14 +62,9 @@ constructor(public router: Router) {
   private _checkAdmin(profile) {
     // Check if the user has admin role
     const roles = profile['https://example.com/roles'] || [];
-    
      localStorage.setItem('roles', roles);
-       localStorage.setItem('name', name);
- 
     return roles.indexOf('admin') > -1;
   }
-
-  
 
 
 public getProfile(cb): void {
@@ -83,7 +74,7 @@ public getProfile(cb): void {
     this.auth0.client.userInfo(accessToken, (err, profile) => {
       if (profile && this._checkAdmin(profile)) {
         self.userProfile = profile;
- 
+         
      
 
       }
@@ -97,6 +88,7 @@ public getProfile(cb): void {
   }
   private setSession(authResult): void {
 
+
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
 
@@ -105,12 +97,11 @@ public getProfile(cb): void {
     // use the scopes as requested. If no scopes were requested,
     // set it to nothing
     const scopes = authResult.scope || this.requestedScopes || '';
-
+    
     localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.nickname);
+    localStorage.setItem('id_token', authResult.accessToken);
     localStorage.setItem('expires_at', expiresAt);
     localStorage.setItem('scopes', JSON.stringify(scopes));
-  
    
     this.scheduleRenewal();
   }
@@ -120,12 +111,10 @@ public getProfile(cb): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    localStorage.removeItem('user');
     localStorage.removeItem('scopes');
-    localStorage.removeItem('roles');
-    localStorage.removeItem('profile');
+       localStorage.removeItem('roles');
     // Go back to the home route
-    this.router.navigate(['/home']);
+    this.router.navigate(['/']);
     location.reload();
   }
 

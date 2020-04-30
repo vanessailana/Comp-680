@@ -39,7 +39,7 @@
     "express-jwt": "^5.3.1",
     "font-awesome": "^4.7.0",
     "i": "^0.3.6",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "jwks-rsa": "^1.4.0",
     "method-override": "^3.0.0",
     "mongo": "^0.1.0",
